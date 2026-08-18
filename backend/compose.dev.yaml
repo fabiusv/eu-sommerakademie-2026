@@ -1,0 +1,24 @@
+services:
+  db:
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+
+  migrate:
+    volumes:
+      - .:/app
+
+  web:
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8000", "--noreload"]
+    environment:
+      DEBUG: "true"
+      SESSION_COOKIE_SECURE: "false"
+      SECURE_SSL_REDIRECT: "false"
+      SECURE_HSTS_SECONDS: "0"
+    ports:
+      - "${WEB_PORT:-8000}:8000"
+    volumes:
+      - .:/app
+
+  scheduler:
+    volumes:
+      - .:/app

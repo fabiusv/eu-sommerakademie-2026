@@ -1,0 +1,116 @@
+name: civileu
+
+x-app: &app
+  image: ${CIVILEU_IMAGE:-civileu:local}
+  build:
+    context: .
+    target: runtime
+  environment: &app-environment
+    DATABASE_URL: ${CONTAINER_DATABASE_URL:-postgresql://civileu:civileu@db:5432/civileu}
+    SECRET_KEY: ${SECRET_KEY:-unsafe-docker-development-key}
+    DEBUG: ${DEBUG:-false}
+    ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1}
+    CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS:-http://localhost:8000}
+    CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:3000}
+    SESSION_COOKIE_SECURE: ${SESSION_COOKIE_SECURE:-false}
+    SECURE_SSL_REDIRECT: ${SECURE_SSL_REDIRECT:-false}
+    SECURE_HSTS_SECONDS: ${SECURE_HSTS_SECONDS:-0}
+    OPENCAGE_API_KEY: ${OPENCAGE_API_KEY:-}
+    OPENCAGE_API_URL: ${OPENCAGE_API_URL:-https://api.opencagedata.com/geocode/v1/json}
+    GEOCODING_PROVIDER: ${GEOCODING_PROVIDER:-opencage}
+    LLM_PROVIDER: ${LLM_PROVIDER:-openai}
+    OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+    OPENAI_API_URL: ${OPENAI_API_URL:-https://api.openai.com/v1}
+    OPPORTUNITY_KIND_CLASSIFIER_MODEL: ${OPPORTUNITY_KIND_CLASSIFIER_MODEL:-gpt-5.4-nano}
+    OPPORTUNITY_KIND_CLASSIFIER_MIN_CONFIDENCE: ${OPPORTUNITY_KIND_CLASSIFIER_MIN_CONFIDENCE:-0.75}
+    OPPORTUNITY_DEDUPLICATION_EMBEDDING_MODEL: ${OPPORTUNITY_DEDUPLICATION_EMBEDDING_MODEL:-text-embedding-3-small}
+    IMPORT_SCHEDULER_POLL_SECONDS: ${IMPORT_SCHEDULER_POLL_SECONDS:-60}
+    IMPORT_HEALTH_GRACE_SECONDS: ${IMPORT_HEALTH_GRACE_SECONDS:-21600}
+    HEALTHCHECK_HOST: ${HEALTHCHECK_HOST:-localhost}
+    GUNICORN_BIND: ${GUNICORN_BIND:-0.0.0.0:8000}
+    WEB_CONCURRENCY: ${WEB_CONCURRENCY:-2}
+    WEB_THREADS: ${WEB_THREADS:-2}
+    WEB_TIMEOUT_SECONDS: ${WEB_TIMEOUT_SECONDS:-60}
+  security_opt:
+    - no-new-privileges:true
+
+services:
+  db:
+    image: ${CIVILEU_DATABASE_IMAGE:-civileu-postgres:local}
+    # The official PostGIS 17/3.5 image is currently AMD64-only. Docker uses
+    # emulation on ARM hosts; operators may override this when the base image
+    # publishes another supported architecture.
+    platform: ${CIVILEU_DATABASE_PLATFORM:-linux/amd64}
+    build:
+      context: .
+      dockerfile: deployment/postgres/Dockerfile
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-civileu}
+      POSTGRES_USER: ${POSTGRES_USER:-civileu}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-civileu}
+    healthcheck:
+      # The PostGIS entrypoint opens a temporary Unix-socket server while it
+      # installs extensions, then restarts PostgreSQL for normal TCP service.
+      # Probe TCP so migrations cannot race that restart.
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  migrate:
+    <<: *app
+    command:
+      - sh
+      - -c
+      - python manage.py migrate --noinput && python manage.py seed_sources
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+  web:
+    <<: *app
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    expose:
+      - "8000"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - >-
+          import os, urllib.request;
+          request = urllib.request.Request(
+          'http://127.0.0.1:8000/health/ready',
+          headers={'Host': os.environ['HEALTHCHECK_HOST'],
+          'X-Forwarded-Proto': 'https'});
+          urllib.request.urlopen(request, timeout=5)
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    stop_grace_period: 45s
+    restart: unless-stopped
+
+  scheduler:
+    <<: *app
+    command: ["python", "manage.py", "run_import_scheduler"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "manage.py", "check_import_health"]
+      interval: 5m
+      timeout: 30s
+      retries: 3
+      start_period: 2m
+    stop_grace_period: 30m
+    restart: unless-stopped
+
+volumes:
+  postgres-data:

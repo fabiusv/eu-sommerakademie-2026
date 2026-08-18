@@ -1,0 +1,78 @@
+name: Backend CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    services:
+      postgres:
+        image: postgis/postgis:17-3.5
+        env:
+          POSTGRES_DB: civileu
+          POSTGRES_USER: civileu
+          POSTGRES_PASSWORD: civileu
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U civileu -d civileu"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    env:
+      DATABASE_URL: postgresql://civileu:civileu@localhost:5432/civileu
+      SECRET_KEY: ci-only-key
+      SESSION_COOKIE_SECURE: "false"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pgvector in the PostGIS service
+        run: >-
+          docker exec ${{ job.services.postgres.id }}
+          bash -lc 'apt-get update && apt-get install --yes --no-install-recommends postgresql-17-pgvector'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: backend/requirements.lock
+      - run: pip install -e '.[dev]'
+      - run: ruff check .
+      - run: python manage.py makemigrations --check --dry-run
+      - run: python manage.py migrate
+      - run: python manage.py check --deploy
+      - run: pytest --cov=accounts --cov=ingestion --cov=interactions --cov=opportunities
+      - run: docker compose --env-file .env.example -f compose.yaml -f compose.dev.yaml config
+      - run: >-
+          docker compose --env-file .env.production.example
+          -f compose.yaml -f compose.prod.yaml config
+      - run: docker build --tag civileu:ci .
+      - name: Smoke-test production containers
+        env:
+          CIVILEU_IMAGE: civileu:ci
+          POSTGRES_PASSWORD: ci-container-password
+          CONTAINER_DATABASE_URL: postgresql://civileu:ci-container-password@db:5432/civileu
+          SECRET_KEY: ci-container-secret-key-that-is-not-used-outside-ci
+          HEALTHCHECK_HOST: api.example.org
+          WEB_PORT: "18000"
+        run: >-
+          docker compose --project-name civileu-ci
+          --env-file .env.production.example
+          -f compose.yaml -f compose.prod.yaml
+          up --detach --wait db web
+      - name: Verify containerized API readiness
+        run: >-
+          curl --fail --show-error
+          --header 'Host: api.example.org'
+          --header 'X-Forwarded-Proto: https'
+          http://127.0.0.1:18000/health/ready
+      - name: Stop production smoke stack
+        if: always()
+        run: >-
+          docker compose --project-name civileu-ci
+          --env-file .env.production.example
+          -f compose.yaml -f compose.prod.yaml
+          down --volumes

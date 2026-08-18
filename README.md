@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CivilEU
 
-## Getting Started
+CivilEU combines a Next.js frontend with a host-agnostic, containerized Django
+backend for aggregating European civic and youth opportunities.
 
-First, run the development server:
+## Repository structure
 
-```bash
+- `src/` and `public/` contain the product frontend.
+- `backend/` contains the complete CivilEU backend package, including its
+  Docker/Compose topology, migrations, tests, architecture, roadmap, and
+  deployment runbook.
+- `backend/frontend.html` is a standalone backend testing interface. It is not
+  part of the deployable frontend or backend image.
+
+## Frontend development
+
+Install the JavaScript dependencies and start the development server:
+
+```shell
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The frontend is then available at <http://localhost:3000>.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Backend development and deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Run backend commands from the `backend/` directory:
 
-## Learn More
+```shell
+cd backend
+cp .env.example .env
+docker compose -f compose.yaml -f compose.dev.yaml up --build
+```
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The backend API is then available at <http://localhost:8000>. See the
+[backend README](backend/README.md) for development and API details and the
+[deployment runbook](backend/deployment/README.md) for the provider-neutral
+production container contract.

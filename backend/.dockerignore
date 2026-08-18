@@ -1,0 +1,14 @@
+.git
+.github
+.DS_Store
+.env
+.env.*
+.pytest_cache
+.ruff_cache
+.venv
+**/__pycache__
+**/*.py[cod]
+frontend.html
+htmlcov
+staticfiles
+tests

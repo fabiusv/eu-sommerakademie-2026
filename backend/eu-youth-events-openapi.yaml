@@ -1,0 +1,520 @@
+openapi: 3.0.3
+info:
+  title: European Youth Portal Events API
+  version: 1.0.0-observed
+  description: |
+    Importable definition of the public search endpoint used by
+    https://youth.europa.eu/events_en.
+
+    This is an undocumented internal API and may change without notice. Date
+    strings behave as UTC but omit the trailing Z. The event list supports one
+    topic, ascending/descending date sorting, and offset pagination.
+
+    Inspected and live-tested on 2026-08-14.
+  contact:
+    name: European Youth Portal
+    url: https://youth.europa.eu/events_en
+externalDocs:
+  description: European Youth Portal Events
+  url: https://youth.europa.eu/events_en
+servers:
+  - url: https://youth.europa.eu/api/rest/eyp/v1
+    description: Production API
+tags:
+  - name: Events
+paths:
+  /search_en:
+    get:
+      tags:
+        - Events
+      operationId: searchEvents
+      summary: Search European Youth Portal events
+      description: |
+        Returns Content records whose internal type is eyp_event. The default
+        page size is 12. The English query accepts English records and records
+        declaring themselves as the English fallback.
+
+        Optional topic and aggregation examples are intentionally omitted so
+        importers do not activate every optional parameter simultaneously.
+      security: []
+      parameters:
+        - name: type
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [Content]
+            default: Content
+          description: Search-index document family.
+        - name: no_score
+          in: query
+          required: true
+          schema:
+            type: boolean
+            default: true
+          description: Disable relevance scoring.
+        - name: "sort[start_date]"
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [desc, asc]
+            default: desc
+          description: Primary event-date order.
+        - name: "sort[end_date]"
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [desc, asc]
+            default: desc
+          description: Secondary event-date order; the page uses the same value as start_date.
+        - name: "raw[query][bool][must][0][term][type]"
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [eyp_event]
+            default: eyp_event
+          description: Restrict Content documents to events.
+        - name: "raw[query][bool][must][1][match][visible]"
+          in: query
+          required: true
+          schema:
+            type: boolean
+            default: true
+          description: Restrict results to visible events.
+        - name: "raw[query][bool][must][2][bool][should][0][term][language]"
+          in: query
+          required: true
+          schema:
+            type: string
+            default: en
+          description: Preferred record language.
+        - name: "raw[query][bool][must][2][bool][should][1][term][is_fallback_for]"
+          in: query
+          required: true
+          schema:
+            type: string
+            default: en
+          description: Include records serving as the English fallback.
+        - name: "raw[query][bool][must][3][term][section_item.uuid]"
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - 6eb04c10-e422-410a-b6ac-d7ab312a4e97
+              - a44f33d0-3f97-439d-b095-80980d9e5b21
+              - ca974ac6-4be6-46e0-8d42-be5ce70c666d
+              - a2ed3803-752e-42d4-8a77-2b92364b6864
+              - f98f60b5-4d8d-4088-94dd-9ebe2185b17d
+              - cd9e361b-c7b8-40ca-bfc8-3058c87b3ade
+              - get-involved_youth-in-the-world
+              - 2d3935b5-21ce-476c-9b3f-dc23e7f744be
+              - go-abroad-volunteering
+              - go-abroad-traineeships
+              - go-abroad-working
+              - go-abroad-studying
+              - go-abroad-school-youth-exchange
+              - go-abroad-travelling
+              - esc
+              - deu
+              - erasmus
+              - 1d6f96c0-9900-4ed8-9f11-ddbfd24ea30b
+              - eu-youth-dialogue
+              - youth-policy-dialogues
+              - young-journalists-in-europe
+              - european-youth-week
+              - year-of-youth
+              - youth-policy-eu
+              - youth-policy-latest-news
+              - youth-policy-latest-events
+              - youth-policy-get-involved
+              - youth-policy-discover
+              - youth-policy-resources
+          description: Optional topic UUID. Omit for all topics.
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          description: Result offset; the page increments it by 12.
+        - name: size
+          in: query
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+            default: 12
+          description: Number of hits. Use 0 for a facets-only request.
+        - name: "raw[aggs][sectionIds][terms][field]"
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [section_id]
+          description: Add the section-ID facet to a size=0 request.
+        - name: "raw[aggs][sectionIds][terms][size]"
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+          description: Maximum section-ID buckets; the page uses 1000.
+        - name: "raw[aggs][sections][terms][field]"
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [section]
+          description: Add the section-name facet to a size=0 request.
+        - name: "raw[aggs][sections][terms][size]"
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+          description: Maximum section-name buckets; the page uses 1000.
+      responses:
+        "200":
+          description: Event search or facet response
+          headers:
+            Cache-Control:
+              description: Public cache policy; observed max-age was 300 seconds.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchResponse"
+              examples:
+                eventPage:
+                  summary: Minimal event result
+                  value:
+                    took: 10
+                    timed_out: false
+                    hits:
+                      total:
+                        value: 124
+                        relation: eq
+                      max_score: null
+                      hits:
+                        - _index: eyp_content
+                          _id: d8_35729_nl
+                          _score: null
+                          sort: [1797148800000, 1797264000000]
+                          _source:
+                            identifier: 35729
+                            uuid: 21b127c6-6fed-4002-8f66-d75b4014cbd0
+                            type: eyp_event
+                            bundle: eyp_event
+                            visible: true
+                            language: nl
+                            title: Studiekeuzebeurs West
+                            start_date: "2026-12-13T08:00:00"
+                            end_date: "2026-12-14T16:00:00"
+                            timezone: CET
+                            online: false
+                            online_location: null
+                            url: /events/studiekeuzebeurs-west_nl
+                facets:
+                  summary: Minimal facets response
+                  value:
+                    took: 5
+                    timed_out: false
+                    hits:
+                      total:
+                        value: 124
+                        relation: eq
+                      max_score: null
+                      hits: []
+                    aggregations:
+                      sectionIds:
+                        doc_count_error_upper_bound: 0
+                        sum_other_doc_count: 0
+                        buckets:
+                          - key: 226
+                            doc_count: 65
+                      sections:
+                        doc_count_error_upper_bound: 0
+                        sum_other_doc_count: 0
+                        buckets:
+                          - key: Youth Policy Dialogues
+                            doc_count: 65
+        "503":
+          description: Temporary upstream/backend failure; retrying the unchanged request once may succeed.
+          content:
+            text/html:
+              schema:
+                type: string
+components:
+  schemas:
+    SearchResponse:
+      type: object
+      required: [took, timed_out, hits]
+      properties:
+        took:
+          type: integer
+          description: Backend processing time in milliseconds.
+        timed_out:
+          type: boolean
+        hits:
+          $ref: "#/components/schemas/Hits"
+        aggregations:
+          $ref: "#/components/schemas/Aggregations"
+    Hits:
+      type: object
+      required: [total, hits]
+      properties:
+        total:
+          $ref: "#/components/schemas/HitTotal"
+        max_score:
+          type: number
+          format: double
+          nullable: true
+        hits:
+          type: array
+          items:
+            $ref: "#/components/schemas/EventHit"
+    HitTotal:
+      type: object
+      required: [value, relation]
+      properties:
+        value:
+          type: integer
+        relation:
+          type: string
+          example: eq
+    EventHit:
+      type: object
+      required: [_index, _id, _source]
+      properties:
+        _index:
+          type: string
+          example: eyp_content
+        _id:
+          type: string
+        _score:
+          type: number
+          format: double
+          nullable: true
+        sort:
+          type: array
+          description: Epoch-millisecond values for the requested sort fields.
+          items:
+            type: integer
+            format: int64
+        _source:
+          $ref: "#/components/schemas/EypEvent"
+    EypEvent:
+      type: object
+      properties:
+        identifier:
+          type: integer
+        uuid:
+          type: string
+          format: uuid
+        type:
+          type: string
+          example: eyp_event
+        bundle:
+          type: string
+          example: eyp_event
+        entity_type:
+          type: string
+          example: node
+        created:
+          type: integer
+          format: int64
+          description: Unix timestamp in seconds.
+        updated:
+          type: integer
+          format: int64
+          description: Unix timestamp in seconds.
+        visible:
+          type: boolean
+        moderation:
+          type: string
+          example: published
+        language:
+          type: string
+        title:
+          type: string
+        summary:
+          type: string
+        body:
+          type: string
+          description: May contain HTML or CSS fragments.
+        start_date:
+          $ref: "#/components/schemas/UtcDateWithoutZone"
+        end_date:
+          $ref: "#/components/schemas/UtcDateWithoutZone"
+        publication_start:
+          $ref: "#/components/schemas/UtcDateWithoutZone"
+        publication_end:
+          $ref: "#/components/schemas/UtcDateWithoutZone"
+        timezone:
+          type: string
+          description: Event timezone abbreviation; current records use CET, EET, and GMT.
+        online:
+          type: boolean
+        online_location:
+          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/OnlineLocation"
+        venues:
+          type: array
+          nullable: true
+          items:
+            $ref: "#/components/schemas/Venue"
+        section:
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+          description: Legacy records can return a scalar instead of an array.
+        section_id:
+          oneOf:
+            - type: integer
+            - type: array
+              items:
+                type: integer
+          description: Legacy records can return a scalar instead of an array.
+        section_item:
+          type: array
+          items:
+            $ref: "#/components/schemas/SectionTerm"
+        section_parent:
+          type: array
+          items:
+            $ref: "#/components/schemas/SectionParent"
+        section_ancestry:
+          type: array
+          items:
+            $ref: "#/components/schemas/SectionAncestry"
+        url:
+          type: string
+          description: Relative portal URL.
+        url_parts:
+          type: array
+          items:
+            type: string
+        is_fallback_for:
+          type: array
+          items:
+            type: string
+        fallback_urls:
+          type: object
+          additionalProperties:
+            type: string
+        styled_images:
+          type: object
+          additionalProperties:
+            type: string
+    UtcDateWithoutZone:
+      type: string
+      pattern: "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$"
+      description: UTC timestamp whose trailing Z has been omitted by the API.
+      example: "2026-12-13T08:00:00"
+    OnlineLocation:
+      type: object
+      properties:
+        title:
+          type: string
+        url:
+          type: string
+    Venue:
+      type: object
+      properties:
+        name:
+          type: string
+        region:
+          type: string
+        street1:
+          type: string
+        street2:
+          type: string
+        city:
+          type: string
+        postal_code:
+          type: string
+        country:
+          $ref: "#/components/schemas/VenueCountry"
+    VenueCountry:
+      type: object
+      properties:
+        id:
+          oneOf:
+            - type: integer
+            - type: string
+        name:
+          type: string
+        is_eu_country:
+          type: boolean
+        iso:
+          type: string
+    SectionTerm:
+      type: object
+      properties:
+        uuid:
+          type: string
+        name:
+          type: string
+        name_translated:
+          type: string
+        weight:
+          type: number
+        status:
+          type: boolean
+        vocabulary:
+          type: string
+        id:
+          type: string
+    SectionParent:
+      allOf:
+        - $ref: "#/components/schemas/SectionTerm"
+        - type: object
+          properties:
+            parent_of:
+              type: string
+    SectionAncestry:
+      allOf:
+        - $ref: "#/components/schemas/SectionTerm"
+        - type: object
+          properties:
+            ancestor_of:
+              type: string
+    Aggregations:
+      type: object
+      properties:
+        sectionIds:
+          $ref: "#/components/schemas/TermsAggregation"
+        sections:
+          $ref: "#/components/schemas/TermsAggregation"
+      additionalProperties:
+        $ref: "#/components/schemas/TermsAggregation"
+    TermsAggregation:
+      type: object
+      properties:
+        doc_count_error_upper_bound:
+          type: integer
+        sum_other_doc_count:
+          type: integer
+        buckets:
+          type: array
+          items:
+            $ref: "#/components/schemas/TermsBucket"
+    TermsBucket:
+      type: object
+      required: [key, doc_count]
+      properties:
+        key:
+          oneOf:
+            - type: integer
+            - type: string
+        doc_count:
+          type: integer

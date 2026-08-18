@@ -1,0 +1,54 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "civileu"
+version = "0.2.0"
+description = "CivilEU democratic participation opportunity backend"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "beautifulsoup4>=4.13,<5",
+  "Django>=6.0,<6.1",
+  "django-allauth[headless]>=65.13,<66",
+  "django-cors-headers>=4.7,<5",
+  "django-ninja>=1.4,<2",
+  "gunicorn>=23,<24",
+  "httpx>=0.28,<0.29",
+  "nh3>=0.3,<0.4",
+  "pgvector>=0.5,<0.6",
+  "psycopg[binary]>=3.2,<4",
+  "pydantic>=2.12,<3",
+  "pydantic-settings>=2.10,<3",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.4,<9",
+  "pytest-cov>=6.2,<7",
+  "pytest-django>=4.11,<5",
+  "ruff>=0.12,<0.13",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["accounts", "config", "ingestion", "interactions", "llm", "opportunities"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings"
+python_files = ["test_*.py"]
+addopts = "--strict-markers --strict-config -ra"
+markers = [
+  "integration: requires PostgreSQL with PostGIS",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "DJ"]
+ignore = ["DJ008"]
+
+[tool.ruff.lint.per-file-ignores]
+"**/migrations/*.py" = ["E501"]
+"opportunities/models.py" = ["DJ001"]

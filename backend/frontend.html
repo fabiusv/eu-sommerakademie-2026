@@ -1,0 +1,2932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CivilEU — European Youth & Civic Opportunities Explorer</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Leaflet for Map view -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <style>
+    :root {
+      /* Light Clean Aesthetic Color Palette */
+      --bg-canvas: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-surface-raised: #f1f5f9;
+      --bg-surface-subtle: #f8fafc;
+      --bg-surface-elevated: #ffffff;
+
+      --border-subtle: #e2e8f0;
+      --border-default: #cbd5e1;
+      --border-focus: #2563eb;
+
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --text-light: #94a3b8;
+
+      /* European Blue Accent Spectrum */
+      --eu-blue-deep: #0b3b8c;
+      --eu-blue-primary: #1d4ed8;
+      --eu-blue-vibrant: #2563eb;
+      --eu-blue-light: #3b82f6;
+      --eu-blue-tint: #eff6ff;
+      --eu-blue-subtle: #dbeafe;
+
+      --eu-cyan: #0284c7;
+      --eu-cyan-tint: #f0f9ff;
+
+      --eu-gold: #f59e0b;
+      --eu-gold-tint: #fffbeb;
+      --eu-gold-border: #fcd34d;
+
+      --status-success: #10b981;
+      --status-success-bg: #ecfdf5;
+      --status-warning: #f59e0b;
+      --status-warning-bg: #fffbeb;
+      --status-error: #ef4444;
+      --status-error-bg: #fef2f2;
+      --status-info: #0284c7;
+      --status-info-bg: #f0f9ff;
+
+      --radius-xs: 4px;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 22px;
+      --radius-full: 9999px;
+
+      --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+      --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.07), 0 1px 2px -1px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -2px rgba(15, 23, 42, 0.04);
+      --shadow-lg: 0 12px 28px -6px rgba(15, 23, 42, 0.1), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
+      --shadow-glow-blue: 0 8px 24px -4px rgba(37, 99, 235, 0.18);
+
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-canvas);
+      background-image:
+        radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.04) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(14, 165, 233, 0.05) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(245, 158, 11, 0.03) 0px, transparent 50%);
+      background-attachment: fixed;
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Bar */
+    header {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03);
+    }
+
+    .header-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .logo-badge {
+      background: linear-gradient(135deg, #0b3b8c 0%, #1d4ed8 55%, #0284c7 100%);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.02em;
+      padding: 0.4rem 0.75rem;
+      border-radius: var(--radius-md);
+      box-shadow: 0 4px 12px rgba(29, 78, 216, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      position: relative;
+    }
+
+    .logo-badge .stars {
+      color: #fbbf24;
+      font-size: 0.75rem;
+    }
+
+    .brand-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .brand-title .tagline-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--eu-blue-vibrant);
+    }
+
+    .brand-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    .config-group {
+      display: flex;
+      align-items: center;
+      background: var(--bg-surface-raised);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      padding: 0.2rem 0.4rem 0.2rem 0.75rem;
+      font-size: 0.78rem;
+      gap: 0.4rem;
+    }
+
+    .config-group label {
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .config-group input {
+      background: transparent;
+      border: none;
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 500;
+      width: 155px;
+      outline: none;
+    }
+
+    .btn-chip {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      border-radius: var(--radius-full);
+      padding: 0.2rem 0.55rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-chip:hover {
+      background: var(--eu-blue-tint);
+      color: var(--eu-blue-primary);
+      border-color: var(--eu-blue-subtle);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.3rem 0.75rem;
+      border-radius: var(--radius-full);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .status-badge:hover {
+      border-color: var(--border-default);
+      box-shadow: var(--shadow-xs);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--text-light);
+      position: relative;
+    }
+    .status-dot.green {
+      background-color: var(--status-success);
+      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+    }
+    .status-dot.red {
+      background-color: var(--status-error);
+      box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+    }
+    .status-dot.yellow {
+      background-color: var(--status-warning);
+      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+    }
+
+    /* Diagnostics Banner */
+    #corsNoticeBanner {
+      display: none;
+      background: #fef2f2;
+      border-bottom: 1px solid #fecaca;
+      color: #991b1b;
+      padding: 0.75rem 1.5rem;
+      font-size: 0.85rem;
+      animation: fadeIn 0.2s ease-in;
+    }
+    #corsNoticeBanner .banner-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* Nav Bar / Tabs */
+    .nav-bar {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-subtle);
+      position: sticky;
+      top: 57px;
+      z-index: 45;
+    }
+    .nav-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0 1.5rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .nav-inner::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 0.85rem 1rem;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    }
+    .tab-btn:hover {
+      color: var(--eu-blue-primary);
+      background: rgba(37, 99, 235, 0.03);
+    }
+    .tab-btn.active {
+      color: var(--eu-blue-primary);
+      border-bottom-color: var(--eu-blue-primary);
+      background: var(--eu-blue-tint);
+    }
+    .tab-icon {
+      font-size: 1rem;
+    }
+
+    .badge-count {
+      background: var(--eu-blue-tint);
+      color: var(--eu-blue-primary);
+      border: 1px solid var(--eu-blue-subtle);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.1rem 0.45rem;
+      border-radius: var(--radius-full);
+    }
+
+    /* Main Container */
+    main {
+      max-width: 1440px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.5rem;
+      flex: 1;
+    }
+
+    .view-panel { display: none; }
+    .view-panel.active { display: block; animation: fadeIn 0.2s ease-out; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Common Card & Form Styles */
+    .card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s ease;
+    }
+    .card:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-subtitle {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .card-subtitle code {
+      font-family: var(--font-mono);
+      background: var(--bg-surface-raised);
+      padding: 0.15rem 0.4rem;
+      border-radius: var(--radius-xs);
+      color: var(--eu-blue-primary);
+      font-size: 0.78rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+    .grid-sidebar {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+    @media (max-width: 1024px) {
+      .grid-sidebar { grid-template-columns: 1fr; }
+    }
+
+    .form-group { margin-bottom: 1rem; }
+    .form-group label {
+      display: block;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-secondary);
+      margin-bottom: 0.4rem;
+    }
+    .form-control, input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="datetime-local"], select, textarea {
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid var(--border-default);
+      color: var(--text-primary);
+      padding: 0.55rem 0.85rem;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      border-radius: var(--radius-sm);
+      outline: none;
+      transition: all 0.15s ease;
+      box-shadow: var(--shadow-xs);
+    }
+    .form-control:focus, input:focus, select:focus, textarea:focus {
+      border-color: var(--eu-blue-vibrant);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+    .form-control::placeholder, input::placeholder, textarea::placeholder {
+      color: var(--text-light);
+    }
+    textarea.form-control {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      resize: vertical;
+      line-height: 1.45;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      background-color: var(--bg-surface);
+      color: var(--text-primary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      padding: 0.55rem 1.1rem;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-decoration: none;
+      box-shadow: var(--shadow-xs);
+    }
+    .btn:hover {
+      background-color: var(--bg-surface-raised);
+      border-color: var(--text-muted);
+    }
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+      border-color: #1d4ed8;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(29, 78, 216, 0.25);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
+      border-color: #1e40af;
+      box-shadow: 0 4px 12px rgba(29, 78, 216, 0.35);
+      color: #ffffff;
+    }
+
+    .btn-accent {
+      background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
+      border-color: #0284c7;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.25);
+    }
+    .btn-accent:hover {
+      background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
+      color: #ffffff;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      border-color: #d97706;
+      color: #ffffff;
+    }
+    .btn-gold:hover {
+      background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+      color: #ffffff;
+    }
+
+    .btn-danger {
+      background-color: var(--status-error-bg);
+      border-color: #fca5a5;
+      color: #b91c1c;
+    }
+    .btn-danger:hover {
+      background-color: #fee2e2;
+      border-color: #f87171;
+    }
+
+    .btn-sm {
+      padding: 0.3rem 0.65rem;
+      font-size: 0.76rem;
+      border-radius: var(--radius-xs);
+    }
+    .btn-group {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    /* Civic Hero Banner */
+    .civic-hero {
+      background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+      border: 1px solid var(--eu-blue-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+    .civic-hero::after {
+      content: "🇪🇺";
+      position: absolute;
+      right: 1.5rem;
+      bottom: -0.5rem;
+      font-size: 5.5rem;
+      opacity: 0.08;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .hero-content h1 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--eu-blue-deep);
+      margin-bottom: 0.35rem;
+    }
+    .hero-content p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      max-width: 680px;
+    }
+
+    /* Quick Filter Chips bar */
+    .quick-chips-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.25rem;
+      margin-bottom: 1.25rem;
+      scrollbar-width: none;
+    }
+    .quick-chips-row::-webkit-scrollbar { display: none; }
+
+    .filter-chip {
+      background: #ffffff;
+      border: 1px solid var(--border-default);
+      color: var(--text-secondary);
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-full);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      box-shadow: var(--shadow-xs);
+    }
+    .filter-chip:hover {
+      border-color: var(--eu-blue-light);
+      color: var(--eu-blue-primary);
+      background: var(--eu-blue-tint);
+    }
+    .filter-chip.active {
+      background: var(--eu-blue-primary);
+      color: #ffffff;
+      border-color: var(--eu-blue-primary);
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+    }
+
+    /* Main Search Bar */
+    .search-box-wrapper {
+      position: relative;
+      margin-bottom: 1.25rem;
+    }
+    .search-box-input {
+      width: 100%;
+      background: #ffffff;
+      border: 1.5px solid var(--border-default);
+      border-radius: var(--radius-md);
+      padding: 0.8rem 1rem 0.8rem 2.85rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+    .search-box-input:focus {
+      border-color: var(--eu-blue-primary);
+      box-shadow: var(--shadow-glow-blue);
+    }
+    .search-icon-pos {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+    .search-clear-btn {
+      position: absolute;
+      right: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-light);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0.25rem;
+      display: none;
+    }
+    .search-clear-btn:hover { color: var(--text-primary); }
+
+    /* Opportunity Cards Grid */
+    .opportunities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 1.25rem;
+    }
+    .opportunities-list-view {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .opp-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      box-shadow: var(--shadow-xs);
+    }
+    .opp-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--border-default);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .opp-img-wrap {
+      height: 150px;
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .opp-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .opp-card:hover .opp-img-wrap img {
+      transform: scale(1.04);
+    }
+
+    .opp-placeholder-art {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      color: var(--text-muted);
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 50%, #eff6ff 0%, #e0f2fe 100%);
+    }
+    .opp-placeholder-art .art-icon {
+      font-size: 2.5rem;
+    }
+    .opp-placeholder-art .art-text {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--eu-blue-primary);
+    }
+
+    .opp-badge-row {
+      position: absolute;
+      top: 0.65rem;
+      left: 0.65rem;
+      right: 0.65rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.4rem;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .pill {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.22rem 0.55rem;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    }
+
+    /* Kind Badges with Distinct Colors */
+    .pill-kind { background: rgba(29, 78, 216, 0.9); color: #ffffff; }
+    .pill-kind-workshop { background: rgba(79, 70, 229, 0.9); color: #ffffff; }
+    .pill-kind-training { background: rgba(37, 99, 235, 0.9); color: #ffffff; }
+    .pill-kind-dialogue { background: rgba(13, 148, 136, 0.9); color: #ffffff; }
+    .pill-kind-debate { background: rgba(124, 58, 237, 0.9); color: #ffffff; }
+    .pill-kind-talk { background: rgba(2, 132, 199, 0.9); color: #ffffff; }
+    .pill-kind-conference { background: rgba(51, 65, 85, 0.9); color: #ffffff; }
+    .pill-kind-programme { background: rgba(5, 150, 105, 0.9); color: #ffffff; }
+    .pill-kind-volunteering { background: rgba(22, 163, 74, 0.9); color: #ffffff; }
+    .pill-kind-scholarship { background: rgba(234, 88, 12, 0.9); color: #ffffff; }
+    .pill-kind-grant { background: rgba(4, 120, 87, 0.9); color: #ffffff; }
+    .pill-kind-exchange { background: rgba(2, 132, 199, 0.9); color: #ffffff; }
+    .pill-kind-competition { background: rgba(217, 119, 6, 0.9); color: #ffffff; }
+    .pill-kind-cultural { background: rgba(225, 29, 72, 0.9); color: #ffffff; }
+
+    .pill-mode { background: rgba(255, 255, 255, 0.92); color: var(--text-secondary); border: 1px solid rgba(0,0,0,0.06); }
+    .pill-lang { background: rgba(248, 250, 252, 0.92); color: var(--text-primary); border: 1px solid rgba(0,0,0,0.08); font-weight: 800; }
+
+    .opp-body {
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .opp-header-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }
+    .opp-date-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: var(--eu-blue-tint);
+      color: var(--eu-blue-primary);
+      font-weight: 600;
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--radius-xs);
+    }
+
+    .opp-title {
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.38;
+      margin-bottom: 0.45rem;
+      color: var(--text-primary);
+    }
+    .opp-summary {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .opp-meta-list {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      margin-top: auto;
+      padding-top: 0.65rem;
+      border-top: 1px dashed var(--border-subtle);
+    }
+    .opp-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .opp-meta-item strong {
+      color: var(--text-primary);
+    }
+
+    .opp-footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 0.75rem 1.15rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      background: var(--bg-surface-subtle);
+    }
+
+    .btn-bookmark {
+      background: #ffffff;
+      border: 1px solid var(--border-default);
+      color: var(--text-secondary);
+      border-radius: var(--radius-full);
+      width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-size: 0.95rem;
+    }
+    .btn-bookmark:hover {
+      background: var(--eu-gold-tint);
+      border-color: var(--eu-gold-border);
+      color: var(--eu-gold);
+    }
+    .btn-bookmark.saved {
+      background: #fef3c7;
+      border-color: #f59e0b;
+      color: #d97706;
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .modal-backdrop.open { display: flex; animation: fadeIn 0.15s ease-out; }
+
+    .modal-content {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      width: 100%;
+      max-width: 820px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.2);
+      animation: modalScale 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+    }
+    @keyframes modalScale {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-header {
+      padding: 1.25rem 1.75rem;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #ffffff;
+    }
+    .modal-body {
+      padding: 1.75rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .modal-footer {
+      padding: 1rem 1.75rem;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-surface-subtle);
+    }
+
+    /* Console Boxes */
+    .console-box {
+      background: #090e17;
+      border: 1px solid #1e293b;
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: #38bdf8;
+      max-height: 380px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+      line-height: 1.5;
+    }
+    .console-box::-webkit-scrollbar {
+      width: 6px;
+    }
+    .console-box::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 3px;
+    }
+
+    /* Toast */
+    #toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      padding: 0.85rem 1.35rem;
+      background: #ffffff;
+      color: var(--text-primary);
+      border: 1px solid var(--border-default);
+      border-left: 4px solid var(--eu-blue-primary);
+      border-radius: var(--radius-md);
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.15);
+      font-size: 0.875rem;
+      font-weight: 500;
+      display: none;
+      z-index: 120;
+      animation: slideUpToast 0.2s ease-out;
+      max-width: 400px;
+    }
+    @keyframes slideUpToast {
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Map container */
+    #mapContainer {
+      height: 480px;
+      width: 100%;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      z-index: 1;
+    }
+
+    /* Range slider custom styling */
+    .range-slider-wrap {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .range-slider-wrap input[type="range"] {
+      flex: 1;
+      accent-color: var(--eu-blue-primary);
+    }
+    .range-val-badge {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 700;
+      background: var(--eu-blue-tint);
+      color: var(--eu-blue-primary);
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-xs);
+      min-width: 80px;
+      text-align: center;
+    }
+
+    /* User Profile Card */
+    .profile-banner {
+      background: linear-gradient(135deg, #1d4ed8 0%, #0284c7 100%);
+      color: #ffffff;
+      padding: 1.5rem;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .profile-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #ffffff;
+      color: var(--eu-blue-primary);
+      font-size: 1.5rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    /* Tag Chip Editor */
+    .tag-chips-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+    }
+    .tag-chip {
+      background: var(--eu-blue-tint);
+      color: var(--eu-blue-primary);
+      border: 1px solid var(--eu-blue-subtle);
+      border-radius: var(--radius-full);
+      padding: 0.2rem 0.65rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .tag-chip-remove {
+      cursor: pointer;
+      color: var(--eu-blue-light);
+      font-weight: bold;
+    }
+    .tag-chip-remove:hover { color: var(--status-error); }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <header>
+    <div class="header-inner">
+      <a href="#" class="brand" onclick="location.reload(); return false;">
+        <div class="logo-badge">
+          <span>EU</span>
+          <span class="stars">★</span>
+        </div>
+        <div>
+          <div class="brand-title">
+            CivilEU
+            <span class="tagline-dot"></span>
+            <span style="font-weight: 500; font-size: 0.85rem; color: var(--eu-blue-primary);">Explorer</span>
+          </div>
+          <div class="brand-subtitle">European Youth & Civic Opportunities Platform</div>
+        </div>
+      </a>
+
+      <div class="header-controls">
+        <div class="config-group">
+          <label for="apiUrl">API:</label>
+          <input type="text" id="apiUrl" value="http://127.0.0.1:8000" placeholder="Base URL" />
+          <button class="btn-chip" id="btnConnect" title="Connect / Refresh">⚡ Sync</button>
+          <button class="btn-chip" id="btnSet127" title="Use 127.0.0.1">127.0.0.1</button>
+          <button class="btn-chip" id="btnSetLocalhost" title="Use localhost">localhost</button>
+        </div>
+
+        <button class="status-badge" id="btnCheckHealth" title="Ping /health/live and /health/ready">
+          <span class="status-dot yellow" id="healthDot"></span>
+          <span id="healthText" style="font-weight: 600;">Connecting...</span>
+        </button>
+
+        <div id="authStatusPill" class="status-badge" title="Current session state">
+          <span class="status-dot red" id="authDot"></span>
+          <span id="authStatusText">Anonymous</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Diagnostic Alert Banner -->
+  <div id="corsNoticeBanner">
+    <div class="banner-inner">
+      <div>
+        <strong>⚠️ Cannot reach backend at <span id="currentApiUrlDisplay"></span></strong>
+        <div style="font-size:0.8rem; margin-top:0.2rem; color:#7f1d1d;">
+          Status: <span id="diagnosticErrorText"></span> — Make sure Django is running (`python manage.py runserver 8000`).
+        </div>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-sm btn-primary" id="btnBannerRetry">Retry Connection</button>
+        <button class="btn btn-sm" id="btnBannerDismiss">Dismiss</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Tabs -->
+  <nav class="nav-bar">
+    <div class="nav-inner">
+      <button class="tab-btn active" data-tab="catalog">
+        <span class="tab-icon">🔍</span>
+        <span>Opportunities Catalog</span>
+      </button>
+      <button class="tab-btn" data-tab="map">
+        <span class="tab-icon">🗺️</span>
+        <span>Interactive Map</span>
+      </button>
+      <button class="tab-btn" data-tab="bookmarks">
+        <span class="tab-icon">⭐</span>
+        <span>Saved Bookmarks</span>
+        <span class="badge-count" id="bookmarkCount">0</span>
+      </button>
+      <button class="tab-btn" data-tab="preferences">
+        <span class="tab-icon">⚙️</span>
+        <span>Civic Preferences</span>
+      </button>
+      <button class="tab-btn" data-tab="auth">
+        <span class="tab-icon">👤</span>
+        <span>Account & Session</span>
+      </button>
+      <button class="tab-btn" data-tab="interactions">
+        <span class="tab-icon">📊</span>
+        <span>Telemetry Stream</span>
+      </button>
+      <button class="tab-btn" data-tab="inspector">
+        <span class="tab-icon">⚡</span>
+        <span>API Inspector</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content Panels -->
+  <main>
+
+    <!-- TAB 1: OPPORTUNITY CATALOG -->
+    <section id="tab-catalog" class="view-panel active">
+
+      <!-- Civic Hero Banner -->
+      <div class="civic-hero">
+        <div class="hero-content">
+          <h1>Discover Civic & Youth Opportunities Across Europe</h1>
+          <p>Find youth dialogues, exchange programmes, trainings, civic workshops, scholarships, and volunteer initiatives powered by the CivilEU catalog.</p>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-sm btn-primary" id="btnHeroRefresh">🔄 Refresh Feed</button>
+          <button class="btn btn-sm btn-accent" id="btnHeroSwitchMap">🗺️ View on Map</button>
+        </div>
+      </div>
+
+      <!-- Quick Topic & Temporal Chips -->
+      <div class="quick-chips-row">
+        <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-right:0.25rem;">Filter by:</span>
+        <button class="filter-chip active" data-chip-type="all">All Opportunities</button>
+        <button class="filter-chip" data-chip-type="kind" data-chip-val="DIALOGUE">💬 Dialogues</button>
+        <button class="filter-chip" data-chip-type="kind" data-chip-val="WORKSHOP">🛠️ Workshops</button>
+        <button class="filter-chip" data-chip-type="kind" data-chip-val="TRAINING">🎓 Trainings</button>
+        <button class="filter-chip" data-chip-type="kind" data-chip-val="VOLUNTEERING">🤝 Volunteering</button>
+        <button class="filter-chip" data-chip-type="kind" data-chip-val="PROGRAMME">🚀 Programmes</button>
+        <button class="filter-chip" data-chip-type="kind" data-chip-val="SCHOLARSHIP">📜 Scholarships</button>
+        <button class="filter-chip" data-chip-type="kind" data-chip-val="GRANT">💶 Grants</button>
+        <button class="filter-chip" data-chip-type="kind" data-chip-val="EXCHANGE">🌍 Exchanges</button>
+        <button class="filter-chip" data-chip-type="mode" data-chip-val="ONLINE">🌐 Online Only</button>
+        <button class="filter-chip" data-chip-type="temporal" data-chip-val="upcoming">⏳ Upcoming</button>
+        <button class="filter-chip" data-chip-type="temporal" data-chip-val="ongoing">⚡ Ongoing Now</button>
+      </div>
+
+      <!-- Main Search Bar -->
+      <div class="search-box-wrapper">
+        <span class="search-icon-pos">🔍</span>
+        <input type="text" id="filterQuery" class="search-box-input" placeholder="Search by keyword, topic, organization, or city (e.g. 'democracy', 'Erasmus', 'Berlin', 'climate')..." />
+        <button type="button" id="btnClearSearch" class="search-clear-btn" title="Clear search">✕</button>
+      </div>
+
+      <div class="grid-sidebar">
+
+        <!-- Filter Controls Sidebar -->
+        <aside class="card">
+          <div class="card-title">
+            <span>Filter Parameters</span>
+            <button type="button" class="btn btn-sm" id="btnResetCatalogFilters" style="padding:0.2rem 0.5rem; font-size:0.7rem;">Reset All</button>
+          </div>
+          <div class="card-subtitle">Endpoint: <code>/v1/opportunities</code></div>
+
+          <form id="catalogFilterForm">
+
+            <div class="form-group">
+              <label for="filterTemporal">Temporal Status</label>
+              <select id="filterTemporal" class="form-control">
+                <option value="">Active (Ongoing + Upcoming)</option>
+                <option value="ongoing">Ongoing</option>
+                <option value="upcoming">Upcoming</option>
+                <option value="ended">Ended</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="filterKind">Opportunity Kind</label>
+              <select id="filterKind" class="form-control">
+                <option value="">All Kinds</option>
+                <option value="DIALOGUE">Dialogue</option>
+                <option value="DEBATE">Debate</option>
+                <option value="TALK">Talk</option>
+                <option value="WORKSHOP">Workshop</option>
+                <option value="TRAINING">Training</option>
+                <option value="MEETUP">Meetup</option>
+                <option value="CONFERENCE">Conference</option>
+                <option value="INFO_SESSION">Information Session</option>
+                <option value="CULTURAL_EVENT">Cultural Event</option>
+                <option value="COMPETITION">Competition</option>
+                <option value="CEREMONY">Ceremony</option>
+                <option value="RECRUITMENT">Recruitment</option>
+                <option value="PROGRAMME">Programme</option>
+                <option value="VOLUNTEERING">Volunteering</option>
+                <option value="SCHOLARSHIP">Scholarship</option>
+                <option value="GRANT">Grant</option>
+                <option value="EXCHANGE">Exchange</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="filterParticipationMode">Participation Mode</label>
+              <select id="filterParticipationMode" class="form-control">
+                <option value="">All Modes</option>
+                <option value="IN_PERSON">In Person</option>
+                <option value="ONLINE">Online</option>
+                <option value="HYBRID">Hybrid</option>
+                <option value="UNSPECIFIED">Unspecified</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label style="display:flex; align-items:center; gap:0.55rem; cursor:pointer;">
+                <input type="checkbox" id="filterHasDate" />
+                <span>Only opportunities with a date</span>
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label for="filterActionKind">Action Kind</label>
+              <select id="filterActionKind" class="form-control">
+                <option value="">All Action Types</option>
+                <option value="REGISTER">Register</option>
+                <option value="APPLY">Apply</option>
+                <option value="SIGN">Sign</option>
+                <option value="RESPOND">Respond</option>
+                <option value="JOIN">Join</option>
+                <option value="LEARN_MORE">Learn more</option>
+              </select>
+            </div>
+
+            <div class="grid-2" style="gap:0.75rem;">
+              <div class="form-group">
+                <label for="filterCountry">Country Code</label>
+                <input type="text" id="filterCountry" placeholder="e.g. DE, BE, FR" maxlength="2" />
+              </div>
+              <div class="form-group">
+                <label for="filterCity">City</label>
+                <input type="text" id="filterCity" placeholder="e.g. Brussels, Berlin" />
+              </div>
+            </div>
+
+            <div class="grid-2" style="gap:0.75rem;">
+              <div class="form-group">
+                <label for="filterLanguage">Language</label>
+                <input type="text" id="filterLanguage" placeholder="e.g. en, de, fr" />
+              </div>
+              <div class="form-group">
+                <label for="filterSource">Source Adapter</label>
+                <input type="text" id="filterSource" placeholder="e.g. eu_youth_events.v1" />
+              </div>
+            </div>
+
+            <!-- Proximity Geo Box -->
+            <div style="background:var(--bg-surface-raised); padding:0.85rem; border-radius:var(--radius-md); border:1px solid var(--border-subtle); margin-bottom:1rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+                <label style="margin:0; font-size:0.74rem; font-weight:700;">📍 Proximity Radius Search</label>
+                <button type="button" class="btn btn-sm btn-accent" id="btnUseBrowserLocation" title="Get GPS from browser">📍 My GPS</button>
+              </div>
+              <div class="grid-2" style="gap:0.5rem; margin-bottom:0.5rem;">
+                <input type="number" step="any" id="filterLat" placeholder="Latitude (-90..90)" />
+                <input type="number" step="any" id="filterLng" placeholder="Longitude (-180..180)" />
+              </div>
+              <div>
+                <label style="font-size:0.7rem; color:var(--text-muted); margin-bottom:0.2rem; display:block;">Radius in meters (1..500,000):</label>
+                <input type="number" id="filterRadius" placeholder="e.g. 50000 (50 km)" min="1" max="500000" />
+              </div>
+            </div>
+
+            <div class="grid-2" style="gap:0.75rem;">
+              <div class="form-group">
+                <label for="filterStartsAfter">Starts After</label>
+                <input type="datetime-local" id="filterStartsAfter" />
+              </div>
+              <div class="form-group">
+                <label for="filterStartsBefore">Starts Before</label>
+                <input type="datetime-local" id="filterStartsBefore" />
+              </div>
+            </div>
+
+            <div class="grid-2" style="gap:0.75rem;">
+              <div class="form-group">
+                <label for="filterLimit">Limit (1-100)</label>
+                <input type="number" id="filterLimit" value="20" min="1" max="100" />
+              </div>
+              <div class="form-group">
+                <label for="filterOffset">Offset</label>
+                <input type="number" id="filterOffset" value="0" min="0" />
+              </div>
+            </div>
+
+            <div style="margin-top:0.75rem;">
+              <button type="submit" class="btn btn-primary" style="width:100%;">⚡ Apply Filters</button>
+            </div>
+          </form>
+        </aside>
+
+        <!-- Opportunity Cards Stream -->
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.75rem;">
+            <div>
+              <span id="catalogCountDisplay" style="font-weight:800; font-size:1.15rem; color:var(--text-primary);">0 opportunities found</span>
+              <span id="catalogPageInfo" style="color:var(--text-muted); font-size:0.85rem; margin-left:0.4rem;"></span>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <div class="btn-group">
+                <button class="btn btn-sm" id="btnCatalogPrev">← Prev</button>
+                <button class="btn btn-sm" id="btnCatalogNext">Next →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active filters badge bar -->
+          <div id="activeFiltersContainer" style="display:none; margin-bottom:1rem;" class="tag-chips-container">
+            <!-- Injected by JS -->
+          </div>
+
+          <!-- Opportunity Cards Grid -->
+          <div id="catalogList" class="opportunities-grid">
+            <!-- Injected via JavaScript -->
+          </div>
+
+          <!-- Empty State -->
+          <div id="catalogEmpty" style="display:none; text-align:center; padding:4rem 1.5rem; background:#ffffff; border-radius:var(--radius-lg); border:1px dashed var(--border-default); box-shadow:var(--shadow-xs);">
+            <div style="font-size:3rem; margin-bottom:0.75rem;">🔍</div>
+            <h3 style="font-size:1.25rem; font-weight:800; color:var(--text-primary);">No opportunities found</h3>
+            <p style="color:var(--text-secondary); font-size:0.9rem; max-width:460px; margin:0.5rem auto 1.5rem auto;">Try broadening your query keywords, removing specific country filters, or resetting temporal criteria.</p>
+            <button type="button" class="btn btn-primary" onclick="document.getElementById('btnResetCatalogFilters').click()">Reset Filters</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: INTERACTIVE MAP VIEW -->
+    <section id="tab-map" class="view-panel">
+      <div class="card" style="margin-bottom:1.5rem;">
+        <div class="card-title">
+          <span>🗺️ Pan-European Opportunities Map</span>
+          <button class="btn btn-sm btn-primary" id="btnRefreshMap">Center on Europe</button>
+        </div>
+        <div class="card-subtitle">Visualizing geolocated youth events, workshops, dialogues, and initiatives across the EU</div>
+
+        <div id="mapContainer"></div>
+        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; color:var(--text-muted); flex-wrap:wrap; gap:0.5rem;">
+          <div>Showing geolocated opportunities matching current catalog filters. Click any pin to view details.</div>
+          <div style="display:flex; gap:1rem;">
+            <span>📍 Blue: In Person</span>
+            <span>🌐 Green: Hybrid / Online</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: BOOKMARKS -->
+    <section id="tab-bookmarks" class="view-panel">
+      <div class="card" style="margin-bottom:1.5rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+          <div>
+            <h2 style="font-size:1.3rem; font-weight:800; color:var(--eu-blue-deep);">Saved Bookmarks</h2>
+            <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:0.2rem;">Endpoint: <code>/v1/bookmarks</code> (Requires active authenticated session)</p>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-primary" id="btnRefreshBookmarks">🔄 Sync Bookmarks</button>
+            <button class="btn" id="btnExportBookmarks" title="Export as JSON">📥 Export JSON</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="bookmarksList" class="opportunities-grid">
+        <!-- Bookmark cards rendered here -->
+      </div>
+
+      <div id="bookmarksEmpty" style="display:none; text-align:center; padding:4rem 1.5rem; background:#ffffff; border-radius:var(--radius-lg); border:1px dashed var(--border-default);">
+        <div style="font-size:3rem; margin-bottom:0.75rem;">⭐</div>
+        <h3 style="font-size:1.2rem; font-weight:800;">No bookmarks saved yet</h3>
+        <p style="color:var(--text-secondary); font-size:0.9rem; max-width:440px; margin:0.5rem auto 1.5rem auto;">
+          Explore the catalog and tap the star icon on any opportunity card to save it for quick reference.
+        </p>
+        <button class="btn btn-primary" onclick="document.querySelector('[data-tab=catalog]').click()">Browse Opportunities</button>
+      </div>
+    </section>
+
+    <!-- TAB 4: USER PREFERENCES -->
+    <section id="tab-preferences" class="view-panel">
+      <div class="card" style="max-width: 840px; margin: 0 auto; overflow:hidden; padding:0;">
+        <div class="profile-banner">
+          <div class="profile-avatar" id="prefAvatarLetter">EU</div>
+          <div>
+            <h2 style="font-size:1.3rem; font-weight:800; color:#ffffff;">Civic Preferences & Discovery Profile</h2>
+            <p style="font-size:0.85rem; opacity:0.9; margin-top:0.15rem;">Customise your localized time zone, radius preferences, participation modes, and civic interests.</p>
+          </div>
+        </div>
+
+        <div style="padding:1.75rem;">
+          <form id="preferencesForm">
+
+            <div class="grid-2" style="margin-bottom:1.25rem;">
+              <div class="form-group">
+                <label for="prefTimezone">Timezone (IANA)</label>
+                <div style="display:flex; gap:0.5rem;">
+                  <input type="text" id="prefTimezone" placeholder="e.g. Europe/Berlin, UTC" />
+                  <button type="button" class="btn btn-sm" id="btnPrefAutoTz" title="Set to browser timezone">Auto</button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="prefRadius">Travel Radius (1 - 500,000 meters)</label>
+                <div class="range-slider-wrap">
+                  <input type="range" id="prefRadiusSlider" min="1000" max="500000" step="5000" value="50000" />
+                  <input type="number" id="prefRadius" min="1" max="500000" placeholder="50000" style="width:110px;" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Home Anchor Location -->
+            <div style="background:var(--bg-surface-raised); padding:1rem; border-radius:var(--radius-md); border:1px solid var(--border-subtle); margin-bottom:1.25rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; flex-wrap:wrap; gap:0.5rem;">
+                <label style="margin:0; font-size:0.78rem; font-weight:700;">🏠 Anchor Geographic Coordinates</label>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-accent" id="btnPrefGps">📍 Detect Device GPS</button>
+                  <button type="button" class="btn btn-sm btn-danger" id="btnClearLocation">Clear Location</button>
+                </div>
+              </div>
+              <div class="grid-2">
+                <div>
+                  <label style="font-size:0.7rem; color:var(--text-muted);">Latitude (-90..90):</label>
+                  <input type="number" step="any" id="prefLat" placeholder="e.g. 50.8503" />
+                </div>
+                <div>
+                  <label style="font-size:0.7rem; color:var(--text-muted);">Longitude (-180..180):</label>
+                  <input type="number" step="any" id="prefLng" placeholder="e.g. 4.3517" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Participation Modes -->
+            <div class="form-group" style="margin-bottom:1.25rem;">
+              <label>Preferred Participation Modes</label>
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:0.75rem; margin-top:0.4rem;">
+                <label style="display:flex; align-items:center; gap:0.6rem; background:var(--bg-surface-raised); padding:0.75rem; border-radius:var(--radius-sm); border:1px solid var(--border-subtle); cursor:pointer;">
+                  <input type="checkbox" name="prefMode" value="IN_PERSON" style="width:auto;" />
+                  <span style="font-size:0.85rem; font-weight:600;">In Person</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:0.6rem; background:var(--bg-surface-raised); padding:0.75rem; border-radius:var(--radius-sm); border:1px solid var(--border-subtle); cursor:pointer;">
+                  <input type="checkbox" name="prefMode" value="ONLINE" style="width:auto;" />
+                  <span style="font-size:0.85rem; font-weight:600;">Online</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:0.6rem; background:var(--bg-surface-raised); padding:0.75rem; border-radius:var(--radius-sm); border:1px solid var(--border-subtle); cursor:pointer;">
+                  <input type="checkbox" name="prefMode" value="HYBRID" style="width:auto;" />
+                  <span style="font-size:0.85rem; font-weight:600;">Hybrid</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:0.6rem; background:var(--bg-surface-raised); padding:0.75rem; border-radius:var(--radius-sm); border:1px solid var(--border-subtle); cursor:pointer;">
+                  <input type="checkbox" name="prefMode" value="UNSPECIFIED" style="width:auto;" />
+                  <span style="font-size:0.85rem; font-weight:600;">Unspecified</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Interest Tags -->
+            <div class="form-group">
+              <label for="prefInterestsInput">Interest Codes (e.g. youth, climate, democracy, technology, culture)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="prefInterestsInput" placeholder="Type a tag and press Enter or click Add" />
+                <button type="button" class="btn btn-sm btn-primary" id="btnAddInterestTag">Add Tag</button>
+              </div>
+              <input type="hidden" id="prefInterests" />
+              <div id="prefInterestsTagsContainer" class="tag-chips-container">
+                <!-- Tag chips injected here -->
+              </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1.5rem; padding-top:1rem; border-top:1px solid var(--border-subtle);">
+              <button type="button" class="btn" id="btnFetchPreferences">Fetch from Server (GET)</button>
+              <button type="submit" class="btn btn-primary">💾 Save Preferences (PATCH)</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: AUTH & SESSIONS -->
+    <section id="tab-auth" class="view-panel">
+      <div class="grid-2" style="max-width:960px; margin: 0 auto;">
+
+        <!-- Session State Card -->
+        <div class="card">
+          <div class="card-title">Session State</div>
+          <div class="card-subtitle">Endpoints: <code>/_allauth/browser/v1/auth/session</code></div>
+
+          <div style="margin-bottom: 1.25rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; background:var(--bg-surface-raised); padding:0.75rem 1rem; border-radius:var(--radius-md);">
+              <span style="font-weight:600; font-size:0.85rem;">Authentication Status:</span>
+              <span class="status-badge" id="sessionStatusBadge">
+                <span class="status-dot red" id="sessionDot"></span>
+                <span id="sessionStatusLabel">Not Logged In</span>
+              </span>
+            </div>
+
+            <div id="sessionUserInfo" style="background:#ffffff; border:1px solid var(--border-subtle); padding:1rem; border-radius:var(--radius-md); font-size:0.85rem; display:none; box-shadow:var(--shadow-xs);">
+              <div style="margin-bottom:0.4rem;"><strong>Email:</strong> <span id="sessionUserEmail">-</span></div>
+              <div><strong>User ID:</strong> <span id="sessionUserId" style="font-family:var(--font-mono); color:var(--eu-blue-primary);">-</span></div>
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button class="btn" id="btnRefreshSession">🔄 Check Session</button>
+            <button class="btn btn-danger" id="btnLogoutSession">🚪 Logout</button>
+          </div>
+        </div>
+
+        <!-- Login / Signup Form Card -->
+        <div class="card">
+          <div class="card-title" id="authFormTitle">Sign In to CivilEU</div>
+          <div class="card-subtitle">AllAuth Headless Browser Authentication</div>
+
+          <div style="display:flex; gap:0.5rem; margin-bottom:1.25rem; background:var(--bg-surface-raised); padding:0.25rem; border-radius:var(--radius-sm);">
+            <button type="button" class="btn btn-sm btn-primary" id="btnSwitchLogin" style="flex:1;">Sign In</button>
+            <button type="button" class="btn btn-sm" id="btnSwitchSignup" style="flex:1;">Create Account</button>
+          </div>
+
+          <!-- Sign In Form -->
+          <form id="loginForm">
+            <div class="form-group">
+              <label for="loginEmail">Email Address</label>
+              <input type="email" id="loginEmail" placeholder="you@example.eu" required />
+            </div>
+            <div class="form-group">
+              <label for="loginPassword">Password</label>
+              <input type="password" id="loginPassword" placeholder="••••••••" required />
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%; margin-top:0.5rem;">Sign In to Account</button>
+          </form>
+
+          <!-- Sign Up Form -->
+          <form id="signupForm" style="display:none;">
+            <div class="form-group">
+              <label for="signupEmail">Email Address</label>
+              <input type="email" id="signupEmail" placeholder="you@example.eu" required />
+            </div>
+            <div class="form-group">
+              <label for="signupPassword1">Password</label>
+              <input type="password" id="signupPassword1" placeholder="••••••••" required />
+            </div>
+            <div class="form-group">
+              <label for="signupPassword2">Confirm Password</label>
+              <input type="password" id="signupPassword2" placeholder="••••••••" required />
+            </div>
+            <button type="submit" class="btn btn-accent" style="width:100%; margin-top:0.5rem;">Create New Account</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 6: INTERACTIONS / TELEMETRY -->
+    <section id="tab-interactions" class="view-panel">
+      <div class="grid-2">
+        <!-- Manual Interaction Dispatcher -->
+        <div class="card">
+          <div class="card-title">Send Telemetry Interaction</div>
+          <div class="card-subtitle">Endpoint: <code>/v1/interactions</code> (POST)</div>
+
+          <form id="interactionForm">
+            <div class="form-group">
+              <label for="eventOppId">Opportunity ID</label>
+              <input type="number" id="eventOppId" placeholder="e.g. 1" required />
+            </div>
+
+            <div class="form-group">
+              <label for="eventType">Interaction Type</label>
+              <select id="eventType" class="form-control">
+                <option value="IMPRESSION">IMPRESSION</option>
+                <option value="OPEN">OPEN</option>
+                <option value="EXTERNAL_ACTION_CLICK">EXTERNAL_ACTION_CLICK</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="eventContext">Context Payload (JSON, max 4096 bytes)</label>
+              <textarea id="eventContext" rows="4" class="form-control">{"position": 1, "source": "civil_explorer_v2"}</textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width:100%;">🚀 Dispatch Telemetry Event</button>
+          </form>
+        </div>
+
+        <!-- Telemetry Log -->
+        <div class="card">
+          <div class="card-title">
+            <span>Live Telemetry Activity Stream</span>
+            <button class="btn btn-sm" id="btnClearInteractionLog">Clear</button>
+          </div>
+          <div class="card-subtitle">Real-time telemetry events recorded across this session</div>
+          <div id="interactionLogConsole" class="console-box" style="height:320px;">No interaction events dispatched yet.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 7: API INSPECTOR -->
+    <section id="tab-inspector" class="view-panel">
+      <div class="card">
+        <div class="card-title">
+          <span>HTTP Request & Response Inspector</span>
+          <div class="btn-group">
+            <button class="btn btn-sm" id="btnCopyInspector">📋 Copy Log</button>
+            <button class="btn btn-sm" id="btnClearInspector">Clear</button>
+          </div>
+        </div>
+        <div class="card-subtitle">Live request tracing, timing, headers, CSRF tokens, and payloads for all backend communication</div>
+        <div id="inspectorLog" class="console-box" style="height:500px;">Waiting for API activity...</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- OPPORTUNITY DETAIL MODAL -->
+  <div id="opportunityModal" class="modal-backdrop">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div style="display:flex; align-items:center; gap:0.6rem;">
+          <span id="modalKindPill" class="pill pill-kind">DIALOGUE</span>
+          <h3 id="modalTitle" style="font-size:1.15rem; font-weight:800; color:var(--text-primary);">Opportunity Details</h3>
+        </div>
+        <button class="btn btn-sm" id="btnCloseModal" style="border-radius:50%; width:32px; height:32px; padding:0;">✕</button>
+      </div>
+
+      <div class="modal-body" id="modalBody">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn" id="modalBookmarkBtn">⭐ Bookmark</button>
+        <div class="btn-group">
+          <button class="btn" id="modalShareBtn">🔗 Copy Link</button>
+          <a id="modalActionLink" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Take Action ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Element -->
+  <div id="toast"></div>
+
+  <!-- Main JavaScript Logic -->
+  <script>
+    // State management
+    const state = {
+      user: null,
+      bookmarks: new Set(),
+      catalog: {
+        items: [],
+        count: 0,
+        limit: 20,
+        offset: 0
+      },
+      selectedOpportunity: null,
+      map: null,
+      mapMarkers: [],
+      interests: []
+    };
+
+    // DOM Elements Cache
+    const el = {
+      apiUrl: document.getElementById('apiUrl'),
+      btnConnect: document.getElementById('btnConnect'),
+      btnSet127: document.getElementById('btnSet127'),
+      btnSetLocalhost: document.getElementById('btnSetLocalhost'),
+      healthDot: document.getElementById('healthDot'),
+      healthText: document.getElementById('healthText'),
+      btnCheckHealth: document.getElementById('btnCheckHealth'),
+      authDot: document.getElementById('authDot'),
+      authStatusText: document.getElementById('authStatusText'),
+      tabs: document.querySelectorAll('.tab-btn'),
+      panels: document.querySelectorAll('.view-panel'),
+      toast: document.getElementById('toast'),
+
+      // CORS Banner
+      corsNoticeBanner: document.getElementById('corsNoticeBanner'),
+      currentApiUrlDisplay: document.getElementById('currentApiUrlDisplay'),
+      diagnosticErrorText: document.getElementById('diagnosticErrorText'),
+      btnBannerRetry: document.getElementById('btnBannerRetry'),
+      btnBannerDismiss: document.getElementById('btnBannerDismiss'),
+
+      // Catalog
+      filterQuery: document.getElementById('filterQuery'),
+      btnClearSearch: document.getElementById('btnClearSearch'),
+      catalogFilterForm: document.getElementById('catalogFilterForm'),
+      catalogList: document.getElementById('catalogList'),
+      catalogEmpty: document.getElementById('catalogEmpty'),
+      catalogCountDisplay: document.getElementById('catalogCountDisplay'),
+      catalogPageInfo: document.getElementById('catalogPageInfo'),
+      activeFiltersContainer: document.getElementById('activeFiltersContainer'),
+      btnCatalogPrev: document.getElementById('btnCatalogPrev'),
+      btnCatalogNext: document.getElementById('btnCatalogNext'),
+      btnResetCatalogFilters: document.getElementById('btnResetCatalogFilters'),
+      btnUseBrowserLocation: document.getElementById('btnUseBrowserLocation'),
+      btnHeroRefresh: document.getElementById('btnHeroRefresh'),
+      btnHeroSwitchMap: document.getElementById('btnHeroSwitchMap'),
+
+      // Map
+      btnRefreshMap: document.getElementById('btnRefreshMap'),
+
+      // Auth
+      sessionDot: document.getElementById('sessionDot'),
+      sessionStatusLabel: document.getElementById('sessionStatusLabel'),
+      sessionUserInfo: document.getElementById('sessionUserInfo'),
+      sessionUserEmail: document.getElementById('sessionUserEmail'),
+      sessionUserId: document.getElementById('sessionUserId'),
+      btnRefreshSession: document.getElementById('btnRefreshSession'),
+      btnLogoutSession: document.getElementById('btnLogoutSession'),
+      loginForm: document.getElementById('loginForm'),
+      signupForm: document.getElementById('signupForm'),
+      btnSwitchLogin: document.getElementById('btnSwitchLogin'),
+      btnSwitchSignup: document.getElementById('btnSwitchSignup'),
+      authFormTitle: document.getElementById('authFormTitle'),
+
+      // Preferences
+      preferencesForm: document.getElementById('preferencesForm'),
+      prefAvatarLetter: document.getElementById('prefAvatarLetter'),
+      prefTimezone: document.getElementById('prefTimezone'),
+      prefRadius: document.getElementById('prefRadius'),
+      prefRadiusSlider: document.getElementById('prefRadiusSlider'),
+      prefLat: document.getElementById('prefLat'),
+      prefLng: document.getElementById('prefLng'),
+      prefInterests: document.getElementById('prefInterests'),
+      prefInterestsInput: document.getElementById('prefInterestsInput'),
+      prefInterestsTagsContainer: document.getElementById('prefInterestsTagsContainer'),
+      btnAddInterestTag: document.getElementById('btnAddInterestTag'),
+      btnPrefAutoTz: document.getElementById('btnPrefAutoTz'),
+      btnPrefGps: document.getElementById('btnPrefGps'),
+      btnClearLocation: document.getElementById('btnClearLocation'),
+      btnFetchPreferences: document.getElementById('btnFetchPreferences'),
+
+      // Bookmarks
+      bookmarksList: document.getElementById('bookmarksList'),
+      bookmarksEmpty: document.getElementById('bookmarksEmpty'),
+      bookmarkCount: document.getElementById('bookmarkCount'),
+      btnRefreshBookmarks: document.getElementById('btnRefreshBookmarks'),
+      btnExportBookmarks: document.getElementById('btnExportBookmarks'),
+
+      // Interactions
+      interactionForm: document.getElementById('interactionForm'),
+      eventOppId: document.getElementById('eventOppId'),
+      eventType: document.getElementById('eventType'),
+      eventContext: document.getElementById('eventContext'),
+      interactionLogConsole: document.getElementById('interactionLogConsole'),
+      btnClearInteractionLog: document.getElementById('btnClearInteractionLog'),
+
+      // Inspector
+      inspectorLog: document.getElementById('inspectorLog'),
+      btnClearInspector: document.getElementById('btnClearInspector'),
+      btnCopyInspector: document.getElementById('btnCopyInspector'),
+
+      // Modal
+      modal: document.getElementById('opportunityModal'),
+      modalTitle: document.getElementById('modalTitle'),
+      modalKindPill: document.getElementById('modalKindPill'),
+      modalBody: document.getElementById('modalBody'),
+      modalBookmarkBtn: document.getElementById('modalBookmarkBtn'),
+      modalActionLink: document.getElementById('modalActionLink'),
+      modalShareBtn: document.getElementById('modalShareBtn'),
+      btnCloseModal: document.getElementById('btnCloseModal')
+    };
+
+    // Helper: Cookie extractor for CSRF
+    function getCookie(name) {
+      const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return match ? decodeURIComponent(match[2]) : null;
+    }
+
+    // Helper: Toast alert
+    function showToast(message, type = 'info') {
+      el.toast.textContent = message;
+      el.toast.style.borderLeftColor = type === 'error' ? 'var(--status-error)' : (type === 'success' ? 'var(--status-success)' : 'var(--eu-blue-primary)');
+      el.toast.style.display = 'block';
+      setTimeout(() => {
+        el.toast.style.display = 'none';
+      }, 3500);
+    }
+
+    // Helper: Logger
+    function logInspector(entry) {
+      const timestamp = new Date().toISOString().substring(11, 23);
+      const statusColor = entry.status >= 200 && entry.status < 300 ? '✅' : (entry.status === 0 ? '❌' : '⚠️');
+      const text = `[${timestamp}] ${statusColor} ${entry.method} ${entry.url}\n` +
+        `Status: ${entry.status || 'FAILED'} (${entry.durationMs}ms)\n` +
+        (entry.requestBody ? `Request: ${JSON.stringify(entry.requestBody, null, 2)}\n` : '') +
+        (entry.responseBody ? `Response: ${JSON.stringify(entry.responseBody, null, 2)}\n` : '') +
+        `----------------------------------------------------------------------\n`;
+
+      if (el.inspectorLog.textContent.startsWith('Waiting')) {
+        el.inspectorLog.textContent = '';
+      }
+      el.inspectorLog.textContent = text + el.inspectorLog.textContent;
+    }
+
+    function logInteraction(entry) {
+      const timestamp = new Date().toLocaleTimeString();
+      const text = `[${timestamp}] ${entry}\n`;
+      if (el.interactionLogConsole.textContent.startsWith('No interaction')) {
+        el.interactionLogConsole.textContent = '';
+      }
+      el.interactionLogConsole.textContent = text + el.interactionLogConsole.textContent;
+    }
+
+    // Core HTTP Client
+    async function apiRequest(endpoint, options = {}) {
+      const base = el.apiUrl.value.trim().replace(/\/+$/, '');
+      const url = endpoint.startsWith('http') ? endpoint : `${base}${endpoint.startsWith('/') ? '' : '/'}${endpoint}`;
+
+      const method = options.method || 'GET';
+      const headers = {
+        'Accept': 'application/json',
+        ...(options.headers || {})
+      };
+
+      const csrfToken = getCookie('csrftoken');
+      if (csrfToken && !headers['X-CSRFToken'] && method !== 'GET') {
+        headers['X-CSRFToken'] = csrfToken;
+      }
+
+      if (options.body && typeof options.body === 'object' && !(options.body instanceof FormData)) {
+        headers['Content-Type'] = 'application/json';
+        options.body = JSON.stringify(options.body);
+      }
+
+      const start = performance.now();
+      let response;
+      let responseBody = null;
+      let status = 0;
+
+      try {
+        const fetchOptions = {
+          ...options,
+          method,
+          headers
+        };
+
+        // Include session credentials
+        if (window.location.protocol.startsWith('http')) {
+          fetchOptions.credentials = 'include';
+        }
+
+        response = await fetch(url, fetchOptions);
+        status = response.status;
+        const text = await response.text();
+        try {
+          responseBody = text ? JSON.parse(text) : null;
+        } catch {
+          responseBody = text;
+        }
+        hideCorsNotice();
+      } catch (err) {
+        status = 0;
+        responseBody = { error: err.message };
+        showCorsNotice(err.message);
+        throw err;
+      } finally {
+        const durationMs = Math.round(performance.now() - start);
+        logInspector({
+          method,
+          url,
+          status,
+          durationMs,
+          requestBody: options.body ? (typeof options.body === 'string' ? JSON.parse(options.body || '{}') : options.body) : null,
+          responseBody
+        });
+      }
+
+      if (!response.ok) {
+        let msg = `HTTP ${status}`;
+        if (responseBody && responseBody.detail) {
+          msg = typeof responseBody.detail === 'string' ? responseBody.detail : JSON.stringify(responseBody.detail);
+        } else if (responseBody && responseBody.message) {
+          msg = responseBody.message;
+        } else if (responseBody && typeof responseBody === 'object') {
+          msg = JSON.stringify(responseBody);
+        }
+        throw new Error(msg);
+      }
+
+      return { status, data: responseBody };
+    }
+
+    function showCorsNotice(errMessage) {
+      const base = el.apiUrl.value.trim();
+      el.currentApiUrlDisplay.textContent = base;
+      el.diagnosticErrorText.textContent = errMessage || 'Network / CORS Error. Check if backend is running on this exact host & port.';
+      el.corsNoticeBanner.style.display = 'block';
+    }
+
+    function hideCorsNotice() {
+      el.corsNoticeBanner.style.display = 'none';
+    }
+
+    el.btnBannerDismiss.addEventListener('click', hideCorsNotice);
+    el.btnBannerRetry.addEventListener('click', () => {
+      checkHealth();
+      loadCatalog();
+    });
+
+    // Preset & Connect Buttons
+    el.btnConnect.addEventListener('click', () => {
+      checkHealth();
+      checkSession();
+      loadCatalog();
+    });
+    el.btnSet127.addEventListener('click', () => {
+      el.apiUrl.value = 'http://127.0.0.1:8000';
+      checkHealth();
+      checkSession();
+      loadCatalog();
+    });
+    el.btnSetLocalhost.addEventListener('click', () => {
+      el.apiUrl.value = 'http://localhost:8000';
+      checkHealth();
+      checkSession();
+      loadCatalog();
+    });
+
+    // Tab Navigation
+    el.tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        el.tabs.forEach(t => t.classList.remove('active'));
+        el.panels.forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        const target = document.getElementById(`tab-${tab.dataset.tab}`);
+        if (target) target.classList.add('active');
+
+        if (tab.dataset.tab === 'bookmarks' && state.user) {
+          loadBookmarks();
+        } else if (tab.dataset.tab === 'preferences' && state.user) {
+          loadPreferences();
+        } else if (tab.dataset.tab === 'map') {
+          initOrUpdateMap();
+        }
+      });
+    });
+
+    el.btnHeroSwitchMap.addEventListener('click', () => {
+      const mapTab = document.querySelector('[data-tab=map]');
+      if (mapTab) mapTab.click();
+    });
+
+    el.btnHeroRefresh.addEventListener('click', () => {
+      loadCatalog();
+    });
+
+    // Helper: Determine matching API URL based on host
+    function getRecommendedApiUrl() {
+      if (window.location.hostname === 'localhost') return 'http://localhost:8000';
+      if (window.location.hostname === '127.0.0.1') return 'http://127.0.0.1:8000';
+      if (window.location.hostname) return `${window.location.protocol}//${window.location.hostname}:8000`;
+      return 'http://127.0.0.1:8000';
+    }
+
+    // Health Checks with Auto-Fallback between 127.0.0.1 and localhost
+    async function checkHealth(retryAlternative = true) {
+      el.healthDot.className = 'status-dot yellow';
+      el.healthText.textContent = 'Checking...';
+      try {
+        const [liveRes, readyRes] = await Promise.all([
+          apiRequest('/health/live'),
+          apiRequest('/health/ready')
+        ]);
+        if (liveRes.status === 200 && readyRes.status === 200) {
+          el.healthDot.className = 'status-dot green';
+          el.healthText.textContent = 'Online & Healthy';
+          hideCorsNotice();
+          return true;
+        } else {
+          el.healthDot.className = 'status-dot red';
+          el.healthText.textContent = 'Degraded';
+          return false;
+        }
+      } catch (e) {
+        if (retryAlternative) {
+          const current = el.apiUrl.value.trim();
+          const alt = current.includes('127.0.0.1') ? current.replace('127.0.0.1', 'localhost') : (current.includes('localhost') ? current.replace('localhost', '127.0.0.1') : null);
+          if (alt && alt !== current) {
+            el.apiUrl.value = alt;
+            const success = await checkHealth(false);
+            if (success) {
+              showToast(`Connected via ${alt}!`, 'success');
+              return true;
+            }
+            el.apiUrl.value = current;
+          }
+        }
+        el.healthDot.className = 'status-dot red';
+        el.healthText.textContent = 'Unreachable';
+        return false;
+      }
+    }
+    el.btnCheckHealth.addEventListener('click', () => checkHealth(true));
+
+    // Auth & Session Management
+    async function checkSession() {
+      try {
+        const res = await apiRequest('/_allauth/browser/v1/auth/session');
+        if (res.data && res.data.user) {
+          state.user = res.data.user;
+          updateAuthUI(true, res.data.user);
+          loadBookmarks();
+        } else {
+          state.user = null;
+          updateAuthUI(false);
+        }
+      } catch (err) {
+        state.user = null;
+        updateAuthUI(false);
+      }
+    }
+
+    function updateAuthUI(isAuth, user = null) {
+      if (isAuth && user) {
+        el.authDot.className = 'status-dot green';
+        el.authStatusText.textContent = user.email || 'Authenticated';
+        el.sessionDot.className = 'status-dot green';
+        el.sessionStatusLabel.textContent = 'Active Session';
+        el.sessionUserInfo.style.display = 'block';
+        el.sessionUserEmail.textContent = user.email || 'N/A';
+        el.sessionUserId.textContent = user.id || user.pk || 'N/A';
+        if (el.prefAvatarLetter) {
+          el.prefAvatarLetter.textContent = (user.email ? user.email[0].toUpperCase() : 'EU');
+        }
+      } else {
+        el.authDot.className = 'status-dot red';
+        el.authStatusText.textContent = 'Anonymous';
+        el.sessionDot.className = 'status-dot red';
+        el.sessionStatusLabel.textContent = 'Not Logged In';
+        el.sessionUserInfo.style.display = 'none';
+        if (el.prefAvatarLetter) {
+          el.prefAvatarLetter.textContent = 'EU';
+        }
+      }
+    }
+
+    el.btnRefreshSession.addEventListener('click', () => {
+      checkSession().then(() => showToast('Session state updated', 'info'));
+    });
+
+    el.btnLogoutSession.addEventListener('click', async () => {
+      try {
+        await apiRequest('/_allauth/browser/v1/auth/session', { method: 'DELETE' });
+        state.user = null;
+        updateAuthUI(false);
+        state.bookmarks.clear();
+        el.bookmarkCount.textContent = '0';
+        renderCatalog();
+        showToast('Logged out successfully', 'success');
+      } catch (e) {
+        showToast('Logout: ' + e.message, 'error');
+      }
+    });
+
+    el.btnSwitchLogin.addEventListener('click', () => {
+      el.btnSwitchLogin.className = 'btn btn-sm btn-primary';
+      el.btnSwitchSignup.className = 'btn btn-sm';
+      el.loginForm.style.display = 'block';
+      el.signupForm.style.display = 'none';
+      el.authFormTitle.textContent = 'Sign In to CivilEU';
+    });
+
+    el.btnSwitchSignup.addEventListener('click', () => {
+      el.btnSwitchSignup.className = 'btn btn-sm btn-accent';
+      el.btnSwitchLogin.className = 'btn btn-sm';
+      el.loginForm.style.display = 'none';
+      el.signupForm.style.display = 'block';
+      el.authFormTitle.textContent = 'Create New Account';
+    });
+
+    el.loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        const payload = {
+          email: document.getElementById('loginEmail').value,
+          password: document.getElementById('loginPassword').value
+        };
+        await apiRequest('/_allauth/browser/v1/auth/login', {
+          method: 'POST',
+          body: payload
+        });
+        showToast('Logged in successfully', 'success');
+        await checkSession();
+      } catch (err) {
+        showToast('Login failed: ' + err.message, 'error');
+      }
+    });
+
+    el.signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        const payload = {
+          email: document.getElementById('signupEmail').value,
+          password1: document.getElementById('signupPassword1').value,
+          password2: document.getElementById('signupPassword2').value
+        };
+        await apiRequest('/_allauth/browser/v1/auth/signup', {
+          method: 'POST',
+          body: payload
+        });
+        showToast('Account created & logged in!', 'success');
+        await checkSession();
+      } catch (err) {
+        showToast('Signup failed: ' + err.message, 'error');
+      }
+    });
+
+    // Helper: Kind style class and icon
+    function getKindMeta(kind) {
+      const meta = {
+        'DIALOGUE': { icon: '💬', name: 'Dialogue', cls: 'pill-kind-dialogue' },
+        'DEBATE': { icon: '🎙️', name: 'Debate', cls: 'pill-kind-debate' },
+        'TALK': { icon: '🗣️', name: 'Talk', cls: 'pill-kind-talk' },
+        'WORKSHOP': { icon: '🛠️', name: 'Workshop', cls: 'pill-kind-workshop' },
+        'TRAINING': { icon: '🎓', name: 'Training', cls: 'pill-kind-training' },
+        'MEETUP': { icon: '👥', name: 'Meetup', cls: 'pill-kind' },
+        'CONFERENCE': { icon: '🏛️', name: 'Conference', cls: 'pill-kind-conference' },
+        'INFO_SESSION': { icon: 'ℹ️', name: 'Info Session', cls: 'pill-kind' },
+        'CULTURAL_EVENT': { icon: '🎭', name: 'Cultural Event', cls: 'pill-kind-cultural' },
+        'COMPETITION': { icon: '🏆', name: 'Competition', cls: 'pill-kind-competition' },
+        'CEREMONY': { icon: '✨', name: 'Ceremony', cls: 'pill-kind' },
+        'RECRUITMENT': { icon: '💼', name: 'Recruitment', cls: 'pill-kind' },
+        'PROGRAMME': { icon: '🚀', name: 'Programme', cls: 'pill-kind-programme' },
+        'VOLUNTEERING': { icon: '🤝', name: 'Volunteering', cls: 'pill-kind-volunteering' },
+        'SCHOLARSHIP': { icon: '📜', name: 'Scholarship', cls: 'pill-kind-scholarship' },
+        'GRANT': { icon: '💶', name: 'Grant', cls: 'pill-kind-grant' },
+        'EXCHANGE': { icon: '🌍', name: 'Exchange', cls: 'pill-kind-exchange' },
+        'OTHER': { icon: '📌', name: 'Opportunity', cls: 'pill-kind' }
+      };
+      return meta[kind] || { icon: '✨', name: kind || 'Event', cls: 'pill-kind' };
+    }
+
+    // Helper: Country code to flag emoji
+    function getCountryFlag(countryCode) {
+      if (!countryCode || countryCode.length !== 2) return '';
+      const code = countryCode.toUpperCase();
+      const offset = 127397;
+      return String.fromCodePoint(...[...code].map(c => c.charCodeAt(0) + offset));
+    }
+
+    // Live Search with Debounce
+    let searchDebounceTimer = null;
+    el.filterQuery.addEventListener('input', () => {
+      const val = el.filterQuery.value.trim();
+      el.btnClearSearch.style.display = val.length > 0 ? 'block' : 'none';
+
+      clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = setTimeout(() => {
+        document.getElementById('filterOffset').value = 0;
+        loadCatalog();
+      }, 350);
+    });
+
+    el.btnClearSearch.addEventListener('click', () => {
+      el.filterQuery.value = '';
+      el.btnClearSearch.style.display = 'none';
+      document.getElementById('filterOffset').value = 0;
+      loadCatalog();
+    });
+
+    // Quick filter chips click handler
+    document.querySelectorAll('.filter-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+
+        const chipType = chip.dataset.chipType;
+        const chipVal = chip.dataset.chipVal;
+
+        if (chipType === 'all') {
+          document.getElementById('filterKind').value = '';
+          document.getElementById('filterParticipationMode').value = '';
+          document.getElementById('filterTemporal').value = '';
+        } else if (chipType === 'kind') {
+          document.getElementById('filterKind').value = chipVal || '';
+        } else if (chipType === 'mode') {
+          document.getElementById('filterParticipationMode').value = chipVal || '';
+        } else if (chipType === 'temporal') {
+          document.getElementById('filterTemporal').value = chipVal || '';
+        }
+
+        document.getElementById('filterOffset').value = 0;
+        loadCatalog();
+      });
+    });
+
+    // Catalog & Opportunities Loading
+    async function loadCatalog() {
+      const params = new URLSearchParams();
+
+      const query = el.filterQuery.value.trim();
+      if (query.length >= 2) {
+        params.append('query', query);
+      }
+
+      const temporal = document.getElementById('filterTemporal').value;
+      if (temporal) params.append('temporal_status', temporal);
+
+      if (document.getElementById('filterHasDate').checked) {
+        params.append('has_date', 'true');
+      }
+
+      const kind = document.getElementById('filterKind').value;
+      if (kind) params.append('kind', kind);
+
+      const mode = document.getElementById('filterParticipationMode').value;
+      if (mode) params.append('participation_mode', mode);
+
+      const actionKind = document.getElementById('filterActionKind').value;
+      if (actionKind) params.append('action_kind', actionKind);
+
+      const country = document.getElementById('filterCountry').value.trim();
+      if (country && country.length === 2) params.append('country', country);
+
+      const city = document.getElementById('filterCity').value.trim();
+      if (city) params.append('city', city);
+
+      const lang = document.getElementById('filterLanguage').value.trim();
+      if (lang) params.append('language', lang);
+
+      const source = document.getElementById('filterSource').value.trim();
+      if (source) params.append('source', source);
+
+      const lat = document.getElementById('filterLat').value;
+      const lng = document.getElementById('filterLng').value;
+      const radius = document.getElementById('filterRadius').value;
+      if (lat && lng && radius) {
+        params.append('latitude', lat);
+        params.append('longitude', lng);
+        params.append('radius', radius);
+      }
+
+      const startsAfter = document.getElementById('filterStartsAfter').value;
+      if (startsAfter) params.append('starts_after', new Date(startsAfter).toISOString());
+
+      const startsBefore = document.getElementById('filterStartsBefore').value;
+      if (startsBefore) params.append('starts_before', new Date(startsBefore).toISOString());
+
+      const limit = parseInt(document.getElementById('filterLimit').value, 10) || 20;
+      const offset = parseInt(document.getElementById('filterOffset').value, 10) || 0;
+      params.append('limit', limit);
+      params.append('offset', offset);
+
+      try {
+        const res = await apiRequest(`/v1/opportunities?${params.toString()}`);
+        state.catalog = res.data;
+        renderCatalog();
+        updateActiveFiltersView(params);
+
+        if (res.data.items && res.data.items.length > 0) {
+          sendImpressionsTelemetry(res.data.items);
+          if (state.map) updateMapMarkers(res.data.items);
+        }
+      } catch (err) {
+        showToast('Catalog error: ' + err.message, 'error');
+      }
+    }
+
+    function updateActiveFiltersView(params) {
+      const active = [];
+      params.forEach((val, key) => {
+        if (!['limit', 'offset'].includes(key) && val) {
+          active.push({ key, val });
+        }
+      });
+
+      if (active.length === 0) {
+        el.activeFiltersContainer.style.display = 'none';
+        el.activeFiltersContainer.innerHTML = '';
+        return;
+      }
+
+      el.activeFiltersContainer.style.display = 'flex';
+      el.activeFiltersContainer.innerHTML = `<span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); align-self:center;">Active filters:</span>` +
+        active.map(item => `
+          <span class="tag-chip">
+            <strong>${item.key}:</strong> ${item.val}
+          </span>
+        `).join('');
+    }
+
+    function renderCatalog() {
+      const items = state.catalog.items || [];
+      const count = state.catalog.count || 0;
+      const limit = state.catalog.limit || 20;
+      const offset = state.catalog.offset || 0;
+
+      el.catalogCountDisplay.textContent = `${count} opportunit${count === 1 ? 'y' : 'ies'} found`;
+      el.catalogPageInfo.textContent = count > 0 ? `(Showing ${offset + 1} - ${Math.min(offset + limit, count)})` : '';
+
+      el.catalogList.innerHTML = '';
+      if (items.length === 0) {
+        el.catalogEmpty.style.display = 'block';
+        return;
+      }
+      el.catalogEmpty.style.display = 'none';
+
+      items.forEach(opp => {
+        const isBookmarked = state.bookmarks.has(opp.id);
+        const card = document.createElement('div');
+        card.className = 'opp-card';
+
+        const kindMeta = getKindMeta(opp.kind);
+        const flag = getCountryFlag(opp.country_code);
+
+        let dateDisplay = 'Date TBD';
+        if (opp.starts_at) {
+          const d = new Date(opp.starts_at);
+          dateDisplay = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+        } else if (opp.application_deadline_at) {
+          const d = new Date(opp.application_deadline_at);
+          dateDisplay = `Deadline: ${d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}`;
+        }
+
+        const locationText = [flag, opp.city, opp.country_code].filter(Boolean).join(' ') || (opp.participation_mode === 'ONLINE' ? '🌐 Online' : opp.participation_mode);
+
+        card.innerHTML = `
+          <div class="opp-img-wrap">
+            ${opp.image_url
+              ? `<img src="${opp.image_url}" alt="${opp.title}" onerror="this.parentElement.innerHTML='<div class=\\'opp-placeholder-art\\'><span class=\\'art-icon\\'>${kindMeta.icon}</span><span class=\\'art-text\\'>${kindMeta.name}</span></div>'" />`
+              : `<div class="opp-placeholder-art"><span class="art-icon">${kindMeta.icon}</span><span class="art-text">${kindMeta.name}</span></div>`
+            }
+            <div class="opp-badge-row">
+              <span class="pill ${kindMeta.cls}">${kindMeta.icon} ${kindMeta.name}</span>
+              <span class="pill pill-mode">${opp.participation_mode.replace('_', ' ')}</span>
+            </div>
+          </div>
+          <div class="opp-body">
+            <div class="opp-header-meta">
+              <span class="opp-date-badge">📅 ${dateDisplay}</span>
+              ${opp.language ? `<span class="pill pill-lang">${opp.language.toUpperCase()}</span>` : ''}
+            </div>
+            <h4 class="opp-title">${opp.title}</h4>
+            <p class="opp-summary">${opp.summary || opp.description || 'No description provided.'}</p>
+            <div class="opp-meta-list">
+              <div class="opp-meta-item">📍 <strong>${locationText}</strong></div>
+              ${opp.organizer_name ? `<div class="opp-meta-item">🏢 ${opp.organizer_name}</div>` : ''}
+            </div>
+          </div>
+          <div class="opp-footer">
+            <button class="btn-bookmark ${isBookmarked ? 'saved' : ''} btn-opp-bookmark" data-id="${opp.id}" title="${isBookmarked ? 'Remove bookmark' : 'Bookmark this'}">
+              ${isBookmarked ? '★' : '☆'}
+            </button>
+            <div class="btn-group">
+              <button class="btn btn-sm btn-opp-details" data-id="${opp.id}">Details</button>
+              <a href="${opp.action_url}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary btn-opp-action" data-id="${opp.id}">
+                ${(opp.action_kind || 'Action').replace('_', ' ')} ↗
+              </a>
+            </div>
+          </div>
+        `;
+        el.catalogList.appendChild(card);
+      });
+
+      // Bind card buttons
+      el.catalogList.querySelectorAll('.btn-opp-details').forEach(b => {
+        b.addEventListener('click', () => openOpportunityDetails(parseInt(b.dataset.id, 10)));
+      });
+      el.catalogList.querySelectorAll('.btn-opp-bookmark').forEach(b => {
+        b.addEventListener('click', () => toggleBookmark(parseInt(b.dataset.id, 10)));
+      });
+      el.catalogList.querySelectorAll('.btn-opp-action').forEach(b => {
+        b.addEventListener('click', () => trackActionClick(parseInt(b.dataset.id, 10)));
+      });
+    }
+
+    el.catalogFilterForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      document.getElementById('filterOffset').value = 0;
+      loadCatalog();
+    });
+
+    el.btnResetCatalogFilters.addEventListener('click', () => {
+      el.catalogFilterForm.reset();
+      el.filterQuery.value = '';
+      el.btnClearSearch.style.display = 'none';
+      document.getElementById('filterLimit').value = 20;
+      document.getElementById('filterOffset').value = 0;
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      const allChip = document.querySelector('.filter-chip[data-chip-type=all]');
+      if (allChip) allChip.classList.add('active');
+      loadCatalog();
+    });
+
+    el.btnCatalogPrev.addEventListener('click', () => {
+      const current = parseInt(document.getElementById('filterOffset').value, 10) || 0;
+      const limit = parseInt(document.getElementById('filterLimit').value, 10) || 20;
+      const next = Math.max(0, current - limit);
+      document.getElementById('filterOffset').value = next;
+      loadCatalog();
+    });
+
+    el.btnCatalogNext.addEventListener('click', () => {
+      const current = parseInt(document.getElementById('filterOffset').value, 10) || 0;
+      const limit = parseInt(document.getElementById('filterLimit').value, 10) || 20;
+      if (current + limit < state.catalog.count) {
+        document.getElementById('filterOffset').value = current + limit;
+        loadCatalog();
+      }
+    });
+
+    el.btnUseBrowserLocation.addEventListener('click', () => {
+      if (!navigator.geolocation) return showToast('Geolocation is not supported by your browser', 'error');
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          document.getElementById('filterLat').value = pos.coords.latitude.toFixed(4);
+          document.getElementById('filterLng').value = pos.coords.longitude.toFixed(4);
+          if (!document.getElementById('filterRadius').value) {
+            document.getElementById('filterRadius').value = 50000;
+          }
+          showToast('GPS coordinates set for proximity filter', 'info');
+        },
+        (err) => showToast('GPS error: ' + err.message, 'error')
+      );
+    });
+
+    // Detail Modal
+    async function openOpportunityDetails(id) {
+      try {
+        const res = await apiRequest(`/v1/opportunities/${id}`);
+        const opp = res.data;
+        state.selectedOpportunity = opp;
+
+        const kindMeta = getKindMeta(opp.kind);
+        el.modalTitle.textContent = opp.title;
+        el.modalKindPill.textContent = `${kindMeta.icon} ${kindMeta.name}`;
+        el.modalKindPill.className = `pill ${kindMeta.cls}`;
+
+        const isBookmarked = state.bookmarks.has(opp.id);
+        el.modalBookmarkBtn.textContent = isBookmarked ? '★ Saved in Bookmarks' : '☆ Bookmark Opportunity';
+        el.modalBookmarkBtn.className = isBookmarked ? 'btn btn-gold' : 'btn';
+
+        el.modalActionLink.href = opp.action_url;
+        el.modalActionLink.textContent = `${(opp.action_kind || 'Action').replace('_', ' ')} ↗`;
+
+        const startStr = opp.starts_at ? new Date(opp.starts_at).toLocaleString() : 'Not specified';
+        const endStr = opp.ends_at ? new Date(opp.ends_at).toLocaleString() : 'Not specified';
+        const deadlineStr = opp.application_deadline_at ? new Date(opp.application_deadline_at).toLocaleString() : 'Open / None';
+
+        const flag = getCountryFlag(opp.country_code);
+
+        el.modalBody.innerHTML = `
+          ${opp.image_url ? `<img src="${opp.image_url}" style="width:100%; max-height:240px; object-fit:cover; border-radius:var(--radius-lg); margin-bottom:1.25rem; box-shadow:var(--shadow-sm);" onerror="this.style.display='none'" />` : ''}
+
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.25rem;">
+            <span class="pill ${kindMeta.cls}">${kindMeta.icon} ${kindMeta.name}</span>
+            <span class="pill pill-mode">${opp.participation_mode}</span>
+            ${opp.language ? `<span class="pill pill-lang">${opp.language.toUpperCase()}</span>` : ''}
+            ${opp.country_code ? `<span class="pill pill-lang">${flag} ${opp.country_code}</span>` : ''}
+          </div>
+
+          <div style="background:var(--bg-surface-raised); padding:1.25rem; border-radius:var(--radius-md); border:1px solid var(--border-subtle); margin-bottom:1.25rem; font-size:0.85rem; display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:0.85rem;">
+            <div><strong>📅 Starts:</strong> ${startStr}</div>
+            <div><strong>🏁 Ends:</strong> ${endStr}</div>
+            <div><strong>⏳ Application Deadline:</strong> ${deadlineStr}</div>
+            <div><strong>📍 Location:</strong> ${[flag, opp.city, opp.country_code].filter(Boolean).join(', ') || 'N/A'}</div>
+            <div><strong>🏢 Organizer:</strong> ${opp.organizer_name || 'CivilEU Partner'}</div>
+            <div><strong>📌 Geo Coordinates:</strong> ${opp.location ? `${opp.location.latitude.toFixed(4)}, ${opp.location.longitude.toFixed(4)}` : 'Online / Ungeocoded'}</div>
+          </div>
+
+          ${opp.summary ? `
+            <div style="margin-bottom:1.25rem;">
+              <h4 style="font-size:0.95rem; font-weight:700; margin-bottom:0.4rem; color:var(--text-primary);">Executive Summary</h4>
+              <p style="color:var(--text-secondary); font-size:0.9rem; line-height:1.55;">${opp.summary}</p>
+            </div>
+          ` : ''}
+
+          <div style="margin-bottom:1.5rem;">
+            <h4 style="font-size:0.95rem; font-weight:700; margin-bottom:0.4rem; color:var(--text-primary);">Full Overview & Requirements</h4>
+            <div style="color:var(--text-secondary); font-size:0.88rem; line-height:1.65; white-space:pre-wrap;">${opp.description || opp.summary || 'No extended description available.'}</div>
+          </div>
+
+          ${opp.attribution ? `
+            <div style="border-top:1px solid var(--border-subtle); padding-top:0.85rem; font-size:0.78rem; color:var(--text-muted); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+              <span>Source: <a href="${opp.attribution.url}" target="_blank" rel="noopener noreferrer" style="color:var(--eu-blue-primary); font-weight:600;">${opp.attribution.text || opp.attribution.name}</a></span>
+              <a href="${opp.source_url}" target="_blank" rel="noopener noreferrer" style="color:var(--eu-blue-primary);">Original Source Page ↗</a>
+            </div>
+          ` : ''}
+        `;
+
+        el.modal.classList.add('open');
+
+        // Track OPEN event telemetry
+        dispatchSingleEvent(opp.id, 'OPEN', { origin: 'opportunity_modal' });
+      } catch (err) {
+        showToast('Error opening details: ' + err.message, 'error');
+      }
+    }
+
+    el.btnCloseModal.addEventListener('click', () => el.modal.classList.remove('open'));
+    el.modal.addEventListener('click', (e) => {
+      if (e.target === el.modal) el.modal.classList.remove('open');
+    });
+
+    el.modalBookmarkBtn.addEventListener('click', async () => {
+      if (state.selectedOpportunity) {
+        await toggleBookmark(state.selectedOpportunity.id);
+        const isBookmarked = state.bookmarks.has(state.selectedOpportunity.id);
+        el.modalBookmarkBtn.textContent = isBookmarked ? '★ Saved in Bookmarks' : '☆ Bookmark Opportunity';
+        el.modalBookmarkBtn.className = isBookmarked ? 'btn btn-gold' : 'btn';
+      }
+    });
+
+    el.modalActionLink.addEventListener('click', () => {
+      if (state.selectedOpportunity) {
+        trackActionClick(state.selectedOpportunity.id);
+      }
+    });
+
+    el.modalShareBtn.addEventListener('click', () => {
+      if (state.selectedOpportunity) {
+        navigator.clipboard.writeText(state.selectedOpportunity.action_url || window.location.href);
+        showToast('Link copied to clipboard!', 'success');
+      }
+    });
+
+    // Bookmarks Management
+    async function loadBookmarks() {
+      if (!state.user) {
+        state.bookmarks.clear();
+        el.bookmarkCount.textContent = '0';
+        renderBookmarks([]);
+        return;
+      }
+      try {
+        const res = await apiRequest('/v1/bookmarks');
+        const items = res.data.items || [];
+        state.bookmarks = new Set(items.map(b => b.opportunity.id));
+        el.bookmarkCount.textContent = items.length;
+        renderBookmarks(items);
+      } catch (err) {
+        // user might not be logged in
+      }
+    }
+
+    function renderBookmarks(items) {
+      el.bookmarksList.innerHTML = '';
+      if (items.length === 0) {
+        el.bookmarksEmpty.style.display = 'block';
+        return;
+      }
+      el.bookmarksEmpty.style.display = 'none';
+
+      items.forEach(b => {
+        const opp = b.opportunity;
+        const kindMeta = getKindMeta(opp.kind);
+        const card = document.createElement('div');
+        card.className = 'opp-card';
+        card.innerHTML = `
+          <div class="opp-body">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.65rem;">
+              <span class="pill ${kindMeta.cls}">${kindMeta.icon} ${kindMeta.name}</span>
+              <span class="pill pill-mode">${opp.participation_mode}</span>
+            </div>
+            <h4 class="opp-title">${opp.title}</h4>
+            <p class="opp-summary">${opp.summary || opp.description || ''}</p>
+            <div class="opp-meta-list" style="margin-top:auto;">
+              <div>📅 <strong>Starts:</strong> ${opp.starts_at ? new Date(opp.starts_at).toLocaleDateString() : 'N/A'}</div>
+              <div>⭐ <strong>Saved on:</strong> ${new Date(b.created_at).toLocaleDateString()}</div>
+            </div>
+          </div>
+          <div class="opp-footer">
+            <button class="btn btn-sm btn-danger btn-remove-bm" data-id="${opp.id}">Remove</button>
+            <button class="btn btn-sm btn-primary btn-bm-detail" data-id="${opp.id}">View Details</button>
+          </div>
+        `;
+        el.bookmarksList.appendChild(card);
+      });
+
+      el.bookmarksList.querySelectorAll('.btn-remove-bm').forEach(b => {
+        b.addEventListener('click', () => toggleBookmark(parseInt(b.dataset.id, 10)));
+      });
+      el.bookmarksList.querySelectorAll('.btn-bm-detail').forEach(b => {
+        b.addEventListener('click', () => openOpportunityDetails(parseInt(b.dataset.id, 10)));
+      });
+    }
+
+    el.btnRefreshBookmarks.addEventListener('click', loadBookmarks);
+
+    el.btnExportBookmarks.addEventListener('click', () => {
+      const items = Array.from(state.bookmarks);
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(items, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", "civileu-bookmarks.json");
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      showToast('Exported bookmarks JSON', 'success');
+    });
+
+    async function toggleBookmark(opportunityId) {
+      if (!state.user) {
+        showToast('Please sign in to save opportunities to your bookmarks', 'error');
+        const authTab = document.querySelector('[data-tab=auth]');
+        if (authTab) authTab.click();
+        return;
+      }
+      const isSaved = state.bookmarks.has(opportunityId);
+      try {
+        if (isSaved) {
+          await apiRequest(`/v1/bookmarks/${opportunityId}`, { method: 'DELETE' });
+          state.bookmarks.delete(opportunityId);
+          showToast('Bookmark removed', 'info');
+        } else {
+          await apiRequest(`/v1/bookmarks/${opportunityId}`, { method: 'PUT' });
+          state.bookmarks.add(opportunityId);
+          showToast('Bookmark saved!', 'success');
+        }
+        el.bookmarkCount.textContent = state.bookmarks.size;
+        renderCatalog();
+        loadBookmarks();
+      } catch (err) {
+        showToast('Bookmark update failed: ' + err.message, 'error');
+      }
+    }
+
+    // Interactive Map Integration
+    function initOrUpdateMap() {
+      if (!state.map) {
+        state.map = L.map('mapContainer').setView([50.8503, 4.3517], 4);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(state.map);
+      }
+      setTimeout(() => {
+        state.map.invalidateSize();
+        if (state.catalog.items) updateMapMarkers(state.catalog.items);
+      }, 200);
+    }
+
+    function updateMapMarkers(items) {
+      if (!state.map) return;
+      state.mapMarkers.forEach(m => m.remove());
+      state.mapMarkers = [];
+
+      const geocoded = items.filter(it => it.location && it.location.latitude && it.location.longitude);
+      if (geocoded.length === 0) return;
+
+      const bounds = L.latLngBounds();
+      geocoded.forEach(opp => {
+        const latLng = [opp.location.latitude, opp.location.longitude];
+        bounds.extend(latLng);
+
+        const marker = L.marker(latLng).addTo(state.map);
+        marker.bindPopup(`
+          <div style="font-family:var(--font-sans); min-width:180px;">
+            <strong style="font-size:0.9rem; color:var(--eu-blue-deep);">${opp.title}</strong>
+            <div style="font-size:0.75rem; color:#64748b; margin:0.25rem 0;">${opp.city || ''} ${opp.country_code || ''}</div>
+            <button onclick="openOpportunityDetails(${opp.id})" style="background:#1d4ed8; color:#fff; border:none; padding:0.25rem 0.5rem; border-radius:4px; font-size:0.75rem; cursor:pointer; width:100%; margin-top:0.35rem;">View Opportunity</button>
+          </div>
+        `);
+        state.mapMarkers.push(marker);
+      });
+
+      if (geocoded.length > 0) {
+        state.map.fitBounds(bounds, { padding: [50, 50], maxZoom: 12 });
+      }
+    }
+
+    el.btnRefreshMap.addEventListener('click', () => {
+      if (state.map) state.map.setView([50.8503, 4.3517], 4);
+    });
+
+    // Preferences Management
+    function renderInterestTags() {
+      el.prefInterestsTagsContainer.innerHTML = '';
+      state.interests.forEach((tag, idx) => {
+        const chip = document.createElement('span');
+        chip.className = 'tag-chip';
+        chip.innerHTML = `${tag} <span class="tag-chip-remove" data-idx="${idx}">✕</span>`;
+        el.prefInterestsTagsContainer.appendChild(chip);
+      });
+
+      el.prefInterestsTagsContainer.querySelectorAll('.tag-chip-remove').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const idx = parseInt(e.target.dataset.idx, 10);
+          state.interests.splice(idx, 1);
+          renderInterestTags();
+        });
+      });
+      el.prefInterests.value = state.interests.join(',');
+    }
+
+    el.btnAddInterestTag.addEventListener('click', () => {
+      const val = el.prefInterestsInput.value.trim();
+      if (val && !state.interests.includes(val)) {
+        state.interests.push(val);
+        el.prefInterestsInput.value = '';
+        renderInterestTags();
+      }
+    });
+
+    el.prefInterestsInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        el.btnAddInterestTag.click();
+      }
+    });
+
+    el.prefRadiusSlider.addEventListener('input', () => {
+      el.prefRadius.value = el.prefRadiusSlider.value;
+    });
+    el.prefRadius.addEventListener('input', () => {
+      el.prefRadiusSlider.value = el.prefRadius.value || 50000;
+    });
+
+    async function loadPreferences() {
+      try {
+        const res = await apiRequest('/v1/users/me/preferences');
+        const p = res.data;
+        el.prefTimezone.value = p.timezone || '';
+        el.prefRadius.value = p.travel_radius_meters || '';
+        el.prefRadiusSlider.value = p.travel_radius_meters || 50000;
+        el.prefLat.value = p.latitude ?? '';
+        el.prefLng.value = p.longitude ?? '';
+
+        state.interests = [...(p.interest_codes || [])];
+        renderInterestTags();
+
+        const modes = new Set(p.participation_modes || []);
+        document.querySelectorAll('input[name="prefMode"]').forEach(cb => {
+          cb.checked = modes.has(cb.value);
+        });
+        showToast('Civic preferences loaded', 'success');
+      } catch (e) {
+        showToast('Preferences: ' + e.message, 'error');
+      }
+    }
+
+    el.btnFetchPreferences.addEventListener('click', loadPreferences);
+
+    el.preferencesForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        const modes = Array.from(document.querySelectorAll('input[name="prefMode"]:checked')).map(c => c.value);
+        const latVal = el.prefLat.value !== '' ? parseFloat(el.prefLat.value) : null;
+        const lngVal = el.prefLng.value !== '' ? parseFloat(el.prefLng.value) : null;
+        const radiusVal = el.prefRadius.value !== '' ? parseInt(el.prefRadius.value, 10) : null;
+
+        const payload = {
+          timezone: el.prefTimezone.value.trim() || undefined,
+          latitude: latVal,
+          longitude: lngVal,
+          travel_radius_meters: radiusVal,
+          participation_modes: modes,
+          interest_codes: state.interests
+        };
+
+        await apiRequest('/v1/users/me/preferences', {
+          method: 'PATCH',
+          body: payload
+        });
+        showToast('Preferences updated successfully!', 'success');
+      } catch (err) {
+        showToast('Preferences update error: ' + err.message, 'error');
+      }
+    });
+
+    el.btnPrefAutoTz.addEventListener('click', () => {
+      try {
+        el.prefTimezone.value = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+        showToast('Detected timezone: ' + el.prefTimezone.value, 'info');
+      } catch {
+        el.prefTimezone.value = 'UTC';
+      }
+    });
+
+    el.btnPrefGps.addEventListener('click', () => {
+      if (!navigator.geolocation) return showToast('Geolocation not supported', 'error');
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          el.prefLat.value = pos.coords.latitude.toFixed(4);
+          el.prefLng.value = pos.coords.longitude.toFixed(4);
+          showToast('GPS coordinates set', 'info');
+        },
+        (err) => showToast('GPS error: ' + err.message, 'error')
+      );
+    });
+
+    el.btnClearLocation.addEventListener('click', () => {
+      el.prefLat.value = '';
+      el.prefLng.value = '';
+      showToast('Cleared coordinates', 'info');
+    });
+
+    // Telemetry & Interactions
+    async function dispatchSingleEvent(oppId, type, context = {}) {
+      try {
+        const payload = {
+          events: [
+            {
+              opportunity_id: oppId,
+              interaction_type: type,
+              context: { ...context, timestamp: new Date().toISOString() }
+            }
+          ]
+        };
+        await apiRequest('/v1/interactions', {
+          method: 'POST',
+          body: payload
+        });
+        logInteraction(`Dispatched ${type} for Opportunity #${oppId}`);
+      } catch (err) {
+        logInteraction(`Telemetry dispatch error (${type} #${oppId}): ${err.message}`);
+      }
+    }
+
+    async function sendImpressionsTelemetry(items) {
+      try {
+        const events = items.slice(0, 40).map((item, idx) => ({
+          opportunity_id: item.id,
+          interaction_type: 'IMPRESSION',
+          context: { position: idx + 1, source: 'catalog_view' }
+        }));
+        await apiRequest('/v1/interactions', {
+          method: 'POST',
+          body: { events }
+        });
+        logInteraction(`Dispatched batch IMPRESSIONS for ${events.length} opportunities`);
+      } catch (err) {
+        logInteraction(`Impressions telemetry error: ${err.message}`);
+      }
+    }
+
+    function trackActionClick(id) {
+      dispatchSingleEvent(id, 'EXTERNAL_ACTION_CLICK', { action: 'user_action_click' });
+    }
+
+    el.interactionForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const oppId = parseInt(el.eventOppId.value, 10);
+      const type = el.eventType.value;
+      let ctx = {};
+      try {
+        ctx = el.eventContext.value ? JSON.parse(el.eventContext.value) : {};
+      } catch {
+        showToast('Invalid JSON in context field', 'error');
+        return;
+      }
+      try {
+        await apiRequest('/v1/interactions', {
+          method: 'POST',
+          body: {
+            events: [{ opportunity_id: oppId, interaction_type: type, context: ctx }]
+          }
+        });
+        showToast(`Interaction ${type} dispatched for Opportunity #${oppId}`, 'success');
+        logInteraction(`Manual dispatch ${type} for Opp #${oppId}`);
+      } catch (err) {
+        showToast('Interaction failed: ' + err.message, 'error');
+      }
+    });
+
+    el.btnClearInteractionLog.addEventListener('click', () => {
+      el.interactionLogConsole.textContent = 'Log cleared.';
+    });
+
+    el.btnClearInspector.addEventListener('click', () => {
+      el.inspectorLog.textContent = 'Inspector cleared.';
+    });
+
+    el.btnCopyInspector.addEventListener('click', () => {
+      navigator.clipboard.writeText(el.inspectorLog.textContent);
+      showToast('Inspector log copied to clipboard', 'info');
+    });
+
+    // Initialization
+    async function init() {
+      el.apiUrl.value = getRecommendedApiUrl();
+
+      if (window.location.protocol === 'file:') {
+        showCorsNotice('Opening via file:/// protocol. To test live API calls, run `python -m http.server 3000` and visit http://localhost:3000/frontend.html');
+      }
+
+      await checkHealth(true);
+      await checkSession();
+      await loadCatalog();
+    }
+
+    window.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

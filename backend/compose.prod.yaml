@@ -1,0 +1,30 @@
+x-production-environment: &production-environment
+  DATABASE_URL: ${CONTAINER_DATABASE_URL:?Set CONTAINER_DATABASE_URL}
+  SECRET_KEY: ${SECRET_KEY:?Set SECRET_KEY}
+  DEBUG: "false"
+  ALLOWED_HOSTS: ${ALLOWED_HOSTS:?Set ALLOWED_HOSTS}
+  CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS:?Set CSRF_TRUSTED_ORIGINS}
+  CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:?Set CORS_ALLOWED_ORIGINS}
+  SESSION_COOKIE_SECURE: "true"
+  SECURE_SSL_REDIRECT: "true"
+  SECURE_HSTS_SECONDS: ${SECURE_HSTS_SECONDS:-3600}
+  OPENCAGE_API_KEY: ${OPENCAGE_API_KEY:?Set OPENCAGE_API_KEY}
+  OPENAI_API_KEY: ${OPENAI_API_KEY:?Set OPENAI_API_KEY}
+
+services:
+  db:
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?Set POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER:?Set POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+
+  migrate:
+    environment: *production-environment
+
+  web:
+    environment: *production-environment
+    ports:
+      - "${WEB_BIND_ADDRESS:-127.0.0.1}:${WEB_PORT:-8000}:8000"
+
+  scheduler:
+    environment: *production-environment

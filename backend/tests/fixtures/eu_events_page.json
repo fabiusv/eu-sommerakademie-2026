@@ -1,0 +1,65 @@
+{
+  "timed_out": false,
+  "hits": {
+    "total": {"value": 2, "relation": "eq"},
+    "hits": [
+      {
+        "_index": "eyp_content",
+        "_id": "sanitized_1_en",
+        "_source": {
+          "identifier": 1,
+          "uuid": "11111111-1111-4111-8111-111111111111",
+          "visible": true,
+          "moderation": "published",
+          "language": "en",
+          "title": "Youth policy dialogue",
+          "summary": "A public dialogue",
+          "body": "<p>Safe body</p><script>alert('x')</script>",
+          "start_date": "2026-09-01T12:00:00",
+          "end_date": "2026-09-01T13:15:00",
+          "online": false,
+          "venues": [
+            {
+              "name": "Conference Hall",
+              "street1": "Example Street 1",
+              "street2": "",
+              "city": "Brussels",
+              "postal_code": "1000",
+              "country": {"name": "Belgium", "iso": "BE"}
+            },
+            {
+              "name": "Overflow room",
+              "city": "Brussels",
+              "country": {"name": "Belgium", "iso": "BE"}
+            }
+          ],
+          "url": "/events/youth-policy-dialogue_en",
+          "updated": 1786000000,
+          "styled_images": {"400x220": "/images/event-400.jpg"},
+          "future_field": "allowed"
+        }
+      },
+      {
+        "_index": "eyp_content",
+        "_id": "sanitized_2_pl",
+        "_source": {
+          "identifier": 2,
+          "uuid": "22222222-2222-4222-8222-222222222222",
+          "visible": true,
+          "language": "pl",
+          "title": "Konsultacje młodzieżowe",
+          "summary": "Konsultacje online",
+          "body": "<p>Opis</p>",
+          "start_date": "2026-10-01T08:00:00",
+          "end_date": "2026-10-02T18:00:00",
+          "online": true,
+          "online_location": {"url": "https://example.test/join"},
+          "venues": null,
+          "url": "/events/konsultacje_pl",
+          "updated": 1786000001,
+          "styled_images": {}
+        }
+      }
+    ]
+  }
+}
