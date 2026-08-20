@@ -47,7 +47,28 @@ const REDUCED_TIMELINE: TimelineEntry[] = [
   { key: "ready", at: 360 },
 ];
 
-export function HeroIntroProvider({ children }: { children: ReactNode }) {
+// Same order again, for pages that skip the hyperspace preloader entirely (see `instant`
+// below) but still want the reveal choreography — just starting from t=0 on mount instead
+// of from the preloader's exit cue.
+const INSTANT_TIMELINE: TimelineEntry[] = [
+  { key: "navVisible", at: 120 },
+  { key: "headlineVisible", at: 80 },
+  { key: "copyVisible", at: 340 },
+  { key: "ctaVisible", at: 540 },
+  { key: "gradientActive", at: 680 },
+  { key: "ready", at: 780 },
+];
+
+export function HeroIntroProvider({
+  children,
+  instant = false,
+}: {
+  children: ReactNode;
+  // Skips the hyperspace preloader and starts the reveal timeline immediately on mount.
+  // For pages that aren't the primary site entrance (e.g. 404) — they still get the same
+  // nav-visibility + reveal machinery, without forcing a multi-second intro every time.
+  instant?: boolean;
+}) {
   const [state, setState] = useState<HeroIntroState>(HIDDEN);
   const startedRef = useRef(false);
   const timersRef = useRef<number[]>([]);
@@ -72,9 +93,29 @@ export function HeroIntroProvider({ children }: { children: ReactNode }) {
     );
   };
 
+  // Self-contained (schedules and cleans up its own timers) rather than routed through
+  // `start`/`startedRef` above — those are keyed to the preloader's single, real `onExit`
+  // call, which lands long after mount. Dev Strict Mode's mount→cleanup→remount happens
+  // *at* mount, so a mount-time start needs a cleanup that can rearm on remount, not one
+  // guarded by a ref that survives the simulated unmount.
+  useEffect(() => {
+    if (!instant) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const timeline = reducedMotion ? REDUCED_TIMELINE : INSTANT_TIMELINE;
+
+    const ids = timeline.map(({ key, at }) =>
+      window.setTimeout(() => {
+        setState((prev) => ({ ...prev, [key]: true }));
+      }, at)
+    );
+
+    return () => ids.forEach((id) => window.clearTimeout(id));
+  }, [instant]);
+
   return (
     <HeroIntroContext.Provider value={state}>
-      <HyperspacePreloader onExit={start} />
+      {!instant && <HyperspacePreloader onExit={start} />}
       {children}
     </HeroIntroContext.Provider>
   );
