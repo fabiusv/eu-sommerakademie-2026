@@ -30,10 +30,159 @@
 
   /* Restrained, low-opacity elevation for cards and floating panels */
   --shadow-card: 0 1px 2px rgba(11, 22, 70, 0.04), 0 12px 32px rgba(11, 22, 70, 0.08);
+  --shadow-card-hover: 0 2px 4px rgba(11, 22, 70, 0.05), 0 16px 40px rgba(11, 22, 70, 0.12);
 }
 
 body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 46s linear infinite;
+}
+
+.marquee-mask {
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+@keyframes hero-shimmer-sweep {
+  from {
+    background-position: 160% 0;
+  }
+  to {
+    background-position: -60% 0;
+  }
+}
+
+/* Static "at rest" state — solid EU blue, with no gold in the gradient at all. Gold only
+   enters the CSS once .hero-shimmer-active is applied, so there is no background-position
+   at which the resting state could show yellow — the color and the animation switch on
+   together in the same class toggle, not as two separate steps. */
+.hero-shimmer {
+  background-image: linear-gradient(90deg, var(--color-eu-blue) 0%, var(--color-eu-blue) 100%);
+  background-size: 260% 100%;
+  background-position: 50% 0;
+}
+
+.hero-shimmer-active {
+  background-image: linear-gradient(
+    90deg,
+    var(--color-eu-blue) 0%,
+    var(--color-eu-blue) 30%,
+    var(--color-eu-gold) 46%,
+    var(--color-eu-gold) 54%,
+    var(--color-eu-blue) 70%,
+    var(--color-eu-blue) 100%
+  );
+  animation: hero-shimmer-sweep 9.5s ease-in-out infinite;
+}
+
+/* ---------- Hero post-preloader entrance ---------- */
+
+.hero-intro-line {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  filter: blur(6px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out, filter 0.6s ease-out;
+}
+
+.hero-intro-line-visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+.hero-intro-fade {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.55s ease-out, transform 0.55s ease-out;
+}
+
+.hero-intro-fade-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-intro-line,
+  .hero-intro-fade {
+    transform: none;
+    filter: none;
+    transition: opacity 0.3s ease-out;
+  }
+}
+
+@keyframes orbit-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbit-spin-reverse {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.animate-orbit {
+  animation: orbit-spin 140s linear infinite;
+}
+
+.animate-orbit-counter {
+  animation: orbit-spin-reverse 140s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-shimmer-active {
+    animation: none;
+  }
+
+  .animate-orbit,
+  .animate-orbit-counter {
+    animation: none;
+  }
+
+  .nav-visibility {
+    transition-property: opacity;
+    transition-duration: 150ms;
+    transform: none !important;
+  }
 }
 
 ::selection {
@@ -44,4 +193,8 @@ body {
 :focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+}
+
+.nav-search-field:focus-visible {
+  outline: none;
 }

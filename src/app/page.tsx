@@ -1,33 +1,33 @@
 import Header from "@/components/home/Header";
 import Hero from "@/components/home/Hero";
-import Nominees from "@/components/home/Nominees";
-import Winners from "@/components/home/Winners";
-import Academy from "@/components/home/Academy";
-import Collections from "@/components/home/Collections";
-import Directory from "@/components/home/Directory";
-import Blog from "@/components/home/Blog";
-import Market from "@/components/home/Market";
+import EuropeMarquee from "@/components/home/EuropeMarquee";
+import FeaturedCities from "@/components/home/FeaturedCities";
+import StatBanner from "@/components/home/StatBanner";
+import UpcomingEvents from "@/components/home/UpcomingEvents";
+import CommunityAndOpportunities from "@/components/home/CommunityAndOpportunities";
 import CtaBanner from "@/components/home/CtaBanner";
 import Footer from "@/components/home/Footer";
-import FloatingNav from "@/components/home/FloatingNav";
+import FloatingDock from "@/components/home/FloatingDock";
+import { NavVisibilityProvider } from "@/components/home/NavVisibility";
+import { HeroIntroProvider } from "@/components/home/HeroIntroProvider";
 
 export default function Home() {
   return (
-    <>
-      <Header />
-      <main>
-        <Hero />
-        <Nominees />
-        <Winners />
-        <Academy />
-        <Collections />
-        <Directory />
-        <Blog />
-        <Market />
-        <CtaBanner />
-      </main>
-      <Footer />
-      <FloatingNav />
-    </>
+    <HeroIntroProvider>
+      <NavVisibilityProvider>
+        <Header />
+        <main>
+          <Hero />
+          <EuropeMarquee />
+          <FeaturedCities />
+          <StatBanner />
+          <UpcomingEvents />
+          <CommunityAndOpportunities />
+          <CtaBanner />
+        </main>
+        <Footer />
+        <FloatingDock />
+      </NavVisibilityProvider>
+    </HeroIntroProvider>
   );
 }

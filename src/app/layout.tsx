@@ -9,9 +9,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Awwwards – Website Awards",
+  title: "Democratic Pulse — Discover Europe in motion",
   description:
-    "Recognizing and promoting the talent and effort of the best web designers, developers and web agencies in the world.",
+    "Discover events, communities, and opportunities driving change across Europe — one city, one initiative at a time.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

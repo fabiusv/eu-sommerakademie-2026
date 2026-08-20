@@ -1,0 +1,77 @@
+"use client";
+
+import Link from "next/link";
+import PulseMark from "./PulseMark";
+import ScrollToTopButton from "./ScrollToTopButton";
+import { useNavVisibility } from "./NavVisibility";
+
+const navItems = [
+  { label: "Events", href: "#" },
+  { label: "Communities", href: "#" },
+  { label: "Opportunities", href: "#" },
+  { label: "Map", href: "#" },
+  { label: "Initiatives", href: "#" },
+];
+
+export default function FloatingDock() {
+  const { showBottomNav } = useNavVisibility();
+
+  const visibility = showBottomNav
+    ? "translate-y-0 opacity-100"
+    : "pointer-events-none translate-y-3 opacity-0";
+
+  return (
+    <>
+      <div
+        className={`nav-visibility fixed bottom-5 left-4 z-40 transition-all duration-[250ms] ease-out sm:left-6 lg:bottom-7 lg:left-10 ${visibility}`}
+      >
+        <ScrollToTopButton />
+      </div>
+
+      <div
+        className={`nav-visibility fixed inset-x-0 bottom-5 z-40 flex justify-center px-4 transition-all duration-[250ms] ease-out lg:bottom-7 ${visibility}`}
+      >
+        <nav
+          aria-label="Quick navigation"
+          className="flex items-center gap-1 rounded-full border border-line bg-surface/85 p-1.5 shadow-card-hover backdrop-blur-xl"
+        >
+          <Link
+            href="/"
+            aria-label="Democratic Pulse home"
+            className="flex size-10 shrink-0 items-center justify-center rounded-full bg-eu-blue text-white transition-transform hover:scale-105 lg:size-11"
+          >
+            <PulseMark className="size-3.5" />
+          </Link>
+
+          <div className="hidden items-center gap-0.5 px-1 lg:flex">
+            {navItems.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                className="rounded-full px-4 py-2.5 text-[13.5px] font-medium text-ink-secondary transition-colors hover:bg-surface-hover hover:text-eu-blue"
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+
+          <a
+            href="#"
+            className="flex shrink-0 items-center gap-2 rounded-full bg-eu-blue px-5 py-2.5 text-[13.5px] font-medium text-white transition-all hover:brightness-110 lg:px-6 lg:py-3 lg:text-[14px]"
+          >
+            Join Europe
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden>
+              <path
+                d="M2 8h11.5M9 3.5 13.5 8 9 12.5"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </a>
+        </nav>
+      </div>
+    </>
+  );
+}
