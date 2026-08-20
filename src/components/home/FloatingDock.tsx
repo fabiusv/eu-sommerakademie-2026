@@ -22,14 +22,50 @@ export default function FloatingDock() {
 
   return (
     <>
+      {/* Left: back-to-top — shared between mobile and desktop */}
       <div
         className={`nav-visibility fixed bottom-5 left-4 z-40 transition-all duration-[250ms] ease-out sm:left-6 lg:bottom-7 lg:left-10 ${visibility}`}
       >
         <ScrollToTopButton />
       </div>
 
+      {/* Center: standalone Join Europe CTA — mobile only */}
       <div
-        className={`nav-visibility fixed inset-x-0 bottom-5 z-40 flex justify-center px-4 transition-all duration-[250ms] ease-out lg:bottom-7 ${visibility}`}
+        className={`nav-visibility fixed inset-x-0 bottom-5 z-40 flex justify-center px-20 transition-all duration-[250ms] ease-out lg:hidden ${visibility}`}
+      >
+        <a
+          href="#"
+          className="flex shrink-0 items-center gap-2 rounded-full bg-eu-blue px-6 py-3.5 text-[13.5px] font-medium text-white shadow-card-hover transition-all hover:brightness-110"
+        >
+          Join Europe
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden>
+            <path
+              d="M2 8h11.5M9 3.5 13.5 8 9 12.5"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </a>
+      </div>
+
+      {/* Right: standalone logo button — mobile only */}
+      <div
+        className={`nav-visibility fixed bottom-5 right-4 z-40 transition-all duration-[250ms] ease-out sm:right-6 lg:hidden ${visibility}`}
+      >
+        <Link
+          href="/"
+          aria-label="Democratic Pulse home"
+          className="flex size-13 shrink-0 items-center justify-center rounded-full bg-eu-blue text-white shadow-card-hover transition-transform hover:scale-105"
+        >
+          <PulseMark className="size-4" />
+        </Link>
+      </div>
+
+      {/* Desktop: combined pill nav — unchanged, lg and up only */}
+      <div
+        className={`nav-visibility fixed inset-x-0 bottom-5 z-40 hidden justify-center px-4 transition-all duration-[250ms] ease-out lg:flex lg:bottom-7 ${visibility}`}
       >
         <nav
           aria-label="Quick navigation"

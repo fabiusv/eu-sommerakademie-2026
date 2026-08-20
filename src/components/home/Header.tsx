@@ -1,20 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Container from "./Container";
 import PulseMark from "./PulseMark";
+import FullScreenMenu from "./FullScreenMenu";
 import { useNavVisibility } from "./NavVisibility";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
-  const { showTopNav } = useNavVisibility();
+  const { showTopNav, setMenuOpen } = useNavVisibility();
+  const burgerRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    setMenuOpen(open);
+  }, [open, setMenuOpen]);
 
   return (
     <header
+      // z-40 normally, matching the bottom floating dock's layer. While the full-screen
+      // menu is open it jumps to z-[80] — above the menu's own z-[70] — so this bar's
+      // wordmark + morphed close icon read as the menu's own top area instead of being
+      // covered by it.
       className={`nav-visibility sticky top-0 z-40 bg-page transition-all duration-[220ms] ease-out ${
-        showTopNav ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-2 opacity-0"
-      }`}
+        open ? "z-[80]" : ""
+      } ${showTopNav ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-2 opacity-0"}`}
     >
       <Container className="flex h-[64px] items-center justify-between lg:h-[80px]">
         <Link href="/" className="flex shrink-0 items-center gap-2">
@@ -71,72 +81,35 @@ export default function Header() {
         </div>
 
         <button
+          ref={burgerRef}
           type="button"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
+          aria-controls="mobile-full-menu"
           onClick={() => setOpen((value) => !value)}
-          className="flex size-8 items-center justify-center text-ink lg:hidden"
+          className="relative flex size-11 shrink-0 items-center justify-center text-ink lg:hidden"
         >
-          {open ? (
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
-              <path
-                d="M1.5 1.5 14.5 14.5M14.5 1.5 1.5 14.5"
-                stroke="currentColor"
-                strokeWidth="1.4"
-                strokeLinecap="round"
-              />
-            </svg>
-          ) : (
-            <svg width="18" height="13" viewBox="0 0 18 13" fill="none" aria-hidden>
-              <path
-                d="M1 1h16M1 6.5h16M1 12h16"
-                stroke="currentColor"
-                strokeWidth="1.4"
-                strokeLinecap="round"
-              />
-            </svg>
-          )}
+          <span aria-hidden className="relative flex size-4 items-center justify-center">
+            <span
+              className={`absolute h-[1.5px] w-full rounded-full bg-current transition-all duration-300 ease-out ${
+                open ? "translate-y-0 rotate-45" : "-translate-y-[5px] rotate-0"
+              }`}
+            />
+            <span
+              className={`absolute h-[1.5px] w-full rounded-full bg-current transition-opacity duration-200 ease-out ${
+                open ? "opacity-0" : "opacity-100"
+              }`}
+            />
+            <span
+              className={`absolute h-[1.5px] w-full rounded-full bg-current transition-all duration-300 ease-out ${
+                open ? "translate-y-0 -rotate-45" : "translate-y-[5px] rotate-0"
+              }`}
+            />
+          </span>
         </button>
       </Container>
 
-      {open && (
-        <div className="border-t border-line bg-page lg:hidden">
-          <Container className="flex flex-col gap-1 py-4">
-            <div className="relative">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                aria-hidden
-                className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-ink-muted"
-              >
-                <circle cx="7" cy="7" r="5" stroke="currentColor" strokeWidth="1.4" />
-                <path d="M11 11 14.5 14.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-              </svg>
-              <input
-                type="search"
-                placeholder="Search"
-                className="w-full rounded-full border border-line bg-page-secondary py-3 pr-4 pl-10 text-[15px] text-ink placeholder:text-ink-muted focus:border-eu-blue/50 focus:outline-none"
-              />
-            </div>
-            <div className="mt-2 flex items-center justify-between border-t border-line px-3 pt-4">
-              <a href="#" className="text-[15px] font-medium text-ink">
-                Sign in
-              </a>
-              <button
-                type="button"
-                className="flex items-center gap-1 text-[14px] font-medium text-ink-secondary"
-              >
-                EN
-                <svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden>
-                  <path d="M1 2.5 4 5.5 7 2.5" stroke="currentColor" strokeWidth="1" />
-                </svg>
-              </button>
-            </div>
-          </Container>
-        </div>
-      )}
+      <FullScreenMenu open={open} onClose={() => setOpen(false)} triggerRef={burgerRef} />
     </header>
   );
 }

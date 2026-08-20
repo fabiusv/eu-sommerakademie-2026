@@ -6,11 +6,16 @@ import { useHeroIntro } from "./HeroIntroProvider";
 type NavVisibilityState = {
   showTopNav: boolean;
   showBottomNav: boolean;
+  setMenuOpen: (open: boolean) => void;
 };
 
 // Hidden by default — the top nav is part of the post-preloader entrance sequence and
 // only starts becoming scroll-reactive once the intro reaches its nav phase.
-const DEFAULT_STATE: NavVisibilityState = { showTopNav: false, showBottomNav: false };
+const DEFAULT_STATE: NavVisibilityState = {
+  showTopNav: false,
+  showBottomNav: false,
+  setMenuOpen: () => {},
+};
 
 const NavVisibilityContext = createContext<NavVisibilityState>(DEFAULT_STATE);
 
@@ -19,7 +24,8 @@ const DIRECTION_THRESHOLD = 12;
 
 export function NavVisibilityProvider({ children }: { children: ReactNode }) {
   const { navVisible } = useHeroIntro();
-  const [state, setState] = useState<NavVisibilityState>(DEFAULT_STATE);
+  const [state, setState] = useState({ showTopNav: false, showBottomNav: false });
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const pastHeroRef = useRef(false);
   const directionRef = useRef<"up" | "down">("up");
@@ -86,7 +92,16 @@ export function NavVisibilityProvider({ children }: { children: ReactNode }) {
     };
   }, [navVisible]);
 
-  return <NavVisibilityContext.Provider value={state}>{children}</NavVisibilityContext.Provider>;
+  // The full-screen mobile menu is the highest navigation layer while open — the bottom
+  // floating dock (back-to-top / Join Europe / logo) must never show above it, so it's
+  // suppressed here rather than left for every consumer to re-derive.
+  const value: NavVisibilityState = {
+    showTopNav: state.showTopNav,
+    showBottomNav: state.showBottomNav && !menuOpen,
+    setMenuOpen,
+  };
+
+  return <NavVisibilityContext.Provider value={value}>{children}</NavVisibilityContext.Provider>;
 }
 
 export function useNavVisibility() {
