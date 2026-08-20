@@ -80,27 +80,6 @@ export default function Hero() {
                 </svg>
               </a>
             </span>
-
-            <span
-              style={{ transitionDelay: "80ms" }}
-              className={`hero-intro-fade inline-block ${ctaVisible ? "hero-intro-fade-visible" : ""}`}
-            >
-              <a
-                href="#"
-                className="inline-flex items-center gap-1.5 text-[14px] font-medium text-ink-muted transition-colors hover:text-accent lg:text-[15px]"
-              >
-                <span className="border-b border-current/30 pb-0.5">Discover Events</span>
-                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden>
-                  <path
-                    d="M2 8h11.5M9 3.5 13.5 8 9 12.5"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </a>
-            </span>
           </div>
         </div>
       </Container>

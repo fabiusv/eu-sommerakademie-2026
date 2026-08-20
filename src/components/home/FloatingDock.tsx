@@ -57,7 +57,7 @@ export default function FloatingDock() {
         <Link
           href="/"
           aria-label="Democratic Pulse home"
-          className="flex size-13 shrink-0 items-center justify-center rounded-full bg-eu-blue text-white shadow-card-hover transition-transform hover:scale-105"
+          className="flex size-13 shrink-0 items-center justify-center rounded-full bg-surface text-eu-blue shadow-card-hover transition-transform hover:scale-105"
         >
           <PulseMark className="size-4" />
         </Link>
@@ -74,7 +74,7 @@ export default function FloatingDock() {
           <Link
             href="/"
             aria-label="Democratic Pulse home"
-            className="flex size-10 shrink-0 items-center justify-center rounded-full bg-eu-blue text-white transition-transform hover:scale-105 lg:size-11"
+            className="flex size-10 shrink-0 items-center justify-center rounded-full bg-surface text-eu-blue transition-transform hover:scale-105 lg:size-11"
           >
             <PulseMark className="size-3.5" />
           </Link>
