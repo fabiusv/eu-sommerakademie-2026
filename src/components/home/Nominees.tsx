@@ -6,7 +6,7 @@ import { nominees } from "@/lib/home-data";
 
 export default function Nominees() {
   return (
-    <section className="bg-[#e9e9e9] pt-16 pb-4 lg:pt-[80px]">
+    <section className="bg-page pt-16 pb-4 lg:pt-[80px]">
       <Container>
         <DisplayHeading
           eyebrow="Latest"

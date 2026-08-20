@@ -6,7 +6,7 @@ import { winners } from "@/lib/home-data";
 
 export default function Winners() {
   return (
-    <section className="bg-[#e9e9e9] py-16 lg:py-[80px]">
+    <section className="bg-page py-16 lg:py-[80px]">
       <Container>
         <SectionHeading eyebrow="Winners" title={"Recent Sites\nof the Day."} />
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">

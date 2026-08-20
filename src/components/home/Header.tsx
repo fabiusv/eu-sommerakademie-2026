@@ -12,7 +12,7 @@ const navItems = [
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-40 bg-[#e9e9e9]">
+    <header className="sticky top-0 z-40 bg-page">
       <Container className="flex h-[54px] items-center gap-2 lg:h-[70px] lg:gap-4">
         <button
           type="button"
@@ -31,46 +31,52 @@ export default function Header() {
             <a
               key={item.label}
               href="#"
-              className="flex items-center gap-1.5 px-2.5 py-2 text-[13px] font-medium text-[#222]"
+              className="flex items-center gap-1.5 px-2.5 py-2 text-[13px] font-medium text-ink-secondary transition-colors hover:text-accent"
             >
               {item.label}
               {item.badge && (
-                <span className="rounded bg-[#222] px-1 py-[1px] text-[9px] font-medium text-white">
+                <span className="rounded bg-eu-yellow px-1 py-[1px] text-[9px] font-medium text-eu-blue">
                   {item.badge}
                 </span>
               )}
               {item.hasCaret && (
                 <svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden>
-                  <path d="M1 2.5 4 5.5 7 2.5" stroke="#222" strokeWidth="1" />
+                  <path d="M1 2.5 4 5.5 7 2.5" stroke="currentColor" strokeWidth="1" />
                 </svg>
               )}
             </a>
           ))}
         </nav>
 
-        <div className="flex flex-1 items-center rounded-lg bg-[#e2e2e2] px-4 py-2.5 xl:mx-4 xl:bg-[#e9e9e9]">
+        <div className="flex flex-1 items-center rounded-lg border border-line bg-surface px-4 py-2.5 xl:mx-4">
           <Image src="/images/home/search-icon.svg" alt="" width={14} height={14} />
-          <span className="ml-2.5 truncate text-[12px] text-[#222]/70">
+          <span className="ml-2.5 truncate text-[12px] text-ink-secondary">
             Search by Inspiration
           </span>
         </div>
 
         <div className="hidden shrink-0 items-center gap-3 md:flex lg:gap-5">
-          <a href="#" className="text-[13px] font-semibold whitespace-nowrap text-[#222]">
+          <a
+            href="#"
+            className="text-[13px] font-semibold whitespace-nowrap text-ink-secondary transition-colors hover:text-accent"
+          >
             Log in
           </a>
-          <a href="#" className="text-[13px] font-semibold whitespace-nowrap text-[#222]">
+          <a
+            href="#"
+            className="text-[13px] font-semibold whitespace-nowrap text-ink-secondary transition-colors hover:text-accent"
+          >
             Sign Up
           </a>
           <a
             href="#"
-            className="rounded-lg bg-[#222] px-5 py-2.5 text-[13px] font-medium whitespace-nowrap text-white"
+            className="rounded-lg bg-eu-blue px-5 py-2.5 text-[13px] font-medium whitespace-nowrap text-white transition-colors hover:brightness-110"
           >
             Be Pro
           </a>
           <a
             href="#"
-            className="hidden rounded-lg border border-[#222] px-5 py-2.5 text-[13px] font-medium whitespace-nowrap text-[#222] lg:inline-block"
+            className="hidden rounded-lg border border-line px-5 py-2.5 text-[13px] font-medium whitespace-nowrap text-ink-secondary transition-colors hover:border-accent hover:text-ink lg:inline-block"
           >
             Submit Website
           </a>

@@ -1,14 +1,47 @@
 @import "tailwindcss";
 
-:root {
-  --color-page: #e9e9e9;
-  --color-ink: #222222;
-}
-
 @theme inline {
   --font-sans: var(--font-inter);
+
+  /* EU brand core (fixed — do not flip between themes) */
+  --color-eu-blue: #003399;
+  --color-eu-yellow: #ffcc00;
+  /* Deeper, text-safe tonal variant of eu-yellow for foreground/gradient use */
+  --color-eu-gold: #a67c00;
+
+  /* Backgrounds */
+  --color-page: #f8faff;
+  --color-page-secondary: #eef2fb;
+
+  /* Surfaces (cards, elevated panels) */
+  --color-surface: #ffffff;
+  --color-surface-hover: #eef3fc;
+
+  /* Borders */
+  --color-line: #12225a1a;
+
+  /* Text hierarchy */
+  --color-ink: #0b1633;
+  --color-ink-secondary: #48557a;
+  --color-ink-muted: #5a6690;
+
+  /* Interactive accent — the confident, direct brand blue */
+  --color-accent: #003399;
+
+  /* Restrained, low-opacity elevation for cards and floating panels */
+  --shadow-card: 0 1px 2px rgba(11, 22, 70, 0.04), 0 12px 32px rgba(11, 22, 70, 0.08);
 }
 
 body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background-color: var(--color-eu-blue);
+  color: white;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
 }

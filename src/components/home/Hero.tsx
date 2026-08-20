@@ -1,50 +1,65 @@
-import Image from "next/image";
 import Container from "./Container";
 
 export default function Hero() {
   return (
-    <section className="bg-[#e9e9e9] pt-5 pb-16 lg:pt-[60px] lg:pb-[80px]">
+    <section className="bg-page pt-16 pb-14 lg:pt-[90px] lg:pb-[70px]">
       <Container>
-        <div className="flex flex-col items-center text-center">
-          <div className="flex flex-wrap items-center justify-center gap-2 text-[11px] text-[#222] lg:gap-3 lg:text-[13px]">
-            <span>Site of the Day</span>
-            <span className="rounded border border-[#222]/30 px-2.5 py-1 font-medium">
-              Aug 16, 2026
-            </span>
-            <span>
-              Score 7.17<sup className="ml-px text-[8px]">of 10</sup>
-            </span>
-          </div>
+        <div className="mx-auto flex flex-col items-center text-center">
+          <p className="text-[13px] font-light tracking-[0.04em] text-ink-muted lg:text-[15px]">
+            Democratic Pulse
+          </p>
 
-          <h1 className="mt-3 max-w-[1312px] text-[39px] font-semibold uppercase leading-[1.07] text-[#222] sm:text-[64px] md:text-[92px] lg:text-[130px] xl:text-[158px]">
-            SSTR - Friction Reduction
+          <h1 className="mt-6 text-[42px] font-semibold leading-[1.05] tracking-tight text-ink sm:text-[58px] md:text-[74px] lg:mt-8 lg:text-[92px] xl:text-[108px]">
+            Delightful
+            <br />
+            events
+            <br />
+            <span
+              className="bg-clip-text text-transparent"
+              style={{
+                backgroundImage:
+                  "linear-gradient(97deg, var(--color-eu-blue) 0%, var(--color-eu-blue) 35%, var(--color-eu-gold) 100%)",
+              }}
+            >
+              start here
+            </span>
           </h1>
 
-          <a href="#" className="mt-4 flex items-center gap-2.5 lg:mt-6">
-            <span className="relative size-[32px] overflow-hidden rounded-full">
-              <Image
-                src="/images/home/avatar-dmitry-golub.png"
-                alt="Dmitry Golub"
-                fill
-                sizes="32px"
-                className="object-cover"
-              />
-            </span>
-            <span className="hidden border-b border-[#222] text-[19px] font-semibold text-[#222] lg:inline">
-              Dmitry Golub
-            </span>
-          </a>
-        </div>
+          <p className="mt-6 max-w-[480px] text-[16px] font-light leading-[1.5] text-ink-secondary lg:mt-8 lg:max-w-[560px] lg:text-[19px]">
+            Discover events, communities, and opportunities driving change across Europe.
+          </p>
 
-        <div className="relative mx-auto mt-9 aspect-[1600/1200] w-full max-w-[1600px] overflow-hidden rounded-lg lg:mt-14">
-          <Image
-            src="/images/home/hero-screenshot.png"
-            alt="SSTR - Friction Reduction"
-            fill
-            priority
-            sizes="(min-width: 1600px) 1600px, 100vw"
-            className="object-cover"
-          />
+          <a
+            href="#"
+            className="mt-8 inline-flex items-center gap-2.5 rounded-full bg-eu-blue px-8 py-4 text-[15px] font-medium text-white shadow-card transition-all hover:brightness-110 lg:mt-9 lg:px-10 lg:py-[18px] lg:text-[17px]"
+          >
+            Explore Opportunities
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
+              <path
+                d="M2 8h11.5M9 3.5 13.5 8 9 12.5"
+                stroke="currentColor"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </a>
+
+          <a
+            href="#"
+            className="mt-4 inline-flex items-center gap-1.5 text-[14px] font-medium text-ink-muted transition-colors hover:text-accent lg:mt-5 lg:text-[15px]"
+          >
+            <span className="border-b border-current/30 pb-0.5">Discover Events</span>
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden>
+              <path
+                d="M2 8h11.5M9 3.5 13.5 8 9 12.5"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </a>
         </div>
       </Container>
     </section>

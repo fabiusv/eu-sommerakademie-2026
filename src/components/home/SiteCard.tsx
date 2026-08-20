@@ -4,7 +4,7 @@ import type { SiteEntry } from "@/lib/home-data";
 export default function SiteCard({ name, image, avatar, by, pro }: SiteEntry) {
   return (
     <a href="#" className="group block">
-      <div className="relative aspect-[592/444] overflow-hidden rounded-[14px] bg-[#dcdcdc]">
+      <div className="relative aspect-[592/444] overflow-hidden rounded-[14px] bg-surface shadow-card">
         <Image
           src={image}
           alt={name}
@@ -14,17 +14,19 @@ export default function SiteCard({ name, image, avatar, by, pro }: SiteEntry) {
         />
       </div>
       <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2">
-        <span className="text-[17px] font-semibold text-[#222] lg:text-[20px]">{name}</span>
-        <span className="text-[10px] font-light text-[#222]">by</span>
+        <span className="text-[17px] font-semibold text-ink lg:text-[20px]">{name}</span>
+        <span className="text-[10px] font-light text-ink-secondary">by</span>
         <span className="flex items-center gap-2">
           <span className="relative size-[28px] overflow-hidden rounded-full lg:size-[32px]">
             <Image src={avatar} alt={by} fill sizes="32px" className="object-cover" />
           </span>
-          <span className="border-b border-[#222] text-[17px] font-semibold text-[#222] lg:text-[20px]">
+          <span className="border-b border-ink/40 text-[17px] font-semibold text-ink lg:text-[20px]">
             {by}
           </span>
           {pro && (
-            <span className="text-[7px] font-medium tracking-wide text-[#222]">PRO</span>
+            <span className="rounded bg-eu-yellow px-1 py-[1px] text-[7px] font-medium tracking-wide text-eu-blue">
+              PRO
+            </span>
           )}
         </span>
       </div>
