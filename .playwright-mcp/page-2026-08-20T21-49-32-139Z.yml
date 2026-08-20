@@ -1,0 +1,47 @@
+- generic [active] [ref=f10e1]:
+  - generic [ref=f10e2]:
+    - banner:
+      - generic:
+        - link "Democratic Pulse":
+          - /url: /
+        - navigation:
+          - generic:
+            - searchbox "Search"
+        - generic:
+          - link "Sign in":
+            - /url: "#"
+          - button "EN"
+    - main [ref=f10e3]:
+      - generic [ref=f10e6]:
+        - generic [ref=f10e9]:
+          - paragraph [ref=f10e10]: Member sign in
+          - heading "Europe starts with people showing up." [level=2] [ref=f10e11]
+          - paragraph [ref=f10e12]: Democratic Pulse follows the events, communities, and initiatives where that happens — one city at a time.
+        - generic [ref=f10e14]:
+          - generic [ref=f10e15]:
+            - heading "Welcome back" [level=1] [ref=f10e16]
+            - paragraph [ref=f10e17]: Sign in to keep up with the events, communities, and initiatives you follow.
+          - generic [ref=f10e19]:
+            - generic [ref=f10e20]:
+              - button "Continue with Google" [ref=f10e21]
+              - button "Continue with Apple" [ref=f10e28]
+            - generic [ref=f10e33]: or
+            - group [ref=f10e38]:
+              - generic [ref=f10e39]:
+                - generic [ref=f10e40]: Email
+                - textbox "Email" [ref=f10e41]
+              - generic [ref=f10e42]:
+                - generic [ref=f10e43]:
+                  - generic [ref=f10e44]: Password
+                  - generic [ref=f10e45]:
+                    - textbox "Password" [ref=f10e46]
+                    - button "Show password" [ref=f10e47]
+                - link "Forgot password?" [ref=f10e52] [cursor=pointer]:
+                  - /url: "#"
+              - button "Sign in" [ref=f10e53]
+          - paragraph [ref=f10e58]:
+            - text: New to Democratic Pulse?
+            - link "Create account" [ref=f10e59] [cursor=pointer]:
+              - /url: /sign-up
+  - button "Open Next.js Dev Tools" [ref=f10e65] [cursor=pointer]
+  - alert [ref=f10e69]

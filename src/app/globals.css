@@ -185,6 +185,29 @@ body {
   }
 }
 
+/* ---------- Auth pages entrance (no hyperspace preloader) ---------- */
+
+@keyframes auth-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.auth-fade-in {
+  animation: auth-fade-up 0.45s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-fade-in {
+    animation: none;
+  }
+}
+
 ::selection {
   background-color: var(--color-eu-blue);
   color: white;

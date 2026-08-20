@@ -10,10 +10,13 @@ export default function Hero() {
   const { headlineVisible, copyVisible, ctaVisible, gradientActive } = useHeroIntro();
 
   return (
-    <section id="hero" className="bg-page pt-14 pb-16 lg:pt-20 lg:pb-[90px]">
+    <section
+      id="hero"
+      className="flex min-h-[100svh] items-center bg-page pt-14 pb-16 lg:min-h-[90dvh] lg:pt-0 lg:pb-0"
+    >
       <Container>
         <div className="mx-auto flex flex-col items-center text-center">
-          <h1 className="text-[42px] font-semibold leading-[1.05] tracking-tight text-ink sm:text-[58px] md:text-[74px] lg:text-[92px] xl:text-[108px]">
+          <h1 className="text-[42px] font-semibold leading-[1.05] tracking-tight text-ink sm:text-[58px] md:text-[74px] lg:text-[92px] xl:text-[clamp(108px,calc(3.75vw_+_54px),150px)]">
             <span
               className={`hero-intro-line ${headlineVisible ? "hero-intro-line-visible" : ""}`}
               style={{ transitionDelay: "0ms" }}
@@ -52,21 +55,21 @@ export default function Hero() {
 
           <p
             style={{ transitionDelay: "60ms" }}
-            className={`hero-intro-fade mt-6 max-w-[480px] text-[16px] font-light leading-[1.5] text-ink-secondary lg:mt-7 lg:max-w-[560px] lg:text-[19px] ${
+            className={`hero-intro-fade mt-6 max-w-[480px] text-[16px] font-light leading-[1.5] text-ink-secondary lg:mt-7 lg:max-w-[clamp(560px,calc(7.14vw_+_457px),640px)] lg:text-[clamp(19px,calc(0.27vw_+_15.1px),22px)] ${
               copyVisible ? "hero-intro-fade-visible" : ""
             }`}
           >
             Discover events, communities, and opportunities driving change across Europe.
           </p>
 
-          <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:gap-6 lg:mt-10">
+          <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:gap-6 lg:mt-[clamp(40px,calc(1.43vw_+_19.4px),56px)]">
             <span
               style={{ transitionDelay: "0ms" }}
               className={`hero-intro-fade inline-block ${ctaVisible ? "hero-intro-fade-visible" : ""}`}
             >
               <a
                 href="#"
-                className="inline-flex items-center gap-2.5 rounded-full bg-eu-blue px-8 py-4 text-[15px] font-medium text-white shadow-card transition-all hover:brightness-110 lg:px-10 lg:py-[18px] lg:text-[17px]"
+                className="inline-flex items-center gap-2.5 rounded-full bg-eu-blue px-8 py-4 text-[15px] font-medium text-white shadow-card transition-all hover:brightness-110 lg:px-[clamp(40px,calc(0.54vw_+_32.3px),46px)] lg:py-[clamp(18px,calc(0.27vw_+_14.1px),21px)] lg:text-[clamp(17px,calc(0.18vw_+_14.4px),19px)]"
               >
                 Explore Opportunities
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>

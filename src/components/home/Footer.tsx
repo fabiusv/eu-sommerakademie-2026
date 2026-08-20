@@ -17,16 +17,21 @@ export default function Footer() {
       <Container>
         <Link href="/" className="flex w-fit items-center gap-2">
           <PulseMark className="size-2.5 text-eu-blue" />
-          <span className="text-[15px] font-semibold tracking-tight text-ink">Democratic Pulse</span>
+          <span className="text-[15px] font-semibold tracking-tight text-ink lg:text-[clamp(15px,calc(0.18vw_+_12.4px),17px)]">
+            Democratic Pulse
+          </span>
         </Link>
 
-        <div className="mt-12 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:mt-16">
+        {/* Capped at 2xl+: a 3-column fr grid would otherwise stretch these short link
+            lists across the whole wide container, turning normal gaps into huge dead
+            space between columns instead of using the width for anything. */}
+        <div className="mt-12 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:mt-16 lg:gap-x-[clamp(24px,calc(0.71vw_+_13.7px),32px)] lg:gap-y-[clamp(40px,calc(1.43vw_+_19.4px),56px)] 2xl:max-w-[clamp(1400px,calc(19.53vw_+_1100px),1600px)]">
           {columns.map((col) => (
             <div key={col.heading}>
-              <p className="text-[12px] font-semibold tracking-[0.04em] text-ink-muted uppercase">
+              <p className="text-[12px] font-semibold tracking-[0.04em] text-ink-muted uppercase lg:text-[clamp(12px,calc(0.09vw_+_10.7px),13px)]">
                 {col.heading}
               </p>
-              <ul className="mt-4 flex flex-col gap-3 text-[14px] text-ink-secondary">
+              <ul className="mt-4 flex flex-col gap-3 text-[14px] text-ink-secondary lg:text-[clamp(14px,calc(0.18vw_+_11.4px),16px)]">
                 {col.links.map((link) => (
                   <li key={link}>
                     <a href="#" className="transition-colors hover:text-eu-blue">
@@ -39,7 +44,7 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="mt-14 flex flex-col gap-6 border-t border-line pt-6 text-[12px] text-ink-secondary lg:mt-16 lg:flex-row lg:items-center lg:justify-between">
+        <div className="mt-14 flex flex-col gap-6 border-t border-line pt-6 text-[12px] text-ink-secondary lg:mt-16 lg:flex-row lg:items-center lg:justify-between lg:text-[clamp(12px,calc(0.09vw_+_10.7px),13px)]">
           <ul className="flex flex-wrap gap-6">
             {legal.map((item) => (
               <li key={item}>

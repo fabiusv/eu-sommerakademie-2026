@@ -18,12 +18,16 @@ function EuStarIcon({ opacity }: { opacity: number }) {
   );
 }
 
-export default function EuOrbitStars() {
+export default function EuOrbitStars({
+  radius = "clamp(220px, 19vw, 320px)",
+}: {
+  radius?: string;
+}) {
   return (
     <div className="pointer-events-none absolute inset-0 flex items-center justify-center" aria-hidden>
       <div
         className="animate-orbit relative"
-        style={{ "--eu-orbit-radius": "clamp(220px, 19vw, 320px)" } as CSSProperties}
+        style={{ "--eu-orbit-radius": radius } as CSSProperties}
       >
         {STAR_ANGLES.map((angle, i) => (
           <div

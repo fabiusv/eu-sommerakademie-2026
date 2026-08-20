@@ -24,7 +24,7 @@ export default function FeaturedCities() {
           <SectionEyebrow index="01" label="Featured cities" />
 
           <div className="mt-8 flex flex-col gap-6 lg:mt-10 lg:flex-row lg:items-end lg:justify-between">
-            <h2 className="max-w-[420px] text-[28px] font-semibold leading-[1.2] text-ink lg:text-[38px]">
+            <h2 className="max-w-[420px] text-[28px] font-semibold leading-[1.2] text-ink lg:text-[clamp(38px,calc(0.71vw_+_27.7px),46px)]">
               Where Democratic Pulse is most active right now.
             </h2>
             <a
@@ -38,12 +38,12 @@ export default function FeaturedCities() {
             </a>
           </div>
 
-          <div className="mt-10 grid grid-cols-1 gap-4 lg:mt-14 lg:grid-cols-12 lg:items-stretch lg:gap-6">
+          <div className="mt-10 grid grid-cols-1 gap-4 lg:mt-14 lg:grid-cols-12 lg:items-stretch lg:gap-[clamp(24px,calc(0.71vw_+_13.7px),32px)]">
             {/* Featured city — the one immersive, always-visible tile the rest of the
                 section plays against. */}
             <a
               href="#"
-              className="group relative flex min-h-[400px] flex-col justify-between overflow-hidden rounded-3xl bg-gradient-to-br from-[#00194f] to-eu-blue p-8 lg:col-span-5 lg:min-h-0 lg:p-10"
+              className="group relative flex min-h-[400px] flex-col justify-between overflow-hidden rounded-3xl bg-gradient-to-br from-[#00194f] to-eu-blue p-8 lg:col-span-5 lg:min-h-0 lg:p-[clamp(40px,calc(1.43vw_+_19.4px),56px)]"
             >
               <CityLandmark
                 city={featured.name}
@@ -59,7 +59,7 @@ export default function FeaturedCities() {
               </div>
 
               <div className="relative">
-                <h3 className="text-[46px] font-semibold leading-[0.95] text-white lg:text-[60px]">
+                <h3 className="text-[46px] font-semibold leading-[0.95] text-white lg:text-[clamp(60px,calc(1.43vw_+_39.4px),76px)]">
                   {featured.name}
                 </h3>
                 <p className="mt-3 text-[15px] text-white/65">{featured.country}</p>
@@ -87,7 +87,7 @@ export default function FeaturedCities() {
                 <a
                   key={city.name}
                   href="#"
-                  className="group relative flex items-center gap-4 border-t border-line px-3 py-5 transition-colors duration-150 first:border-t-0 active:bg-page-secondary sm:gap-6 sm:px-4 lg:py-6"
+                  className="group relative flex items-center gap-4 border-t border-line px-3 py-5 transition-colors duration-150 first:border-t-0 active:bg-page-secondary sm:gap-6 sm:px-4 lg:py-[clamp(24px,calc(0.71vw_+_13.7px),32px)]"
                 >
                   <span
                     aria-hidden
@@ -101,7 +101,7 @@ export default function FeaturedCities() {
                   </span>
 
                   <span className="relative flex-1 py-1 transition-transform duration-500 ease-out [@media(hover:hover)]:group-hover:translate-x-1">
-                    <span className="block text-[24px] font-semibold leading-tight text-ink transition-colors duration-500 ease-out [@media(hover:hover)]:group-hover:text-white sm:text-[28px]">
+                    <span className="block text-[24px] font-semibold leading-tight text-ink transition-colors duration-500 ease-out [@media(hover:hover)]:group-hover:text-white sm:text-[28px] lg:text-[clamp(28px,calc(0.54vw_+_20.3px),34px)]">
                       {city.name}
                     </span>
                     <span className="mt-0.5 block text-[13px] text-ink-muted transition-colors duration-500 ease-out [@media(hover:hover)]:group-hover:text-white/65">

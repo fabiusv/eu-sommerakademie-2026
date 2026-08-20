@@ -1,0 +1,49 @@
+- generic [active] [ref=f9e1]:
+  - generic [ref=f9e2]:
+    - banner:
+      - generic:
+        - link "Democratic Pulse":
+          - /url: /
+        - navigation:
+          - generic:
+            - searchbox "Search"
+        - generic:
+          - link "Sign in":
+            - /url: "#"
+          - button "EN"
+    - main [ref=f9e3]:
+      - generic [ref=f9e6]:
+        - generic [ref=f9e9]:
+          - paragraph [ref=f9e10]: New member
+          - heading "Europe starts with people showing up." [level=2] [ref=f9e11]
+          - paragraph [ref=f9e12]: Democratic Pulse follows the events, communities, and initiatives where that happens — one city at a time.
+        - generic [ref=f9e14]:
+          - generic [ref=f9e15]:
+            - heading "Create your account" [level=1] [ref=f9e16]
+            - paragraph [ref=f9e17]: Join Democratic Pulse to discover and take part in what’s happening across Europe.
+          - generic [ref=f9e19]:
+            - generic [ref=f9e20]:
+              - button "Continue with Google" [ref=f9e21]
+              - button "Continue with Apple" [ref=f9e28]
+            - generic [ref=f9e33]: or
+            - group [ref=f9e38]:
+              - generic [ref=f9e39]:
+                - generic [ref=f9e40]: Email
+                - textbox "Email" [ref=f9e41]
+              - generic [ref=f9e42]:
+                - generic [ref=f9e43]: Password
+                - generic [ref=f9e44]:
+                  - textbox "Password" [ref=f9e45]
+                  - button "Show password" [ref=f9e46]
+              - generic [ref=f9e50]:
+                - generic [ref=f9e51]: Confirm password
+                - generic [ref=f9e52]:
+                  - textbox "Confirm password" [ref=f9e53]
+                  - button "Show password" [ref=f9e54]
+              - button "Create account" [ref=f9e58]
+          - paragraph [ref=f9e63]:
+            - text: Already have an account?
+            - link "Sign in instead" [ref=f9e64] [cursor=pointer]:
+              - /url: /sign-in
+  - button "Open Next.js Dev Tools" [ref=f9e70] [cursor=pointer]
+  - alert [ref=f9e74]

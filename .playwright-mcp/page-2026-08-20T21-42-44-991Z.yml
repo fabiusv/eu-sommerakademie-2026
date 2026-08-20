@@ -1,0 +1,47 @@
+- generic [active] [ref=f7e1]:
+  - generic [ref=f7e2]:
+    - banner:
+      - generic:
+        - link "Democratic Pulse":
+          - /url: /
+        - navigation:
+          - generic:
+            - searchbox "Search"
+        - generic:
+          - link "Sign in":
+            - /url: "#"
+          - button "EN"
+    - main [ref=f7e3]:
+      - generic [ref=f7e5]:
+        - generic [ref=f7e8]:
+          - paragraph [ref=f7e9]: Member sign in
+          - heading "Europe starts with people showing up." [level=2] [ref=f7e10]
+          - paragraph [ref=f7e11]: Democratic Pulse follows the events, communities, and initiatives where that happens — one city at a time.
+        - generic [ref=f7e13]:
+          - generic [ref=f7e14]:
+            - heading "Welcome back" [level=1] [ref=f7e15]
+            - paragraph [ref=f7e16]: Sign in to keep up with the events, communities, and initiatives you follow.
+          - generic [ref=f7e18]:
+            - generic [ref=f7e19]:
+              - button "Continue with Google" [ref=f7e20]
+              - button "Continue with Apple" [ref=f7e27]
+            - generic [ref=f7e32]: or
+            - group [ref=f7e37]:
+              - generic [ref=f7e38]:
+                - generic [ref=f7e39]: Email
+                - textbox "Email" [ref=f7e40]
+              - generic [ref=f7e41]:
+                - generic [ref=f7e42]:
+                  - generic [ref=f7e43]: Password
+                  - generic [ref=f7e44]:
+                    - textbox "Password" [ref=f7e45]
+                    - button "Show password" [ref=f7e46]
+                - link "Forgot password?" [ref=f7e51] [cursor=pointer]:
+                  - /url: "#"
+              - button "Sign in" [ref=f7e52]
+          - paragraph [ref=f7e57]:
+            - text: New to Democratic Pulse?
+            - link "Create account" [ref=f7e58] [cursor=pointer]:
+              - /url: /sign-up
+  - button "Open Next.js Dev Tools" [ref=f7e64] [cursor=pointer]
+  - alert [ref=f7e68]

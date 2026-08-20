@@ -9,7 +9,7 @@ import CtaBanner from "@/components/home/CtaBanner";
 import Footer from "@/components/home/Footer";
 import FloatingDock from "@/components/home/FloatingDock";
 import { NavVisibilityProvider } from "@/components/home/NavVisibility";
-import { HeroIntroProvider } from "@/components/home/HeroIntroProvider";
+import { HeroIntroProvider, HeroIntroReveal } from "@/components/home/HeroIntroProvider";
 
 export default function Home() {
   return (
@@ -18,14 +18,18 @@ export default function Home() {
         <Header />
         <main>
           <Hero />
-          <EuropeMarquee />
-          <FeaturedCities />
-          <StatBanner />
-          <UpcomingEvents />
-          <CommunityAndOpportunities />
-          <CtaBanner />
+          <HeroIntroReveal>
+            <EuropeMarquee />
+            <FeaturedCities />
+            <StatBanner />
+            <UpcomingEvents />
+            <CommunityAndOpportunities />
+            <CtaBanner />
+          </HeroIntroReveal>
         </main>
-        <Footer />
+        <HeroIntroReveal>
+          <Footer />
+        </HeroIntroReveal>
         <FloatingDock />
       </NavVisibilityProvider>
     </HeroIntroProvider>

@@ -17,11 +17,11 @@ export default function UpcomingEvents() {
       <Container>
         <Reveal>
           <SectionEyebrow index="02" label="Upcoming events" />
-          <h2 className="mt-8 max-w-[520px] text-[28px] font-semibold leading-[1.2] text-ink lg:mt-10 lg:text-[38px]">
+          <h2 className="mt-8 max-w-[520px] text-[28px] font-semibold leading-[1.2] text-ink lg:mt-10 lg:text-[clamp(38px,calc(0.71vw_+_27.7px),46px)]">
             Community-led events happening across Europe.
           </h2>
 
-          <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3 lg:gap-6">
+          <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3 lg:gap-[clamp(24px,calc(0.71vw_+_13.7px),32px)]">
             {events.map((event, i) => (
               <a
                 key={event.title}
@@ -44,8 +44,8 @@ export default function UpcomingEvents() {
                   </div>
                 </div>
 
-                <div className="flex flex-1 flex-col justify-between p-6 lg:p-7">
-                  <h3 className="text-[19px] font-semibold leading-[1.3] text-ink lg:text-[21px]">
+                <div className="flex flex-1 flex-col justify-between p-6 lg:p-[clamp(28px,calc(0.71vw_+_17.7px),36px)]">
+                  <h3 className="text-[19px] font-semibold leading-[1.3] text-ink lg:text-[clamp(21px,calc(0.27vw_+_17.1px),24px)]">
                     {event.title}
                   </h3>
                   <div className="mt-6 flex items-center justify-between border-t border-line pt-4 text-[13px] font-medium text-ink-secondary">

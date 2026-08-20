@@ -67,7 +67,7 @@ export default function NotFoundHero() {
     <section
       id="hero"
       ref={sectionRef}
-      className="relative overflow-hidden bg-page pt-16 pb-24 lg:pt-20 lg:pb-32"
+      className="relative overflow-hidden bg-page pt-16 pb-24 lg:pt-20 lg:pb-32 2xl:flex 2xl:min-h-[min(78vh,760px)] 2xl:flex-col 2xl:justify-center 2xl:pt-0 2xl:pb-0"
     >
       <Container>
         <div aria-hidden="true" className="select-none text-right">
@@ -75,7 +75,7 @@ export default function NotFoundHero() {
               on this span, not the div above, so text-right can position it: an inline-block
               box participates in its parent's inline alignment, a block one wouldn't. */}
           <span
-            className={`hero-intro-line ${headlineVisible ? "hero-intro-line-visible" : ""} font-semibold leading-[0.82] tracking-tighter text-ink text-[clamp(6.5rem,34vw,11.5rem)] lg:text-[clamp(15rem,17vw,21.5rem)]`}
+            className={`hero-intro-line ${headlineVisible ? "hero-intro-line-visible" : ""} font-semibold leading-[0.82] tracking-tighter text-ink text-[clamp(6.5rem,34vw,11.5rem)] lg:text-[clamp(15rem,17vw,27rem)]`}
           >
             4
             <span
@@ -91,11 +91,11 @@ export default function NotFoundHero() {
           </span>
         </div>
 
-        <div className="mt-2 grid gap-10 lg:mt-6 lg:grid-cols-12 lg:items-start lg:gap-x-8">
+        <div className="mt-2 grid gap-10 lg:mt-6 lg:grid-cols-12 lg:items-start lg:gap-x-[clamp(32px,calc(0.71vw_+_21.7px),40px)]">
           <div className="lg:col-span-6">
             <h1
               style={{ transitionDelay: "0ms" }}
-              className={`hero-intro-fade text-[30px] font-semibold leading-[1.08] tracking-tight text-ink sm:text-[38px] lg:text-[46px] xl:text-[52px] ${
+              className={`hero-intro-fade text-[30px] font-semibold leading-[1.08] tracking-tight text-ink sm:text-[38px] lg:text-[46px] xl:text-[clamp(52px,calc(1.43vw_+_31.4px),68px)] ${
                 copyVisible ? "hero-intro-fade-visible" : ""
               }`}
             >
@@ -104,10 +104,10 @@ export default function NotFoundHero() {
             </h1>
           </div>
 
-          <div className="lg:col-span-5 lg:col-start-8 lg:pt-3">
+          <div className="lg:col-span-6 lg:col-start-7 lg:pt-3">
             <p
               style={{ transitionDelay: "60ms" }}
-              className={`hero-intro-fade max-w-[420px] text-[16px] font-light leading-[1.6] text-ink-secondary lg:text-[18px] ${
+              className={`hero-intro-fade max-w-[clamp(420px,calc(5.36vw_+_342.8px),480px)] text-[16px] font-light leading-[1.6] text-ink-secondary lg:text-[clamp(18px,calc(0.27vw_+_14.1px),21px)] ${
                 copyVisible ? "hero-intro-fade-visible" : ""
               }`}
             >
@@ -121,7 +121,7 @@ export default function NotFoundHero() {
             >
               <Link
                 href="/"
-                className="inline-flex items-center gap-2.5 rounded-full bg-eu-blue px-8 py-4 text-[15px] font-medium text-white shadow-card transition-all hover:brightness-110 lg:px-9 lg:py-[17px] lg:text-[16px]"
+                className="inline-flex items-center gap-2.5 rounded-full bg-eu-blue px-8 py-4 text-[15px] font-medium text-white shadow-card transition-all hover:brightness-110 lg:px-[clamp(36px,calc(0.54vw_+_28.3px),42px)] lg:py-[clamp(17px,calc(0.18vw_+_14.4px),19px)] lg:text-[clamp(16px,calc(0.18vw_+_13.4px),18px)]"
               >
                 Back Home
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>

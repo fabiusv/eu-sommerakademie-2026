@@ -79,6 +79,39 @@ export function HeroIntroProvider({
     };
   }, []);
 
+  // Scroll is locked for as long as the intro hasn't reached `ready` — covers both the
+  // preloader and the Hero reveal that follows it, keyed off the same state this context
+  // already produces rather than a timer of its own. `touchmove` is blocked directly
+  // (not just body `overflow`) because iOS Safari can still rubber-band the page behind a
+  // fixed-position element via touch even with `overflow: hidden` set.
+  useEffect(() => {
+    if (state.ready) return;
+
+    const { documentElement, body } = document;
+    const previousHtmlOverflow = documentElement.style.overflow;
+    const previousBodyOverflow = body.style.overflow;
+    const previousBodyTouchAction = body.style.touchAction;
+    const previousOverscroll = body.style.overscrollBehaviorY;
+
+    documentElement.style.overflow = "hidden";
+    body.style.overflow = "hidden";
+    body.style.touchAction = "none";
+    body.style.overscrollBehaviorY = "none";
+
+    const preventTouchMove = (event: TouchEvent) => {
+      event.preventDefault();
+    };
+    document.addEventListener("touchmove", preventTouchMove, { passive: false });
+
+    return () => {
+      documentElement.style.overflow = previousHtmlOverflow;
+      body.style.overflow = previousBodyOverflow;
+      body.style.touchAction = previousBodyTouchAction;
+      body.style.overscrollBehaviorY = previousOverscroll;
+      document.removeEventListener("touchmove", preventTouchMove);
+    };
+  }, [state.ready]);
+
   const start = () => {
     if (startedRef.current) return;
     startedRef.current = true;
@@ -123,4 +156,29 @@ export function HeroIntroProvider({
 
 export function useHeroIntro() {
   return useContext(HeroIntroContext);
+}
+
+// Gates everything below the Hero (marquee, cards, footer, ...) behind the same `ready`
+// flag Hero itself reveals on. Children stay mounted the whole time — geometry never
+// changes — only opacity/visibility/pointer-events flip, so there's no second layout
+// shift and no window where lower content is visible before the Hero intro finishes.
+export function HeroIntroReveal({
+  children,
+  className = "",
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  const { ready } = useHeroIntro();
+
+  return (
+    <div
+      aria-hidden={!ready}
+      className={`transition-opacity duration-500 ease-out motion-reduce:transition-none ${
+        ready ? "opacity-100" : "invisible pointer-events-none opacity-0"
+      } ${className}`}
+    >
+      {children}
+    </div>
+  );
 }

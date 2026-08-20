@@ -14,7 +14,7 @@ const phrases = [
 function Phrase({ text }: { text: string }) {
   return (
     <span className="flex shrink-0 items-center gap-12 whitespace-nowrap lg:gap-16">
-      <span className="text-[15px] font-medium text-ink lg:text-[17px]">{text}</span>
+      <span className="text-[15px] font-medium text-ink lg:text-[clamp(17px,calc(0.18vw_+_14.4px),19px)]">{text}</span>
       <PulseMark className="size-1.5 shrink-0 text-eu-blue/40" />
     </span>
   );
