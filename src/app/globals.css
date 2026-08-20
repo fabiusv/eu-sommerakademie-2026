@@ -37,6 +37,24 @@ body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
 
+/* Next.js's client-side <Link> navigation skips sticky/fixed elements when it looks for
+   a scroll target, then scrolls the next normal-flow sibling (this app's <main>) to the
+   viewport top — landing scrollY at Header's own rendered height instead of 0, since the
+   sticky header itself isn't counted. scroll-padding-top is the documented fix: it offsets
+   exactly what Next's scrollIntoView()-based positioning lands on, without touching
+   history/back-forward scroll restoration or any JS scrollTo. Mirrors Header's own
+   responsive height (h-[64px] / lg:h-[clamp(80px,calc(1.07vw+64.6px),92px)]) exactly, so it
+   stays correct at every breakpoint instead of just the mobile height. */
+html {
+  scroll-padding-top: 64px;
+}
+
+@media (min-width: 64rem) {
+  html {
+    scroll-padding-top: clamp(80px, calc(1.07vw + 64.6px), 92px);
+  }
+}
+
 .reveal {
   opacity: 0;
   transform: translateY(16px);
@@ -218,6 +236,9 @@ body {
   outline-offset: 2px;
 }
 
-.nav-search-field:focus-visible {
+/* Shared across every SearchField instance (nav, mobile menu, /events) — the wrapping
+   label owns the visible focus treatment via `focus-within:border-*`, so the input's own
+   native focus-visible outline would otherwise double up inside the rounded container. */
+.search-field-input:focus-visible {
   outline: none;
 }

@@ -1,0 +1,112 @@
+- generic [active] [ref=f37e1]:
+  - banner:
+    - generic:
+      - link "Democratic Pulse":
+        - /url: /
+      - navigation:
+        - generic:
+          - searchbox "Search"
+      - generic:
+        - link "Sign in":
+          - /url: "#"
+        - button "EN"
+  - main [ref=f37e2]:
+    - generic [ref=f37e4]:
+      - generic [ref=f37e6]:
+        - text: "4"
+        - generic [ref=f37e7]: "0"
+        - text: "4"
+      - generic [ref=f37e8]:
+        - 'heading "Error 404: You’re off the map." [level=1] [ref=f37e10]':
+          - generic [ref=f37e11]: "Error 404:"
+          - text: You’re off the map.
+        - generic [ref=f37e12]:
+          - paragraph [ref=f37e13]: The page you’re looking for isn’t here. There’s still plenty happening across Europe.
+          - link "Back Home" [ref=f37e15] [cursor=pointer]:
+            - /url: /
+  - contentinfo [ref=f37e18]:
+    - generic [ref=f37e19]:
+      - link "Democratic Pulse" [ref=f37e20] [cursor=pointer]:
+        - /url: /
+      - generic [ref=f37e25]:
+        - generic [ref=f37e26]:
+          - paragraph [ref=f37e27]: Discover
+          - list [ref=f37e28]:
+            - listitem [ref=f37e29]:
+              - link "Events" [ref=f37e30] [cursor=pointer]:
+                - /url: /events
+            - listitem [ref=f37e31]:
+              - link "Communities" [ref=f37e32] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f37e33]:
+              - link "Opportunities" [ref=f37e34] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f37e35]:
+              - link "Map" [ref=f37e36] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=f37e37]:
+          - paragraph [ref=f37e38]: Platform
+          - list [ref=f37e39]:
+            - listitem [ref=f37e40]:
+              - link "About" [ref=f37e41] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f37e42]:
+              - link "Interests" [ref=f37e43] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f37e44]:
+              - link "Initiatives" [ref=f37e45] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=f37e46]:
+          - paragraph [ref=f37e47]: Support
+          - list [ref=f37e48]:
+            - listitem [ref=f37e49]:
+              - link "FAQs" [ref=f37e50] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f37e51]:
+              - link "Contact" [ref=f37e52] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f37e53]:
+              - link "Sign in" [ref=f37e54] [cursor=pointer]:
+                - /url: /sign-in
+      - generic [ref=f37e55]:
+        - list [ref=f37e56]:
+          - listitem [ref=f37e57]:
+            - link "Cookies Policy" [ref=f37e58] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f37e59]:
+            - link "Legal Terms" [ref=f37e60] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f37e61]:
+            - link "Privacy Policy" [ref=f37e62] [cursor=pointer]:
+              - /url: "#"
+        - list [ref=f37e63]:
+          - listitem [ref=f37e64]:
+            - link "Instagram" [ref=f37e65] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f37e66]:
+            - link "LinkedIn" [ref=f37e67] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f37e68]:
+            - link "Twitter" [ref=f37e69] [cursor=pointer]:
+              - /url: "#"
+  - generic:
+    - button "Scroll to top"
+  - generic:
+    - navigation "Quick navigation":
+      - link "Democratic Pulse home":
+        - /url: /
+      - generic:
+        - link "Events":
+          - /url: /events
+        - link "Communities":
+          - /url: "#"
+        - link "Opportunities":
+          - /url: "#"
+        - link "Map":
+          - /url: "#"
+        - link "Initiatives":
+          - /url: "#"
+      - link "Join Europe":
+        - /url: "#"
+  - button "Open Next.js Dev Tools" [ref=f37e75] [cursor=pointer]
+  - alert [ref=f37e79]

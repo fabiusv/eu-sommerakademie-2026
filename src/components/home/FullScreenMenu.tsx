@@ -2,8 +2,16 @@
 
 import { useEffect, useRef, useState, useSyncExternalStore, type RefObject } from "react";
 import { createPortal } from "react-dom";
+import Link from "next/link";
+import SearchField from "./SearchField";
 
-const NAV_ITEMS = ["Events", "Communities", "Opportunities", "Map", "Initiatives"];
+const NAV_ITEMS = [
+  { label: "Events", href: "/events" },
+  { label: "Communities", href: "#" },
+  { label: "Opportunities", href: "#" },
+  { label: "Map", href: "#" },
+  { label: "Initiatives", href: "#" },
+];
 
 // Exit duration must match the CSS transition below — it's how long we keep the panel
 // mounted after `open` flips false so the close animation can finish before unmount.
@@ -212,37 +220,24 @@ export default function FullScreenMenu({
         <div className="flex flex-1 flex-col justify-between px-6 pt-8 sm:px-10">
           <div>
             <div className={enterClass} style={contentStep(0, 60)}>
-              <label className="group flex items-center gap-3 rounded-2xl bg-page-secondary px-5 py-4 transition-colors focus-within:ring-1 focus-within:ring-eu-blue">
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  aria-hidden
-                  className="shrink-0 text-ink-muted transition-colors group-focus-within:text-eu-blue"
-                >
-                  <circle cx="7" cy="7" r="5" stroke="currentColor" strokeWidth="1.4" />
-                  <path d="M11 11 14.5 14.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-                </svg>
-                <input
-                  type="search"
-                  aria-label="Search"
-                  placeholder="Search events, communities, and opportunities"
-                  className="w-full cursor-text appearance-none bg-transparent text-[15px] leading-none text-ink placeholder:text-ink-muted outline-none"
-                />
-              </label>
+              <SearchField
+                placeholder="Search events, communities, and opportunities"
+                containerClassName="gap-3 rounded-2xl px-5 py-4"
+                iconClassName="size-4"
+                inputClassName="text-[15px]"
+              />
             </div>
 
             <nav aria-label="Primary" className="mt-10">
               <ul>
-                {NAV_ITEMS.map((label, index) => (
+                {NAV_ITEMS.map((item, index) => (
                   <li
-                    key={label}
+                    key={item.label}
                     className={`border-b border-line first:border-t ${enterClass}`}
                     style={contentStep(index, 160)}
                   >
-                    <a
-                      href="#"
+                    <Link
+                      href={item.href}
                       onClick={onClose}
                       className="group flex items-baseline gap-4 py-4 [@media(hover:hover)]:hover:translate-x-1.5 active:translate-x-0.5 transition-transform duration-200"
                     >
@@ -250,9 +245,9 @@ export default function FullScreenMenu({
                         0{index + 1}
                       </span>
                       <span className="text-[clamp(1.75rem,8vw,2.5rem)] font-semibold leading-[1.15] tracking-tight text-ink transition-colors [@media(hover:hover)]:group-hover:text-eu-blue">
-                        {label}
+                        {item.label}
                       </span>
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -261,8 +256,8 @@ export default function FullScreenMenu({
 
           <div className="mt-12 flex flex-col items-center gap-8 pb-2">
             <div className={enterClass} style={contentStep(0, 480)}>
-              <a
-                href="#"
+              <Link
+                href="/sign-up"
                 onClick={onClose}
                 className="inline-flex items-center gap-2.5 rounded-full bg-eu-blue px-8 py-4 text-[16px] font-semibold text-white shadow-card-hover transition-all hover:brightness-110 active:scale-[0.98]"
               >
@@ -277,20 +272,20 @@ export default function FullScreenMenu({
                     strokeLinejoin="round"
                   />
                 </svg>
-              </a>
+              </Link>
             </div>
 
             <div
               className={`flex w-full items-center justify-between ${enterClass}`}
               style={contentStep(0, 540)}
             >
-              <a
-                href="#"
+              <Link
+                href="/sign-in"
                 onClick={onClose}
                 className="text-[14px] font-medium text-ink-secondary transition-colors [@media(hover:hover)]:hover:text-eu-blue"
               >
                 Sign in
-              </a>
+              </Link>
               <button
                 type="button"
                 className="flex items-center gap-1 text-[13px] font-medium text-ink-secondary transition-colors [@media(hover:hover)]:hover:text-eu-blue"

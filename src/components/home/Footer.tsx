@@ -3,9 +3,31 @@ import Container from "./Container";
 import PulseMark from "./PulseMark";
 
 const columns = [
-  { heading: "Discover", links: ["Events", "Communities", "Opportunities", "Map"] },
-  { heading: "Platform", links: ["About", "Interests", "Initiatives"] },
-  { heading: "Support", links: ["FAQs", "Contact", "Sign in"] },
+  {
+    heading: "Discover",
+    links: [
+      { label: "Events", href: "/events" },
+      { label: "Communities", href: "#" },
+      { label: "Opportunities", href: "#" },
+      { label: "Map", href: "#" },
+    ],
+  },
+  {
+    heading: "Platform",
+    links: [
+      { label: "About", href: "#" },
+      { label: "Interests", href: "#" },
+      { label: "Initiatives", href: "#" },
+    ],
+  },
+  {
+    heading: "Support",
+    links: [
+      { label: "FAQs", href: "#" },
+      { label: "Contact", href: "#" },
+      { label: "Sign in", href: "/sign-in" },
+    ],
+  },
 ];
 
 const legal = ["Cookies Policy", "Legal Terms", "Privacy Policy"];
@@ -33,10 +55,10 @@ export default function Footer() {
               </p>
               <ul className="mt-4 flex flex-col gap-3 text-[14px] text-ink-secondary lg:text-[clamp(14px,calc(0.18vw_+_11.4px),16px)]">
                 {col.links.map((link) => (
-                  <li key={link}>
-                    <a href="#" className="transition-colors hover:text-eu-blue">
-                      {link}
-                    </a>
+                  <li key={link.label}>
+                    <Link href={link.href} className="transition-colors hover:text-eu-blue">
+                      {link.label}
+                    </Link>
                   </li>
                 ))}
               </ul>

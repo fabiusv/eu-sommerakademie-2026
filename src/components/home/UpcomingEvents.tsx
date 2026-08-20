@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Container from "./Container";
 import Reveal from "./Reveal";
 import SectionEyebrow from "./SectionEyebrow";
@@ -75,8 +76,8 @@ export default function UpcomingEvents() {
           </div>
 
           <div className="mt-10 flex justify-center lg:mt-14">
-            <a
-              href="#"
+            <Link
+              href="/events"
               className="inline-flex items-center gap-1.5 text-[14px] font-medium text-ink-muted transition-colors hover:text-eu-blue"
             >
               View all events
@@ -89,7 +90,7 @@ export default function UpcomingEvents() {
                   strokeLinejoin="round"
                 />
               </svg>
-            </a>
+            </Link>
           </div>
         </Reveal>
       </Container>

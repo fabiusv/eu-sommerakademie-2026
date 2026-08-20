@@ -1,0 +1,196 @@
+- generic [active] [ref=f69e1]:
+  - banner:
+    - generic:
+      - link "Democratic Pulse":
+        - /url: /
+      - navigation:
+        - generic:
+          - generic:
+            - searchbox "Search events, communities, and opportunities"
+      - generic:
+        - link "Sign in":
+          - /url: /sign-in
+        - button "EN"
+  - main [ref=f69e2]:
+    - generic [ref=f69e4]:
+      - paragraph [ref=f69e5]: Events across Europe
+      - heading "Find something worth showing up for." [level=1] [ref=f69e6]
+      - paragraph [ref=f69e7]: Meetups, workshops, civic initiatives, volunteering, and cultural gatherings — find what’s happening near you or across the continent.
+      - searchbox "Search events, cities, topics, or communities" [ref=f69e13]
+    - generic [ref=f69e15]:
+      - generic [ref=f69e17]:
+        - button "When" [ref=f69e19]
+        - button "Where" [ref=f69e23]
+        - button "Category" [ref=f69e27]
+        - button "Format" [ref=f69e31]
+        - button "Language" [ref=f69e35]
+        - button "More filters" [ref=f69e38]
+      - generic [ref=f69e39]:
+        - generic [ref=f69e41]:
+          - paragraph [ref=f69e42]: 24 events
+          - generic [ref=f69e43]:
+            - group "Layout" [ref=f69e44]:
+              - generic [ref=f69e45]: Grid
+              - generic "Map view is coming soon" [ref=f69e51]: Map
+            - 'button "Sort: Recommended" [ref=f69e56]'
+        - generic [ref=f69e59]:
+          - link "Featured this week Civic Lab Berlin Berlin Climate Assembly Berlin Sep 8 Climate" [ref=f69e61] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=f69e67]: Featured this week
+            - generic [ref=f69e70]:
+              - paragraph [ref=f69e71]: Civic Lab Berlin
+              - heading "Berlin Climate Assembly" [level=3] [ref=f69e72]
+              - generic [ref=f69e74]:
+                - generic [ref=f69e75]: Berlin
+                - generic [ref=f69e79]: Sep 8
+                - generic [ref=f69e80]: Climate
+          - generic [ref=f69e84]:
+            - link [ref=f69e85] [cursor=pointer]:
+              - /url: "#"
+              - button "Save event" [ref=f69e95]
+              - generic [ref=f69e98]:
+                - paragraph [ref=f69e99]: Aug 23 · Berlin
+                - heading "Open Data Night" [level=3] [ref=f69e100]
+                - paragraph [ref=f69e102]: Civic Tech · English
+            - link [ref=f69e105] [cursor=pointer]:
+              - /url: "#"
+              - button "Save event" [ref=f69e112]
+              - generic [ref=f69e115]:
+                - paragraph [ref=f69e116]: Aug 27 · Berlin
+                - heading "Neighbourhood Clean-Up & Repair Café" [level=3] [ref=f69e117]
+                - paragraph [ref=f69e119]: Volunteering · German
+            - link [ref=f69e122] [cursor=pointer]:
+              - /url: "#"
+              - button "Save event" [ref=f69e132]
+              - generic [ref=f69e135]:
+                - paragraph [ref=f69e136]: Aug 30 · Lisbon
+                - heading "Open Cities Design Sprint" [level=3] [ref=f69e137]
+                - paragraph [ref=f69e139]: Civic Tech · English
+            - link [ref=f69e142] [cursor=pointer]:
+              - /url: "#"
+              - button "Save event" [ref=f69e150]
+              - generic [ref=f69e153]:
+                - paragraph [ref=f69e154]: Sep 14 · Lisbon
+                - heading "Community Housing Assembly" [level=3] [ref=f69e155]
+                - paragraph [ref=f69e157]: Democracy · Portuguese
+            - link [ref=f69e160] [cursor=pointer]:
+              - /url: "#"
+              - button "Save event" [ref=f69e167]
+              - generic [ref=f69e170]:
+                - paragraph [ref=f69e171]: Tomorrow · Lisbon
+                - heading "Coastal Clean-Up Lisbon" [level=3] [ref=f69e172]
+                - paragraph [ref=f69e174]: Climate · Portuguese
+            - link [ref=f69e177] [cursor=pointer]:
+              - /url: "#"
+              - button "Save event" [ref=f69e186]
+              - generic [ref=f69e189]:
+                - paragraph [ref=f69e190]: Sep 23 · Vienna
+                - heading "Cross-Border Culture Night" [level=3] [ref=f69e191]
+                - paragraph [ref=f69e193]: Culture · German
+            - link [ref=f69e196] [cursor=pointer]:
+              - /url: "#"
+              - button "Save event" [ref=f69e203]
+              - generic [ref=f69e206]:
+                - paragraph [ref=f69e207]: Aug 26 · Vienna
+                - heading "Climate Circle Monthly Meetup" [level=3] [ref=f69e208]
+                - paragraph [ref=f69e210]: Climate · German
+            - link [ref=f69e213] [cursor=pointer]:
+              - /url: "#"
+              - button "Save event" [ref=f69e221]
+              - generic [ref=f69e224]:
+                - paragraph [ref=f69e225]: Oct 2 · Vienna
+                - heading "Democracy in Schools Workshop" [level=3] [ref=f69e226]
+                - paragraph [ref=f69e228]: Education · German
+            - link [ref=f69e231] [cursor=pointer]:
+              - /url: "#"
+              - button "Save event" [ref=f69e239]
+              - generic [ref=f69e242]:
+                - paragraph [ref=f69e243]: Sep 1 · Warsaw
+                - heading "Youth Democracy Forum" [level=3] [ref=f69e244]
+                - paragraph [ref=f69e246]: Democracy · Polish
+          - button "Load more events" [ref=f69e250]
+  - contentinfo [ref=f69e251]:
+    - generic [ref=f69e252]:
+      - link "Democratic Pulse" [ref=f69e253] [cursor=pointer]:
+        - /url: /
+      - generic [ref=f69e258]:
+        - generic [ref=f69e259]:
+          - paragraph [ref=f69e260]: Discover
+          - list [ref=f69e261]:
+            - listitem [ref=f69e262]:
+              - link "Events" [ref=f69e263] [cursor=pointer]:
+                - /url: /events
+            - listitem [ref=f69e264]:
+              - link "Communities" [ref=f69e265] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f69e266]:
+              - link "Opportunities" [ref=f69e267] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f69e268]:
+              - link "Map" [ref=f69e269] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=f69e270]:
+          - paragraph [ref=f69e271]: Platform
+          - list [ref=f69e272]:
+            - listitem [ref=f69e273]:
+              - link "About" [ref=f69e274] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f69e275]:
+              - link "Interests" [ref=f69e276] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f69e277]:
+              - link "Initiatives" [ref=f69e278] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=f69e279]:
+          - paragraph [ref=f69e280]: Support
+          - list [ref=f69e281]:
+            - listitem [ref=f69e282]:
+              - link "FAQs" [ref=f69e283] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f69e284]:
+              - link "Contact" [ref=f69e285] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f69e286]:
+              - link "Sign in" [ref=f69e287] [cursor=pointer]:
+                - /url: /sign-in
+      - generic [ref=f69e288]:
+        - list [ref=f69e289]:
+          - listitem [ref=f69e290]:
+            - link "Cookies Policy" [ref=f69e291] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f69e292]:
+            - link "Legal Terms" [ref=f69e293] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f69e294]:
+            - link "Privacy Policy" [ref=f69e295] [cursor=pointer]:
+              - /url: "#"
+        - list [ref=f69e296]:
+          - listitem [ref=f69e297]:
+            - link "Instagram" [ref=f69e298] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f69e299]:
+            - link "LinkedIn" [ref=f69e300] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f69e301]:
+            - link "Twitter" [ref=f69e302] [cursor=pointer]:
+              - /url: "#"
+  - generic:
+    - button "Scroll to top"
+  - generic:
+    - navigation "Quick navigation":
+      - link "Democratic Pulse home":
+        - /url: /
+      - generic:
+        - link "Events":
+          - /url: /events
+        - link "Communities":
+          - /url: "#"
+        - link "Opportunities":
+          - /url: "#"
+        - link "Map":
+          - /url: "#"
+        - link "Initiatives":
+          - /url: "#"
+      - link "Join Europe":
+        - /url: /sign-up
+  - button "Open Next.js Dev Tools" [ref=f69e308] [cursor=pointer]

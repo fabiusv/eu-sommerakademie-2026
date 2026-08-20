@@ -6,7 +6,7 @@ import ScrollToTopButton from "./ScrollToTopButton";
 import { useNavVisibility } from "./NavVisibility";
 
 const navItems = [
-  { label: "Events", href: "#" },
+  { label: "Events", href: "/events" },
   { label: "Communities", href: "#" },
   { label: "Opportunities", href: "#" },
   { label: "Map", href: "#" },
@@ -33,8 +33,8 @@ export default function FloatingDock() {
       <div
         className={`nav-visibility fixed inset-x-0 bottom-5 z-40 flex justify-center px-20 transition-all duration-[250ms] ease-out lg:hidden ${visibility}`}
       >
-        <a
-          href="#"
+        <Link
+          href="/sign-up"
           className="flex shrink-0 items-center gap-2 rounded-full bg-eu-blue px-6 py-3.5 text-[13.5px] font-medium text-white shadow-card-hover transition-all hover:brightness-110"
         >
           Join Europe
@@ -47,7 +47,7 @@ export default function FloatingDock() {
               strokeLinejoin="round"
             />
           </svg>
-        </a>
+        </Link>
       </div>
 
       {/* Right: standalone logo button — mobile only */}
@@ -81,18 +81,18 @@ export default function FloatingDock() {
 
           <div className="hidden items-center gap-0.5 px-1 lg:flex">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.label}
                 href={item.href}
                 className="rounded-full px-4 py-2.5 text-[13.5px] font-medium text-ink-secondary transition-colors hover:bg-surface-hover hover:text-eu-blue"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </div>
 
-          <a
-            href="#"
+          <Link
+            href="/sign-up"
             className="flex shrink-0 items-center gap-2 rounded-full bg-eu-blue px-5 py-2.5 text-[13.5px] font-medium text-white transition-all hover:brightness-110 lg:px-6 lg:py-3 lg:text-[14px]"
           >
             Join Europe
@@ -105,7 +105,7 @@ export default function FloatingDock() {
                 strokeLinejoin="round"
               />
             </svg>
-          </a>
+          </Link>
         </nav>
       </div>
     </>

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import Container from "./Container";
 import { useHeroIntro } from "./HeroIntroProvider";
 
@@ -67,8 +68,8 @@ export default function Hero() {
               style={{ transitionDelay: "0ms" }}
               className={`hero-intro-fade inline-block ${ctaVisible ? "hero-intro-fade-visible" : ""}`}
             >
-              <a
-                href="#"
+              <Link
+                href="/events"
                 className="inline-flex items-center gap-2.5 rounded-full bg-eu-blue px-8 py-4 text-[15px] font-medium text-white shadow-card transition-all hover:brightness-110 lg:px-[clamp(40px,calc(0.54vw_+_32.3px),46px)] lg:py-[clamp(18px,calc(0.27vw_+_14.1px),21px)] lg:text-[clamp(17px,calc(0.18vw_+_14.4px),19px)]"
               >
                 Explore Opportunities
@@ -81,7 +82,7 @@ export default function Hero() {
                     strokeLinejoin="round"
                   />
                 </svg>
-              </a>
+              </Link>
             </span>
           </div>
         </div>

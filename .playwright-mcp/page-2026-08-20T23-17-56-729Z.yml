@@ -1,0 +1,43 @@
+- generic [active] [ref=f64e1]:
+  - status "Loading" [ref=f64e2]
+  - banner:
+    - generic:
+      - link "Democratic Pulse":
+        - /url: /
+      - navigation:
+        - generic:
+          - generic:
+            - searchbox "Search events, communities, and opportunities"
+      - generic:
+        - link "Sign in":
+          - /url: /sign-in
+        - button "EN"
+  - main [ref=f64e4]:
+    - generic [ref=f64e7]:
+      - heading "Delightful events start here" [level=1] [ref=f64e8]:
+        - generic [ref=f64e9]: Delightful
+        - generic [ref=f64e10]: events
+        - generic [ref=f64e11]: start here
+      - paragraph [ref=f64e13]: Discover events, communities, and opportunities driving change across Europe.
+      - link "Explore Opportunities" [ref=f64e16] [cursor=pointer]:
+        - /url: /events
+  - generic:
+    - button "Scroll to top"
+  - generic:
+    - navigation "Quick navigation":
+      - link "Democratic Pulse home":
+        - /url: /
+      - generic:
+        - link "Events":
+          - /url: /events
+        - link "Communities":
+          - /url: "#"
+        - link "Opportunities":
+          - /url: "#"
+        - link "Map":
+          - /url: "#"
+        - link "Initiatives":
+          - /url: "#"
+      - link "Join Europe":
+        - /url: /sign-up
+  - alert [ref=f64e19]

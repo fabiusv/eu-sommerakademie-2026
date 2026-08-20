@@ -1,0 +1,43 @@
+- generic [active] [ref=f43e1]:
+  - button "Open Next.js Dev Tools" [ref=f43e24] [cursor=pointer]
+  - alert [ref=f43e522]: Create account — Democratic Pulse
+  - generic [ref=f43e566]:
+    - banner [ref=f43e567]:
+      - generic [ref=f43e568]:
+        - link "Democratic Pulse" [ref=f43e569] [cursor=pointer]:
+          - /url: /
+        - button "Open menu" [ref=f43e574]
+    - main [ref=f43e579]:
+      - generic [ref=f43e582]:
+        - generic [ref=f43e585]:
+          - paragraph [ref=f43e586]: New member
+          - heading "Europe starts with people showing up." [level=2] [ref=f43e587]
+          - paragraph [ref=f43e588]: Democratic Pulse follows the events, communities, and initiatives where that happens — one city at a time.
+        - generic [ref=f43e590]:
+          - generic [ref=f43e591]:
+            - heading "Create your account" [level=1] [ref=f43e592]
+            - paragraph [ref=f43e593]: Join Democratic Pulse to discover and take part in what’s happening across Europe.
+          - generic [ref=f43e595]:
+            - generic [ref=f43e596]:
+              - button "Continue with Google" [ref=f43e597]
+              - button "Continue with Apple" [ref=f43e604]
+            - generic [ref=f43e609]: or
+            - group [ref=f43e614]:
+              - generic [ref=f43e615]:
+                - generic [ref=f43e616]: Email
+                - textbox "Email" [ref=f43e617]
+              - generic [ref=f43e618]:
+                - generic [ref=f43e619]: Password
+                - generic [ref=f43e620]:
+                  - textbox "Password" [ref=f43e621]
+                  - button "Show password" [ref=f43e622]
+              - generic [ref=f43e626]:
+                - generic [ref=f43e627]: Confirm password
+                - generic [ref=f43e628]:
+                  - textbox "Confirm password" [ref=f43e629]
+                  - button "Show password" [ref=f43e630]
+              - button "Create account" [ref=f43e634]
+          - paragraph [ref=f43e639]:
+            - text: Already have an account?
+            - link "Sign in instead" [ref=f43e640] [cursor=pointer]:
+              - /url: /sign-in

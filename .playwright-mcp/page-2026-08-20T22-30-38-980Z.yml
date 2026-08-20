@@ -1,0 +1,142 @@
+- generic [ref=f35e1]:
+  - banner [ref=f35e311]:
+    - generic [ref=f35e312]:
+      - link "Democratic Pulse" [ref=f35e313] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=f35e318]:
+        - searchbox "Search" [ref=f35e323]
+      - generic [ref=f35e324]:
+        - link "Sign in" [ref=f35e325] [cursor=pointer]:
+          - /url: "#"
+        - button "EN" [ref=f35e326]
+  - main [ref=f35e2]:
+    - generic [ref=f35e4]:
+      - paragraph [ref=f35e5]: Events across Europe
+      - heading "Find something worth showing up for." [level=1] [ref=f35e6]
+      - paragraph [ref=f35e7]: Meetups, workshops, civic initiatives, volunteering, and cultural gatherings — find what’s happening near you or across the continent.
+      - generic [ref=f35e9]:
+        - searchbox "Search events, cities, topics, or communities" [ref=f35e13]: lisbon
+        - button "Clear search" [ref=f35e329]
+    - generic [ref=f35e15]:
+      - generic [ref=f35e17]:
+        - button "When" [ref=f35e19]
+        - button "Where" [ref=f35e23]
+        - button "Category" [ref=f35e27]
+        - button "Format" [ref=f35e31]
+        - button "Language" [ref=f35e35]
+        - button "More filters" [ref=f35e38]
+      - generic [ref=f35e40]:
+        - paragraph [ref=f35e41]: 3 events
+        - generic [ref=f35e42]:
+          - group "Layout" [ref=f35e43]:
+            - generic [ref=f35e44]: Grid
+            - generic "Map view is coming soon" [ref=f35e50]: Map
+          - 'button "Sort: Recommended" [ref=f35e55]'
+      - generic [ref=f35e83]:
+        - link [ref=f35e332] [cursor=pointer]:
+          - /url: "#"
+          - button "Remove from saved events" [active] [pressed] [ref=f35e333]
+          - generic [ref=f35e134]:
+            - paragraph [ref=f35e135]: Aug 30 · Lisbon
+            - heading "Open Cities Design Sprint" [level=3] [ref=f35e136]
+            - paragraph [ref=f35e138]: Civic Tech · English
+        - link [ref=f35e141] [cursor=pointer]:
+          - /url: "#"
+          - button "Save event" [ref=f35e149]
+          - generic [ref=f35e152]:
+            - paragraph [ref=f35e153]: Sep 14 · Lisbon
+            - heading "Community Housing Assembly" [level=3] [ref=f35e154]
+            - paragraph [ref=f35e156]: Democracy · Portuguese
+        - link [ref=f35e159] [cursor=pointer]:
+          - /url: "#"
+          - button "Save event" [ref=f35e166]
+          - generic [ref=f35e169]:
+            - paragraph [ref=f35e170]: Tomorrow · Lisbon
+            - heading "Coastal Clean-Up Lisbon" [level=3] [ref=f35e171]
+            - paragraph [ref=f35e173]: Climate · Portuguese
+  - contentinfo [ref=f35e250]:
+    - generic [ref=f35e251]:
+      - link "Democratic Pulse" [ref=f35e252] [cursor=pointer]:
+        - /url: /
+      - generic [ref=f35e257]:
+        - generic [ref=f35e258]:
+          - paragraph [ref=f35e259]: Discover
+          - list [ref=f35e260]:
+            - listitem [ref=f35e261]:
+              - link "Events" [ref=f35e262] [cursor=pointer]:
+                - /url: /events
+            - listitem [ref=f35e263]:
+              - link "Communities" [ref=f35e264] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f35e265]:
+              - link "Opportunities" [ref=f35e266] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f35e267]:
+              - link "Map" [ref=f35e268] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=f35e269]:
+          - paragraph [ref=f35e270]: Platform
+          - list [ref=f35e271]:
+            - listitem [ref=f35e272]:
+              - link "About" [ref=f35e273] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f35e274]:
+              - link "Interests" [ref=f35e275] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f35e276]:
+              - link "Initiatives" [ref=f35e277] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=f35e278]:
+          - paragraph [ref=f35e279]: Support
+          - list [ref=f35e280]:
+            - listitem [ref=f35e281]:
+              - link "FAQs" [ref=f35e282] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f35e283]:
+              - link "Contact" [ref=f35e284] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f35e285]:
+              - link "Sign in" [ref=f35e286] [cursor=pointer]:
+                - /url: /sign-in
+      - generic [ref=f35e287]:
+        - list [ref=f35e288]:
+          - listitem [ref=f35e289]:
+            - link "Cookies Policy" [ref=f35e290] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f35e291]:
+            - link "Legal Terms" [ref=f35e292] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f35e293]:
+            - link "Privacy Policy" [ref=f35e294] [cursor=pointer]:
+              - /url: "#"
+        - list [ref=f35e295]:
+          - listitem [ref=f35e296]:
+            - link "Instagram" [ref=f35e297] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f35e298]:
+            - link "LinkedIn" [ref=f35e299] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f35e300]:
+            - link "Twitter" [ref=f35e301] [cursor=pointer]:
+              - /url: "#"
+  - generic:
+    - button "Scroll to top"
+  - generic:
+    - navigation "Quick navigation":
+      - link "Democratic Pulse home":
+        - /url: /
+      - generic:
+        - link "Events":
+          - /url: /events
+        - link "Communities":
+          - /url: "#"
+        - link "Opportunities":
+          - /url: "#"
+        - link "Map":
+          - /url: "#"
+        - link "Initiatives":
+          - /url: "#"
+      - link "Join Europe":
+        - /url: "#"
+  - button "Open Next.js Dev Tools" [ref=f35e307] [cursor=pointer]
+  - alert [ref=f35e334]

@@ -1,0 +1,44 @@
+- generic [active] [ref=f52e1]:
+  - status "Loading" [ref=f52e2]
+  - banner:
+    - generic:
+      - link "Democratic Pulse":
+        - /url: /
+      - navigation:
+        - generic:
+          - generic:
+            - searchbox "Search events, communities, and opportunities"
+      - generic:
+        - link "Sign in":
+          - /url: /sign-in
+        - button "EN"
+  - main [ref=f52e4]:
+    - generic [ref=f52e7]:
+      - heading "Delightful events start here" [level=1] [ref=f52e8]:
+        - generic [ref=f52e9]: Delightful
+        - generic [ref=f52e10]: events
+        - generic [ref=f52e11]: start here
+      - paragraph [ref=f52e13]: Discover events, communities, and opportunities driving change across Europe.
+      - link "Explore Opportunities" [ref=f52e16] [cursor=pointer]:
+        - /url: /events
+  - generic:
+    - button "Scroll to top"
+  - generic:
+    - navigation "Quick navigation":
+      - link "Democratic Pulse home":
+        - /url: /
+      - generic:
+        - link "Events":
+          - /url: /events
+        - link "Communities":
+          - /url: "#"
+        - link "Opportunities":
+          - /url: "#"
+        - link "Map":
+          - /url: "#"
+        - link "Initiatives":
+          - /url: "#"
+      - link "Join Europe":
+        - /url: /sign-up
+  - button "Open Next.js Dev Tools" [ref=f52e24] [cursor=pointer]
+  - alert [ref=f52e28]

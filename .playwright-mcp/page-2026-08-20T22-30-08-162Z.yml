@@ -1,0 +1,256 @@
+- generic [ref=f34e1]:
+  - banner:
+    - generic:
+      - link "Democratic Pulse":
+        - /url: /
+      - navigation:
+        - generic:
+          - searchbox "Search"
+      - generic:
+        - link "Sign in":
+          - /url: "#"
+        - button "EN"
+  - main [ref=f34e2]:
+    - generic [ref=f34e4]:
+      - paragraph [ref=f34e5]: Events across Europe
+      - heading "Find something worth showing up for." [level=1] [ref=f34e6]
+      - paragraph [ref=f34e7]: Meetups, workshops, civic initiatives, volunteering, and cultural gatherings — find what’s happening near you or across the continent.
+      - searchbox "Search events, cities, topics, or communities" [ref=f34e13]
+    - generic [ref=f34e15]:
+      - generic [ref=f34e17]:
+        - button "When" [ref=f34e19]
+        - button "Where" [ref=f34e23]
+        - button "Category" [ref=f34e27]
+        - button "Format" [ref=f34e31]
+        - button "Language" [ref=f34e35]
+        - button "More filters" [ref=f34e38]
+      - generic [ref=f34e40]:
+        - paragraph [ref=f34e41]: 24 events
+        - generic [ref=f34e42]:
+          - group "Layout" [ref=f34e43]:
+            - generic [ref=f34e44]: Grid
+            - generic "Map view is coming soon" [ref=f34e50]: Map
+          - 'button "Sort: Recommended" [ref=f34e55]'
+      - generic [ref=f34e58]:
+        - link "Featured this week Civic Lab Berlin Berlin Climate Assembly Berlin Sep 8 Climate" [ref=f34e60] [cursor=pointer]:
+          - /url: "#"
+          - generic [ref=f34e66]: Featured this week
+          - generic [ref=f34e69]:
+            - paragraph [ref=f34e70]: Civic Lab Berlin
+            - heading "Berlin Climate Assembly" [level=3] [ref=f34e71]
+            - generic [ref=f34e73]:
+              - generic [ref=f34e74]: Berlin
+              - generic [ref=f34e78]: Sep 8
+              - generic [ref=f34e79]: Climate
+        - generic [ref=f34e83]:
+          - link [ref=f34e84] [cursor=pointer]:
+            - /url: "#"
+            - button "Save event" [ref=f34e94]
+            - generic [ref=f34e97]:
+              - paragraph [ref=f34e98]: Aug 23 · Berlin
+              - heading "Open Data Night" [level=3] [ref=f34e99]
+              - paragraph [ref=f34e101]: Civic Tech · English
+          - link [ref=f34e104] [cursor=pointer]:
+            - /url: "#"
+            - button "Save event" [ref=f34e111]
+            - generic [ref=f34e114]:
+              - paragraph [ref=f34e115]: Aug 27 · Berlin
+              - heading "Neighbourhood Clean-Up & Repair Café" [level=3] [ref=f34e116]
+              - paragraph [ref=f34e118]: Volunteering · German
+          - link [ref=f34e121] [cursor=pointer]:
+            - /url: "#"
+            - button "Save event" [ref=f34e131]
+            - generic [ref=f34e134]:
+              - paragraph [ref=f34e135]: Aug 30 · Lisbon
+              - heading "Open Cities Design Sprint" [level=3] [ref=f34e136]
+              - paragraph [ref=f34e138]: Civic Tech · English
+          - link [ref=f34e141] [cursor=pointer]:
+            - /url: "#"
+            - button "Save event" [ref=f34e149]
+            - generic [ref=f34e152]:
+              - paragraph [ref=f34e153]: Sep 14 · Lisbon
+              - heading "Community Housing Assembly" [level=3] [ref=f34e154]
+              - paragraph [ref=f34e156]: Democracy · Portuguese
+          - link [ref=f34e159] [cursor=pointer]:
+            - /url: "#"
+            - button "Save event" [ref=f34e166]
+            - generic [ref=f34e169]:
+              - paragraph [ref=f34e170]: Tomorrow · Lisbon
+              - heading "Coastal Clean-Up Lisbon" [level=3] [ref=f34e171]
+              - paragraph [ref=f34e173]: Climate · Portuguese
+          - link [ref=f34e176] [cursor=pointer]:
+            - /url: "#"
+            - button "Save event" [ref=f34e185]
+            - generic [ref=f34e188]:
+              - paragraph [ref=f34e189]: Sep 23 · Vienna
+              - heading "Cross-Border Culture Night" [level=3] [ref=f34e190]
+              - paragraph [ref=f34e192]: Culture · German
+          - link [ref=f34e195] [cursor=pointer]:
+            - /url: "#"
+            - button "Save event" [ref=f34e202]
+            - generic [ref=f34e205]:
+              - paragraph [ref=f34e206]: Aug 26 · Vienna
+              - heading "Climate Circle Monthly Meetup" [level=3] [ref=f34e207]
+              - paragraph [ref=f34e209]: Climate · German
+          - link [ref=f34e212] [cursor=pointer]:
+            - /url: "#"
+            - button "Save event" [ref=f34e220]
+            - generic [ref=f34e223]:
+              - paragraph [ref=f34e224]: Oct 2 · Vienna
+              - heading "Democracy in Schools Workshop" [level=3] [ref=f34e225]
+              - paragraph [ref=f34e227]: Education · German
+          - link [ref=f34e230] [cursor=pointer]:
+            - /url: "#"
+            - button "Save event" [ref=f34e238]
+            - generic [ref=f34e241]:
+              - paragraph [ref=f34e242]: Sep 1 · Warsaw
+              - heading "Youth Democracy Forum" [level=3] [ref=f34e243]
+              - paragraph [ref=f34e245]: Democracy · Polish
+          - link [ref=f34e311] [cursor=pointer]:
+            - /url: "#"
+            - button "Save event" [ref=f34e319]
+            - generic [ref=f34e322]:
+              - paragraph [ref=f34e323]: Aug 24 · Warsaw
+              - heading "Civic Mentor Circle" [level=3] [ref=f34e324]
+              - paragraph [ref=f34e326]: Community · Polish
+          - link [ref=f34e329] [cursor=pointer]:
+            - /url: "#"
+            - button "Save event" [ref=f34e336]
+            - generic [ref=f34e339]:
+              - paragraph [ref=f34e340]: Oct 15 · Warsaw
+              - heading "Election Literacy Volunteering Drive" [level=3] [ref=f34e341]
+              - paragraph [ref=f34e343]: Volunteering · Polish
+          - link [ref=f34e346] [cursor=pointer]:
+            - /url: "#"
+            - button "Save event" [ref=f34e354]
+            - generic [ref=f34e357]:
+              - paragraph [ref=f34e358]: Today · Barcelona
+              - heading "Community Kitchen Open Day" [level=3] [ref=f34e359]
+              - paragraph [ref=f34e361]: Community · Spanish
+          - link [ref=f34e364] [cursor=pointer]:
+            - /url: "#"
+            - button "Save event" [ref=f34e374]
+            - generic [ref=f34e377]:
+              - paragraph [ref=f34e378]: Aug 27 · Barcelona
+              - heading "Civic Tech Hack Weekend" [level=3] [ref=f34e379]
+              - paragraph [ref=f34e381]: Civic Tech · Spanish
+          - link [ref=f34e384] [cursor=pointer]:
+            - /url: "#"
+            - button "Save event" [ref=f34e393]
+            - generic [ref=f34e396]:
+              - paragraph [ref=f34e397]: Oct 8 · Barcelona
+              - heading "Migrant Culture Market" [level=3] [ref=f34e398]
+              - paragraph [ref=f34e400]: Culture · Spanish
+          - link [ref=f34e403] [cursor=pointer]:
+            - /url: "#"
+            - button "Save event" [ref=f34e410]
+            - generic [ref=f34e413]:
+              - paragraph [ref=f34e414]: Sep 11 · Copenhagen
+              - heading "Nordic Climate Policy Lab" [level=3] [ref=f34e415]
+              - paragraph [ref=f34e417]: Climate · English
+          - link [ref=f34e420] [cursor=pointer]:
+            - /url: "#"
+            - button "Save event" [ref=f34e428]
+            - generic [ref=f34e431]:
+              - paragraph [ref=f34e432]: Aug 28 · Copenhagen
+              - 'heading "Cycling Democracy: Streets for People" [level=3] [ref=f34e433]'
+              - paragraph [ref=f34e435]: Education · Danish
+          - link [ref=f34e438] [cursor=pointer]:
+            - /url: "#"
+            - button "Save event" [ref=f34e448]
+            - generic [ref=f34e451]:
+              - paragraph [ref=f34e452]: Sep 6 · Tallinn
+              - heading "Digital Democracy Lab" [level=3] [ref=f34e453]
+              - paragraph [ref=f34e455]: Civic Tech · Estonian
+          - link [ref=f34e458] [cursor=pointer]:
+            - /url: "#"
+            - button "Save event" [ref=f34e466]
+            - generic [ref=f34e469]:
+              - paragraph [ref=f34e470]: Sep 28 · Tallinn
+              - heading "Baltic Youth Exchange Kickoff" [level=3] [ref=f34e471]
+              - paragraph [ref=f34e473]: Community · Estonian
+        - button "Load more events" [active] [ref=f34e249]
+  - contentinfo [ref=f34e250]:
+    - generic [ref=f34e251]:
+      - link "Democratic Pulse" [ref=f34e252] [cursor=pointer]:
+        - /url: /
+      - generic [ref=f34e257]:
+        - generic [ref=f34e258]:
+          - paragraph [ref=f34e259]: Discover
+          - list [ref=f34e260]:
+            - listitem [ref=f34e261]:
+              - link "Events" [ref=f34e262] [cursor=pointer]:
+                - /url: /events
+            - listitem [ref=f34e263]:
+              - link "Communities" [ref=f34e264] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f34e265]:
+              - link "Opportunities" [ref=f34e266] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f34e267]:
+              - link "Map" [ref=f34e268] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=f34e269]:
+          - paragraph [ref=f34e270]: Platform
+          - list [ref=f34e271]:
+            - listitem [ref=f34e272]:
+              - link "About" [ref=f34e273] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f34e274]:
+              - link "Interests" [ref=f34e275] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f34e276]:
+              - link "Initiatives" [ref=f34e277] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=f34e278]:
+          - paragraph [ref=f34e279]: Support
+          - list [ref=f34e280]:
+            - listitem [ref=f34e281]:
+              - link "FAQs" [ref=f34e282] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f34e283]:
+              - link "Contact" [ref=f34e284] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f34e285]:
+              - link "Sign in" [ref=f34e286] [cursor=pointer]:
+                - /url: /sign-in
+      - generic [ref=f34e287]:
+        - list [ref=f34e288]:
+          - listitem [ref=f34e289]:
+            - link "Cookies Policy" [ref=f34e290] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f34e291]:
+            - link "Legal Terms" [ref=f34e292] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f34e293]:
+            - link "Privacy Policy" [ref=f34e294] [cursor=pointer]:
+              - /url: "#"
+        - list [ref=f34e295]:
+          - listitem [ref=f34e296]:
+            - link "Instagram" [ref=f34e297] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f34e298]:
+            - link "LinkedIn" [ref=f34e299] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f34e300]:
+            - link "Twitter" [ref=f34e301] [cursor=pointer]:
+              - /url: "#"
+  - button "Scroll to top" [ref=f34e477]
+  - navigation "Quick navigation" [ref=f34e481]:
+    - link "Democratic Pulse home" [ref=f34e482] [cursor=pointer]:
+      - /url: /
+    - generic [ref=f34e486]:
+      - link "Events" [ref=f34e487] [cursor=pointer]:
+        - /url: /events
+      - link "Communities" [ref=f34e488] [cursor=pointer]:
+        - /url: "#"
+      - link "Opportunities" [ref=f34e489] [cursor=pointer]:
+        - /url: "#"
+      - link "Map" [ref=f34e490] [cursor=pointer]:
+        - /url: "#"
+      - link "Initiatives" [ref=f34e491] [cursor=pointer]:
+        - /url: "#"
+    - link "Join Europe" [ref=f34e492] [cursor=pointer]:
+      - /url: "#"
+  - button "Open Next.js Dev Tools" [ref=f34e307] [cursor=pointer]
+  - alert [ref=f34e495]

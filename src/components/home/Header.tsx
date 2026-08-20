@@ -5,6 +5,7 @@ import Link from "next/link";
 import Container from "./Container";
 import PulseMark from "./PulseMark";
 import FullScreenMenu from "./FullScreenMenu";
+import SearchField from "./SearchField";
 import { useNavVisibility } from "./NavVisibility";
 
 export default function Header() {
@@ -35,40 +36,27 @@ export default function Header() {
         </Link>
 
         <nav className="hidden flex-1 items-center justify-center px-6 lg:flex lg:px-10">
-          <div className="group flex w-full max-w-[260px] items-center gap-2.5 rounded-full border border-transparent bg-page-secondary px-4 py-3 transition-colors duration-200 focus-within:border-eu-blue/60 xl:max-w-[440px] 2xl:max-w-[clamp(480px,calc(11.72vw_-_300px),600px)]">
-            <svg
-              width="15"
-              height="15"
-              viewBox="0 0 16 16"
-              fill="none"
-              aria-hidden
-              className="shrink-0 text-ink-muted transition-colors group-focus-within:text-eu-blue"
-            >
-              <circle cx="7" cy="7" r="5" stroke="currentColor" strokeWidth="1.4" />
-              <path d="M11 11 14.5 14.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-            </svg>
-            <input
-              type="search"
-              aria-label="Search"
+          <div className="w-full max-w-[260px] xl:max-w-[440px] 2xl:max-w-[clamp(480px,calc(11.72vw_-_300px),600px)]">
+            <SearchField
               placeholder="Search across Europe"
-              className="w-full cursor-text nav-search-field appearance-none bg-transparent text-[14px] leading-none text-ink placeholder:text-ink-muted outline-none xl:hidden"
+              containerClassName="gap-2.5 rounded-full px-4 py-3 xl:hidden"
+              inputClassName="text-[14px]"
             />
-            <input
-              type="search"
-              aria-label="Search"
+            <SearchField
               placeholder="Search events, communities, and opportunities"
-              className="hidden w-full cursor-text nav-search-field appearance-none bg-transparent text-[14px] leading-none text-ink placeholder:text-ink-muted outline-none xl:block xl:text-[clamp(14px,calc(0.18vw_+_11.4px),16px)]"
+              containerClassName="hidden gap-2.5 rounded-full px-4 py-3 xl:flex"
+              inputClassName="text-[14px] xl:text-[clamp(14px,calc(0.18vw_+_11.4px),16px)]"
             />
           </div>
         </nav>
 
         <div className="hidden items-center gap-6 lg:flex 2xl:gap-8">
-          <a
-            href="#"
+          <Link
+            href="/sign-in"
             className="text-[14px] font-medium text-ink-secondary transition-colors hover:text-eu-blue lg:text-[clamp(14px,calc(0.09vw_+_12.7px),15px)]"
           >
             Sign in
-          </a>
+          </Link>
           <button
             type="button"
             className="flex items-center gap-1 text-[13px] font-medium text-ink-secondary transition-colors hover:text-eu-blue lg:text-[clamp(13px,calc(0.09vw_+_11.7px),14px)]"

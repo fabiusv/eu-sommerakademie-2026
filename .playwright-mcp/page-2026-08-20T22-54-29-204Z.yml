@@ -1,0 +1,276 @@
+- generic [ref=f41e1]:
+  - banner [ref=f41e28]:
+    - generic [ref=f41e29]:
+      - link "Democratic Pulse" [ref=f41e30] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=f41e35]:
+        - searchbox "Search events, communities, and opportunities" [active] [ref=f41e41]
+      - generic [ref=f41e42]:
+        - link "Sign in" [ref=f41e43] [cursor=pointer]:
+          - /url: /sign-in
+        - button "EN" [ref=f41e44]
+  - main [ref=f41e4]:
+    - generic [ref=f41e7]:
+      - heading "Delightful events start here" [level=1] [ref=f41e8]:
+        - generic [ref=f41e9]: Delightful
+        - generic [ref=f41e10]: events
+        - generic [ref=f41e11]: start here
+      - paragraph [ref=f41e13]: Discover events, communities, and opportunities driving change across Europe.
+      - link "Explore Opportunities" [ref=f41e16] [cursor=pointer]:
+        - /url: /events
+    - generic [ref=f41e47]:
+      - generic [ref=f41e50]:
+        - generic [ref=f41e51]: Built across borders
+        - generic [ref=f41e56]: Communities shaping Europe
+        - generic [ref=f41e61]: Ideas that move Europe forward
+        - generic [ref=f41e66]: Local action, shared future
+        - generic [ref=f41e71]: Open cities, open minds
+        - generic [ref=f41e76]: Participation starts here
+        - generic [ref=f41e81]: Europe grows through people
+        - generic [ref=f41e86]: Rooted locally, connected across Europe
+        - generic [ref=f41e91]:
+          - generic [ref=f41e92]: Built across borders
+          - generic [ref=f41e97]: Communities shaping Europe
+          - generic [ref=f41e102]: Ideas that move Europe forward
+          - generic [ref=f41e107]: Local action, shared future
+          - generic [ref=f41e112]: Open cities, open minds
+          - generic [ref=f41e117]: Participation starts here
+          - generic [ref=f41e122]: Europe grows through people
+          - generic [ref=f41e127]: Rooted locally, connected across Europe
+      - generic [ref=f41e134]:
+        - generic [ref=f41e135]:
+          - generic [ref=f41e136]: "01"
+          - generic [ref=f41e138]: Featured cities
+        - generic [ref=f41e139]:
+          - heading "Where Democratic Pulse is most active right now." [level=2] [ref=f41e140]
+          - link "View all cities" [ref=f41e141] [cursor=pointer]:
+            - /url: "#"
+        - generic [ref=f41e144]:
+          - link "01 Featured city Berlin Germany 42 events" [ref=f41e145] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=f41e154]:
+              - generic [ref=f41e155]: "01"
+              - generic [ref=f41e156]: Featured city
+            - generic [ref=f41e157]:
+              - heading "Berlin" [level=3] [ref=f41e158]
+              - paragraph [ref=f41e159]: Germany
+              - generic [ref=f41e160]: 42 events
+          - generic [ref=f41e165]:
+            - link "02 Lisbon Portugal 28 events" [ref=f41e166] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=f41e183]: "02"
+              - generic [ref=f41e184]:
+                - generic [ref=f41e185]: Lisbon
+                - generic [ref=f41e186]: Portugal
+              - generic [ref=f41e187]: 28 events
+            - link "03 Warsaw Poland 24 events" [ref=f41e192] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=f41e203]: "03"
+              - generic [ref=f41e204]:
+                - generic [ref=f41e205]: Warsaw
+                - generic [ref=f41e206]: Poland
+              - generic [ref=f41e207]: 24 events
+            - link "04 Vienna Austria 31 events" [ref=f41e212] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=f41e224]: "04"
+              - generic [ref=f41e225]:
+                - generic [ref=f41e226]: Vienna
+                - generic [ref=f41e227]: Austria
+              - generic [ref=f41e228]: 31 events
+            - link "05 Athens Greece 19 events" [ref=f41e233] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=f41e250]: "05"
+              - generic [ref=f41e251]:
+                - generic [ref=f41e252]: Athens
+                - generic [ref=f41e253]: Greece
+              - generic [ref=f41e254]: 19 events
+            - link "06 Tallinn Estonia 15 events" [ref=f41e259] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=f41e270]: "06"
+              - generic [ref=f41e271]:
+                - generic [ref=f41e272]: Tallinn
+                - generic [ref=f41e273]: Estonia
+              - generic [ref=f41e274]: 15 events
+            - link "07 Copenhagen Denmark 22 events" [ref=f41e279] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=f41e299]: "07"
+              - generic [ref=f41e300]:
+                - generic [ref=f41e301]: Copenhagen
+                - generic [ref=f41e302]: Denmark
+              - generic [ref=f41e303]: 22 events
+            - link "08 Barcelona Spain 27 events" [ref=f41e308] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=f41e320]: "08"
+              - generic [ref=f41e321]:
+                - generic [ref=f41e322]: Barcelona
+                - generic [ref=f41e323]: Spain
+              - generic [ref=f41e324]: 27 events
+      - generic [ref=f41e331]:
+        - paragraph [ref=f41e335]: 500+ community-led events across 30 countries this year.
+        - paragraph [ref=f41e336]: Democratic Pulse connects people building a more open Europe — one event, one community, one initiative at a time.
+      - generic [ref=f41e339]:
+        - generic [ref=f41e340]:
+          - generic [ref=f41e341]: "02"
+          - generic [ref=f41e343]: Upcoming events
+        - heading "Community-led events happening across Europe." [level=2] [ref=f41e344]
+        - generic [ref=f41e345]:
+          - 'link "Climate 01 Climate Assembly: Berlin Edition Berlin · Sep 12" [ref=f41e346] [cursor=pointer]':
+            - /url: "#"
+            - generic [ref=f41e352]:
+              - generic [ref=f41e353]: Climate
+              - generic [ref=f41e354]: "01"
+            - generic [ref=f41e355]:
+              - 'heading "Climate Assembly: Berlin Edition" [level=3] [ref=f41e356]'
+              - generic [ref=f41e357]: Berlin · Sep 12
+          - link "Civic Tech 02 Open Cities Design Sprint Lisbon · Sep 18" [ref=f41e361] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=f41e367]:
+              - generic [ref=f41e368]: Civic Tech
+              - generic [ref=f41e369]: "02"
+            - generic [ref=f41e370]:
+              - heading "Open Cities Design Sprint" [level=3] [ref=f41e371]
+              - generic [ref=f41e372]: Lisbon · Sep 18
+          - link "Democracy 03 Youth Democracy Forum Warsaw · Sep 24" [ref=f41e376] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=f41e382]:
+              - generic [ref=f41e383]: Democracy
+              - generic [ref=f41e384]: "03"
+            - generic [ref=f41e385]:
+              - heading "Youth Democracy Forum" [level=3] [ref=f41e386]
+              - generic [ref=f41e387]: Warsaw · Sep 24
+          - link "Culture 04 Cross-Border Culture Night Vienna · Oct 02" [ref=f41e391] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=f41e397]:
+              - generic [ref=f41e398]: Culture
+              - generic [ref=f41e399]: "04"
+            - generic [ref=f41e400]:
+              - heading "Cross-Border Culture Night" [level=3] [ref=f41e401]
+              - generic [ref=f41e402]: Vienna · Oct 02
+          - 'link "Civic Tech 05 Civic Tech Meetup: Athens Athens · Oct 09" [ref=f41e406] [cursor=pointer]':
+            - /url: "#"
+            - generic [ref=f41e412]:
+              - generic [ref=f41e413]: Civic Tech
+              - generic [ref=f41e414]: "05"
+            - generic [ref=f41e415]:
+              - 'heading "Civic Tech Meetup: Athens" [level=3] [ref=f41e416]'
+              - generic [ref=f41e417]: Athens · Oct 09
+          - link "Youth 06 Baltic Youth Exchange Kickoff Tallinn · Oct 15" [ref=f41e421] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=f41e427]:
+              - generic [ref=f41e428]: Youth
+              - generic [ref=f41e429]: "06"
+            - generic [ref=f41e430]:
+              - heading "Baltic Youth Exchange Kickoff" [level=3] [ref=f41e431]
+              - generic [ref=f41e432]: Tallinn · Oct 15
+        - link "View all events" [ref=f41e437] [cursor=pointer]:
+          - /url: /events
+      - generic [ref=f41e443]:
+        - generic [ref=f41e444]:
+          - generic [ref=f41e445]:
+            - generic [ref=f41e446]: "03"
+            - generic [ref=f41e448]: Opportunities
+          - heading "A program worth your time right now." [level=2] [ref=f41e449]
+          - paragraph [ref=f41e450]: Hand-picked from the fellowships, grants, and residencies open across the Democratic Pulse network.
+          - link "View all opportunities" [ref=f41e451] [cursor=pointer]:
+            - /url: "#"
+        - link "Fellowship European Civic Fellowship Democratic Pulse Foundation Deadline Oct 30" [ref=f41e454] [cursor=pointer]:
+          - /url: "#"
+          - generic [ref=f41e455]: Fellowship
+          - generic [ref=f41e456]:
+            - heading "European Civic Fellowship" [level=3] [ref=f41e457]
+            - paragraph [ref=f41e458]: Democratic Pulse Foundation
+          - generic [ref=f41e460]:
+            - generic [ref=f41e461]: Deadline
+            - generic [ref=f41e462]: Oct 30
+      - generic [ref=f41e469]:
+        - paragraph [ref=f41e470]: Get involved
+        - heading "Have something to share with Europe?" [level=2] [ref=f41e471]
+        - paragraph [ref=f41e472]: Start an initiative, host an event, or open your community to people across the continent.
+        - link "Start an Initiative" [ref=f41e473] [cursor=pointer]:
+          - /url: "#"
+  - contentinfo [ref=f41e477]:
+    - generic [ref=f41e478]:
+      - link "Democratic Pulse" [ref=f41e479] [cursor=pointer]:
+        - /url: /
+      - generic [ref=f41e484]:
+        - generic [ref=f41e485]:
+          - paragraph [ref=f41e486]: Discover
+          - list [ref=f41e487]:
+            - listitem [ref=f41e488]:
+              - link "Events" [ref=f41e489] [cursor=pointer]:
+                - /url: /events
+            - listitem [ref=f41e490]:
+              - link "Communities" [ref=f41e491] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f41e492]:
+              - link "Opportunities" [ref=f41e493] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f41e494]:
+              - link "Map" [ref=f41e495] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=f41e496]:
+          - paragraph [ref=f41e497]: Platform
+          - list [ref=f41e498]:
+            - listitem [ref=f41e499]:
+              - link "About" [ref=f41e500] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f41e501]:
+              - link "Interests" [ref=f41e502] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f41e503]:
+              - link "Initiatives" [ref=f41e504] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=f41e505]:
+          - paragraph [ref=f41e506]: Support
+          - list [ref=f41e507]:
+            - listitem [ref=f41e508]:
+              - link "FAQs" [ref=f41e509] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f41e510]:
+              - link "Contact" [ref=f41e511] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=f41e512]:
+              - link "Sign in" [ref=f41e513] [cursor=pointer]:
+                - /url: /sign-in
+      - generic [ref=f41e514]:
+        - list [ref=f41e515]:
+          - listitem [ref=f41e516]:
+            - link "Cookies Policy" [ref=f41e517] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f41e518]:
+            - link "Legal Terms" [ref=f41e519] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f41e520]:
+            - link "Privacy Policy" [ref=f41e521] [cursor=pointer]:
+              - /url: "#"
+        - list [ref=f41e522]:
+          - listitem [ref=f41e523]:
+            - link "Instagram" [ref=f41e524] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f41e525]:
+            - link "LinkedIn" [ref=f41e526] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f41e527]:
+            - link "Twitter" [ref=f41e528] [cursor=pointer]:
+              - /url: "#"
+  - generic:
+    - button "Scroll to top"
+  - generic:
+    - navigation "Quick navigation":
+      - link "Democratic Pulse home":
+        - /url: /
+      - generic:
+        - link "Events":
+          - /url: /events
+        - link "Communities":
+          - /url: "#"
+        - link "Opportunities":
+          - /url: "#"
+        - link "Map":
+          - /url: "#"
+        - link "Initiatives":
+          - /url: "#"
+      - link "Join Europe":
+        - /url: /sign-up
+  - button "Open Next.js Dev Tools" [ref=f41e24] [cursor=pointer]
+  - alert [ref=f41e529]
