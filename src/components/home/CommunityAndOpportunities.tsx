@@ -2,16 +2,7 @@ import Container from "./Container";
 import Reveal from "./Reveal";
 import SectionEyebrow from "./SectionEyebrow";
 import { opportunities } from "@/lib/home-data";
-
-const arrow = (
-  <path
-    d="M2 8h11.5M9 3.5 13.5 8 9 12.5"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  />
-);
+import { ArrowRightIcon } from "@/components/icons";
 
 // The foundation's own fellowship — the most on-brand, homepage-worthy pick among the
 // opportunities. Deeper browsing (grants, residencies, volunteering) belongs on the
@@ -38,9 +29,7 @@ export default function CommunityAndOpportunities() {
                 className="mt-7 inline-flex items-center gap-1.5 text-[14px] font-medium text-ink-muted transition-colors hover:text-eu-blue lg:mt-8"
               >
                 View all opportunities
-                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden>
-                  {arrow}
-                </svg>
+                <ArrowRightIcon size={13} strokeWidth={1.5} />
               </a>
             </div>
 
@@ -69,9 +58,7 @@ export default function CommunityAndOpportunities() {
                   </span>
                 </div>
                 <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-eu-yellow text-ink transition-transform duration-500 ease-out group-hover:translate-x-1">
-                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden>
-                    {arrow}
-                  </svg>
+                  <ArrowRightIcon size={15} strokeWidth={1.5} />
                 </span>
               </div>
             </a>

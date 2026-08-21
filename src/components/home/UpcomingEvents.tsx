@@ -4,6 +4,7 @@ import Reveal from "./Reveal";
 import SectionEyebrow from "./SectionEyebrow";
 import PulseMark from "./PulseMark";
 import { events } from "@/lib/home-data";
+import { ArrowRightIcon } from "@/components/icons";
 
 const glowPositions = ["85% 15%", "15% 85%", "90% 90%", "10% 15%", "80% 80%", "20% 20%"];
 
@@ -53,22 +54,10 @@ export default function UpcomingEvents() {
                     <span>
                       {event.city} · {event.date}
                     </span>
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 16 16"
-                      fill="none"
+                    <ArrowRightIcon
+                      size={14}
                       className="text-ink-muted transition-colors group-hover:text-eu-blue"
-                      aria-hidden
-                    >
-                      <path
-                        d="M2 8h11.5M9 3.5 13.5 8 9 12.5"
-                        stroke="currentColor"
-                        strokeWidth="1.4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                    />
                   </div>
                 </div>
               </a>
@@ -81,15 +70,7 @@ export default function UpcomingEvents() {
               className="inline-flex items-center gap-1.5 text-[14px] font-medium text-ink-muted transition-colors hover:text-eu-blue"
             >
               View all events
-              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden>
-                <path
-                  d="M2 8h11.5M9 3.5 13.5 8 9 12.5"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <ArrowRightIcon size={13} strokeWidth={1.5} />
             </Link>
           </div>
         </Reveal>

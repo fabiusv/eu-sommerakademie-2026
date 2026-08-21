@@ -12,6 +12,7 @@ import {
   LANGUAGE_OPTIONS,
   type EventFilters,
 } from "@/lib/events-data";
+import { trapDialogTab } from "@/lib/dialog-focus-trap";
 
 // Same mount/exit-timeout pattern as MoreFiltersDrawer/FullScreenMenu, full-screen instead
 // of a side panel — see components/home/FullScreenMenu for the original.
@@ -99,6 +100,7 @@ export default function MobileFilters({
   const [prevOpen, setPrevOpen] = useState(open);
   const [openRow, setOpenRow] = useState<RowKey>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   if (open !== prevOpen) {
     setPrevOpen(open);
@@ -134,7 +136,11 @@ export default function MobileFilters({
   useEffect(() => {
     if (!rendered) return;
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") onClose();
+      if (event.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (panelRef.current) trapDialogTab(event, panelRef.current);
     }
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
@@ -149,6 +155,7 @@ export default function MobileFilters({
 
   return createPortal(
     <div
+      ref={panelRef}
       role="dialog"
       aria-modal="true"
       aria-label="Filter events"

@@ -1,6 +1,14 @@
 "use client";
 
-import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react";
 import HyperspacePreloader from "@/components/preloader/HyperspacePreloader";
 
 type HeroIntroState = {
@@ -59,6 +67,33 @@ const INSTANT_TIMELINE: TimelineEntry[] = [
   { key: "ready", at: 780 },
 ];
 
+// Marks that the hyperspace preloader has already played once this browser session, so
+// repeat visits to `/` — e.g. clicking the logo home from /events mid-session — get the
+// fast INSTANT_TIMELINE reveal instead of replaying the full ~3.5s animation + scroll
+// lock every time. A fresh tab/session still gets the real intro.
+const INTRO_SEEN_KEY = "dp-intro-seen";
+
+// sessionStorage never fires an event for writes made from the same tab (only cross-tab
+// `storage` events), and this value only ever transitions false→true once per session and
+// never needs to react to anything after that — so there's nothing to subscribe to.
+// useSyncExternalStore is used purely for its snapshot/server-snapshot split, the same
+// hydration-safe pattern FullScreenMenu uses for `prefers-reduced-motion`.
+function subscribeIntroSeen() {
+  return () => {};
+}
+
+function getIntroSeenSnapshot() {
+  try {
+    return sessionStorage.getItem(INTRO_SEEN_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function getIntroSeenServerSnapshot() {
+  return false;
+}
+
 export function HeroIntroProvider({
   children,
   instant = false,
@@ -70,8 +105,14 @@ export function HeroIntroProvider({
   instant?: boolean;
 }) {
   const [state, setState] = useState<HeroIntroState>(HIDDEN);
+  const introAlreadySeen = useSyncExternalStore(
+    subscribeIntroSeen,
+    getIntroSeenSnapshot,
+    getIntroSeenServerSnapshot
+  );
   const startedRef = useRef(false);
   const timersRef = useRef<number[]>([]);
+  const skipPreloader = instant || introAlreadySeen;
 
   useEffect(() => {
     return () => {
@@ -116,6 +157,12 @@ export function HeroIntroProvider({
     if (startedRef.current) return;
     startedRef.current = true;
 
+    try {
+      sessionStorage.setItem(INTRO_SEEN_KEY, "1");
+    } catch {
+      // sessionStorage unavailable — worst case the intro replays next visit.
+    }
+
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const timeline = reducedMotion ? REDUCED_TIMELINE : TIMELINE;
 
@@ -130,9 +177,11 @@ export function HeroIntroProvider({
   // `start`/`startedRef` above — those are keyed to the preloader's single, real `onExit`
   // call, which lands long after mount. Dev Strict Mode's mount→cleanup→remount happens
   // *at* mount, so a mount-time start needs a cleanup that can rearm on remount, not one
-  // guarded by a ref that survives the simulated unmount.
+  // guarded by a ref that survives the simulated unmount. Runs for `instant` pages and for
+  // same-session repeat visits to `/` alike — both skip the hyperspace preloader and want
+  // the same fast reveal.
   useEffect(() => {
-    if (!instant) return;
+    if (!skipPreloader) return;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const timeline = reducedMotion ? REDUCED_TIMELINE : INSTANT_TIMELINE;
@@ -144,11 +193,11 @@ export function HeroIntroProvider({
     );
 
     return () => ids.forEach((id) => window.clearTimeout(id));
-  }, [instant]);
+  }, [skipPreloader]);
 
   return (
     <HeroIntroContext.Provider value={state}>
-      {!instant && <HyperspacePreloader onExit={start} />}
+      {!skipPreloader && <HyperspacePreloader onExit={start} />}
       {children}
     </HeroIntroContext.Provider>
   );

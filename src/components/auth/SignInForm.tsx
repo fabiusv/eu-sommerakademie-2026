@@ -106,7 +106,11 @@ export default function SignInForm() {
           type="email"
           autoComplete="email"
           value={email}
-          onChange={(event) => setEmail(event.target.value)}
+          onChange={(event) => {
+            const value = event.target.value;
+            setEmail(value);
+            setErrors((prev) => (prev.email ? { ...prev, email: validateEmail(value) } : prev));
+          }}
           error={errors.email}
           required
         />
@@ -117,7 +121,13 @@ export default function SignInForm() {
             label="Password"
             autoComplete="current-password"
             value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            onChange={(event) => {
+              const value = event.target.value;
+              setPassword(value);
+              setErrors((prev) =>
+                prev.password ? { ...prev, password: validateRequiredPassword(value) } : prev
+              );
+            }}
             error={errors.password}
             required
           />

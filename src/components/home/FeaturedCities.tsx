@@ -3,16 +3,7 @@ import Reveal from "./Reveal";
 import SectionEyebrow from "./SectionEyebrow";
 import CityLandmark from "./CityLandmark";
 import { cities } from "@/lib/home-data";
-
-const arrow = (
-  <path
-    d="M2 8h11.5M9 3.5 13.5 8 9 12.5"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  />
-);
+import { ArrowRightIcon } from "@/components/icons";
 
 export default function FeaturedCities() {
   const [featured, ...rest] = cities;
@@ -32,9 +23,7 @@ export default function FeaturedCities() {
               className="inline-flex shrink-0 items-center gap-1.5 text-[14px] font-medium text-ink-muted transition-colors hover:text-eu-blue"
             >
               View all cities
-              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden>
-                {arrow}
-              </svg>
+              <ArrowRightIcon size={13} strokeWidth={1.5} />
             </a>
           </div>
 
@@ -69,9 +58,7 @@ export default function FeaturedCities() {
                     {featured.eventCount} events
                   </span>
                   <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-eu-yellow text-ink transition-transform duration-500 ease-out group-hover:rotate-45">
-                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden>
-                      {arrow}
-                    </svg>
+                    <ArrowRightIcon size={14} strokeWidth={1.5} />
                   </span>
                 </div>
               </div>
@@ -114,9 +101,7 @@ export default function FeaturedCities() {
                       {city.eventCount} events
                     </span>
                     <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-line text-ink-muted opacity-0 transition-all duration-500 ease-out [@media(hover:hover)]:group-hover:border-white/30 [@media(hover:hover)]:group-hover:text-white [@media(hover:hover)]:group-hover:opacity-100">
-                      <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden>
-                        {arrow}
-                      </svg>
+                      <ArrowRightIcon size={12} strokeWidth={1.5} />
                     </span>
                   </span>
                 </a>

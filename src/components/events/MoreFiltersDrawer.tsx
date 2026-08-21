@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { ClearIcon } from "./icons";
 import Switch from "./Switch";
 import type { EventFilters } from "@/lib/events-data";
+import { trapDialogTab } from "@/lib/dialog-focus-trap";
 
 // Mirrors FullScreenMenu's mount/exit-timeout pattern (see components/home/FullScreenMenu)
 // at a much smaller scale — no focus trap, just a slide-in panel that needs to survive its
@@ -26,6 +27,7 @@ export default function MoreFiltersDrawer({
   const [visible, setVisible] = useState(false);
   const [prevOpen, setPrevOpen] = useState(open);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   if (open !== prevOpen) {
     setPrevOpen(open);
@@ -61,7 +63,11 @@ export default function MoreFiltersDrawer({
   useEffect(() => {
     if (!rendered) return;
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") onClose();
+      if (event.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (panelRef.current) trapDialogTab(event, panelRef.current);
     }
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
@@ -81,6 +87,7 @@ export default function MoreFiltersDrawer({
         }`}
       />
       <div
+        ref={panelRef}
         role="dialog"
         aria-modal="true"
         aria-label="More filters"

@@ -114,7 +114,11 @@ export default function SignUpForm() {
           type="email"
           autoComplete="email"
           value={email}
-          onChange={(event) => setEmail(event.target.value)}
+          onChange={(event) => {
+            const value = event.target.value;
+            setEmail(value);
+            setErrors((prev) => (prev.email ? { ...prev, email: validateEmail(value) } : prev));
+          }}
           error={errors.email}
           required
         />
@@ -124,7 +128,20 @@ export default function SignUpForm() {
           label="Password"
           autoComplete="new-password"
           value={password}
-          onChange={(event) => setPassword(event.target.value)}
+          onChange={(event) => {
+            const value = event.target.value;
+            setPassword(value);
+            // Re-check confirmPassword too, if it's already showing an error — its
+            // validity depends on this field, so a stale "do not match" shouldn't
+            // linger once the passwords actually line up again.
+            setErrors((prev) => ({
+              ...prev,
+              password: prev.password ? validateNewPassword(value) : prev.password,
+              confirmPassword: prev.confirmPassword
+                ? validateConfirmPassword(value, confirmPassword)
+                : prev.confirmPassword,
+            }));
+          }}
           error={errors.password}
           required
         />
@@ -134,7 +151,15 @@ export default function SignUpForm() {
           label="Confirm password"
           autoComplete="new-password"
           value={confirmPassword}
-          onChange={(event) => setConfirmPassword(event.target.value)}
+          onChange={(event) => {
+            const value = event.target.value;
+            setConfirmPassword(value);
+            setErrors((prev) =>
+              prev.confirmPassword
+                ? { ...prev, confirmPassword: validateConfirmPassword(password, value) }
+                : prev
+            );
+          }}
           error={errors.confirmPassword}
           required
         />

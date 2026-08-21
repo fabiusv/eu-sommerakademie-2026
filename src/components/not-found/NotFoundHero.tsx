@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Container from "@/components/home/Container";
 import { useHeroIntro } from "@/components/home/HeroIntroProvider";
+import { ArrowRightIcon } from "@/components/icons";
 
 // How far the "0" is allowed to drift from center, in px/deg, at the very edge of the
 // section. Deliberately small — this is a signature detail, not a game.
@@ -124,15 +125,7 @@ export default function NotFoundHero() {
                 className="inline-flex items-center gap-2.5 rounded-full bg-eu-blue px-8 py-4 text-[15px] font-medium text-white shadow-card transition-all hover:brightness-110 lg:px-[clamp(36px,calc(0.54vw_+_28.3px),42px)] lg:py-[clamp(17px,calc(0.18vw_+_14.4px),19px)] lg:text-[clamp(16px,calc(0.18vw_+_13.4px),18px)]"
               >
                 Back Home
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
-                  <path
-                    d="M2 8h11.5M9 3.5 13.5 8 9 12.5"
-                    stroke="currentColor"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                <ArrowRightIcon />
               </Link>
             </span>
           </div>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Container from "./Container";
 import { useHeroIntro } from "./HeroIntroProvider";
+import { ArrowRightIcon } from "@/components/icons";
 
 const heroGradient =
   "linear-gradient(97deg, var(--color-eu-blue) 0%, var(--color-eu-blue) 35%, var(--color-eu-gold) 100%)";
@@ -73,15 +74,7 @@ export default function Hero() {
                 className="inline-flex items-center gap-2.5 rounded-full bg-eu-blue px-8 py-4 text-[15px] font-medium text-white shadow-card transition-all hover:brightness-110 lg:px-[clamp(40px,calc(0.54vw_+_32.3px),46px)] lg:py-[clamp(18px,calc(0.27vw_+_14.1px),21px)] lg:text-[clamp(17px,calc(0.18vw_+_14.4px),19px)]"
               >
                 Explore Opportunities
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
-                  <path
-                    d="M2 8h11.5M9 3.5 13.5 8 9 12.5"
-                    stroke="currentColor"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                <ArrowRightIcon />
               </Link>
             </span>
           </div>

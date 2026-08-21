@@ -4,6 +4,7 @@ import Link from "next/link";
 import PulseMark from "./PulseMark";
 import ScrollToTopButton from "./ScrollToTopButton";
 import { useNavVisibility } from "./NavVisibility";
+import { ArrowRightIcon } from "@/components/icons";
 
 const navItems = [
   { label: "Events", href: "/events" },
@@ -29,24 +30,19 @@ export default function FloatingDock() {
         <ScrollToTopButton />
       </div>
 
-      {/* Center: standalone Join Europe CTA — mobile only */}
+      {/* Center: standalone Join Europe CTA — mobile only. Wrapper is full-width
+          (inset-x-0) to center the pill, which would otherwise swallow clicks meant
+          for the back-to-top button underneath — see the desktop pill nav below for
+          the same fix. */}
       <div
-        className={`nav-visibility fixed inset-x-0 bottom-5 z-40 flex justify-center px-20 transition-all duration-[250ms] ease-out lg:hidden ${visibility}`}
+        className={`nav-visibility pointer-events-none fixed inset-x-0 bottom-5 z-40 flex justify-center px-20 transition-all duration-[250ms] ease-out lg:hidden ${visibility}`}
       >
         <Link
           href="/sign-up"
-          className="flex shrink-0 items-center gap-2 rounded-full bg-eu-blue px-6 py-3.5 text-[13.5px] font-medium text-white shadow-card-hover transition-all hover:brightness-110"
+          className="pointer-events-auto flex shrink-0 items-center gap-2 rounded-full bg-eu-blue px-6 py-3.5 text-[13.5px] font-medium text-white shadow-card-hover transition-all hover:brightness-110"
         >
           Join Europe
-          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden>
-            <path
-              d="M2 8h11.5M9 3.5 13.5 8 9 12.5"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <ArrowRightIcon size={13} strokeWidth={1.5} />
         </Link>
       </div>
 
@@ -63,13 +59,18 @@ export default function FloatingDock() {
         </Link>
       </div>
 
-      {/* Desktop: combined pill nav — unchanged, lg and up only */}
+      {/* Desktop: combined pill nav — unchanged, lg and up only. The wrapper spans the
+          full width (inset-x-0) just to center its child, but that made it swallow
+          pointer events across the whole strip — including over the back-to-top button
+          on the left, well outside the visible pill. pointer-events-none on the wrapper
+          plus pointer-events-auto on the nav itself keeps the hit target matched to what
+          is actually visible. */}
       <div
-        className={`nav-visibility fixed inset-x-0 bottom-5 z-40 hidden justify-center px-4 transition-all duration-[250ms] ease-out lg:flex lg:bottom-7 ${visibility}`}
+        className={`nav-visibility pointer-events-none fixed inset-x-0 bottom-5 z-40 hidden justify-center px-4 transition-all duration-[250ms] ease-out lg:flex lg:bottom-7 ${visibility}`}
       >
         <nav
           aria-label="Quick navigation"
-          className="flex items-center gap-1 rounded-full border border-line bg-surface/85 p-1.5 shadow-card-hover backdrop-blur-xl"
+          className="pointer-events-auto flex items-center gap-1 rounded-full border border-line bg-surface/85 p-1.5 shadow-card-hover backdrop-blur-xl"
         >
           <Link
             href="/"
@@ -96,15 +97,7 @@ export default function FloatingDock() {
             className="flex shrink-0 items-center gap-2 rounded-full bg-eu-blue px-5 py-2.5 text-[13.5px] font-medium text-white transition-all hover:brightness-110 lg:px-6 lg:py-3 lg:text-[14px]"
           >
             Join Europe
-            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden>
-              <path
-                d="M2 8h11.5M9 3.5 13.5 8 9 12.5"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <ArrowRightIcon size={13} strokeWidth={1.5} />
           </Link>
         </nav>
       </div>

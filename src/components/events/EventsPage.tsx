@@ -76,8 +76,12 @@ export default function EventsPage() {
 
       <section className="bg-page pb-24 lg:pb-32">
         <Container>
+          {/* relative z-10: `.hero-intro-fade-visible`'s `transform` makes this and the
+              results section below each their own stacking context — without an explicit
+              z-index here, the later (results) one would win paint/hit-test order for any
+              overlap, silently swallowing clicks on this section's filter popovers. */}
           <div
-            className={`hero-intro-fade flex flex-col gap-4 ${ctaVisible ? "hero-intro-fade-visible" : ""}`}
+            className={`hero-intro-fade relative z-10 flex flex-col gap-4 ${ctaVisible ? "hero-intro-fade-visible" : ""}`}
             style={{ transitionDelay: "80ms" }}
           >
             <EventFilterBar

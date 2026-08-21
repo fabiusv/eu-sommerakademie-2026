@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useSyncExternalStore, type RefObject } fro
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import SearchField from "./SearchField";
+import { ArrowRightIcon } from "@/components/icons";
 
 const NAV_ITEMS = [
   { label: "Events", href: "/events" },
@@ -263,15 +264,7 @@ export default function FullScreenMenu({
               >
                 <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-eu-yellow" />
                 Join Europe
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden>
-                  <path
-                    d="M2 8h11.5M9 3.5 13.5 8 9 12.5"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                <ArrowRightIcon size={14} strokeWidth={1.5} />
               </Link>
             </div>
 

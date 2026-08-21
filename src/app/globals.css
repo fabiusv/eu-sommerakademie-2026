@@ -242,3 +242,14 @@ html {
 .search-field-input:focus-visible {
   outline: none;
 }
+
+/* type="search" inputs render their own native clear-icon once they have a value.
+   EventSearch already renders its own `clearable` button with matching styling and an
+   accessible label, so the native one is redundant and, left unstyled, shows up as a
+   second "x" next to it. */
+.search-field-input::-webkit-search-cancel-button {
+  display: none;
+}
+.search-field-input::-ms-clear {
+  display: none;
+}
